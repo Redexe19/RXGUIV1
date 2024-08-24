@@ -1,0 +1,9 @@
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+local function teleportToPosition(position)
+    character:SetPrimaryPartCFrame(CFrame.new(position))
+end
+
+-- change the 10, 3, 5 to any location you want the 10, 3, 5 are just for testing
+teleportToPosition(Vector3.new(149, 440, 31))
