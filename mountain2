@@ -5,5 +5,4 @@ local function teleportToPosition(position)
     character:SetPrimaryPartCFrame(CFrame.new(position))
 end
 
--- change the 10, 3, 5 to any location you want the 10, 3, 5 are just for testing
 teleportToPosition(Vector3.new(304, 671, 395))
