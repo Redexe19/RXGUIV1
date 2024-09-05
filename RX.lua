@@ -1,16 +1,15 @@
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local Window = OrionLib:MakeWindow({Name = "RX GUI", HidePremium = false, SaveConfig = true, ConfigFolder = "RXScript"})
 
-local Window = OrionLib:MakeWindow({Name = "RX GUI", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
-
-local Tab0 = Window:MakeTab({
+local InfoTab = Window:MakeTab({
 	Name = "Info",
-	Icon = "rbxassetid://4483345998",
+	Icon = "rbxassetid://nil",
 	PremiumOnly = false
 })
 
-Tab0:AddParagraph("Guide Or Information","This Gui Was Made By RxScripter Any Type Of Editing, Plagiarism, Copying, And Using Without Credits Will Result In This Gui Getting Deleted")
+InfoTab:AddParagraph("Guide Or Information","This Gui Was Made By RxScripter Any Type Of Editing, Plagiarism, Copying, And Using Without Credits Will Result In This Gui Getting Deleted")
 
-local Tab1 = Window:MakeTab({
+local MainTab = Window:MakeTab({
 	Name = "Main",
 	Icon = "rbxassetid://nil",
 	PremiumOnly = false
@@ -19,26 +18,26 @@ local Tab1 = Window:MakeTab({
 OrionLib:MakeNotification({
 	Name = "DO NOT STEAL",
 	Content = "This Script Is Made By RXSCRIPTER",
-	Image = "rbxassetid://4483345998",
+	Image = "nil",
 	Time = 5
 })
 
-local Section = Tab1:AddSection({
+local UtilSection = MainTab:AddSection({
 	Name = "Utilities"
 })
 
-Tab1:AddButton({
+MainTab:AddButton({
 	Name = "Custom Keyboard",
 	Callback = function()
 loadstring(game:HttpGet("https://gist.githubusercontent.com/RedZenXYZ/4d80bfd70ee27000660e4bfa7509c667/raw/da903c570249ab3c0c1a74f3467260972c3d87e6/KeyBoard%2520From%2520Ohio%2520Fr%2520Fr"))()
   	end    
 })
 
-local Section = Tab1:AddSection({
+local PcSection = MainTab:AddSection({
 	Name = "PC"
 })
 
-Tab1:AddButton({
+MainTab:AddButton({
 	Name = "Dash [E]",
 	Callback = function()
 print("Dash Script Activated Press E To Dash (Teleports You 35 Studs Foward)")
@@ -81,11 +80,11 @@ end)
   	end    
 })
 
-local Section = Tab1:AddSection({
+local MobileSection = MainTab:AddSection({
 	Name = "Mobile"
 })
 
-Tab1:AddButton({
+MainTab:AddButton({
 	Name = "Animated Teleportation",
 	Callback = function()
 local mouse = game.Players.LocalPlayer:GetMouse()
@@ -112,11 +111,11 @@ tool.Parent = game.Players.LocalPlayer.Backpack
   	end    
 })
 
-local Section = Tab1:AddSection({
+local VisSection = MainTab:AddSection({
 	Name = "Visual"
 })
 
-Tab1:AddButton({
+MainTab:AddButton({
 	Name = "Camera Lock",
 	Callback = function()
 local Players = game:GetService("Players")
@@ -194,17 +193,17 @@ end)
   	end    
 })
 
-local Tab2 = Window:MakeTab({
+local ExTab = Window:MakeTab({
 	Name = "Exploits",
 	Icon = "rbxassetid://nil",
 	PremiumOnly = false
 })
 
-local Section = Tab2:AddSection({
+local VisualSection = ExTab:AddSection({
 	Name = "Visual Exploits"
 })
 
-Tab2:AddButton({
+ExTab:AddButton({
 	Name = "Death Counter Alert",
 	Callback = function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/louismich4el/ItsLouisPlayz-Scripts/main/TSB%20Death%20Counter%20Identifier.lua"))()
@@ -212,11 +211,11 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/louismich4el/ItsLouis
   	end    
 })
 
-local Section = Tab2:AddSection({
+local AntiSection = ExTab:AddSection({
 	Name = "Anti Exploits"
 })
 
-Tab2:AddButton({
+ExTab:AddButton({
 	Name = "Anti Omni-Directional And Tableflip",
 	Callback = function()
 DistanceToDodgeOmni_Table = 120
@@ -225,17 +224,17 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/louismich4el/ItsLouis
   	end    
 })
 
-local Tab3 = Window:MakeTab({
+local PlayerTab = Window:MakeTab({
 	Name = "Player",
 	Icon = "rbxassetid://nil",
 	PremiumOnly = false
 })
 
-local Section = Tab3:AddSection({
+local MoveSection = PlayerTab:AddSection({
 	Name = "Movement"
 })
 
-Tab3:AddButton({
+PlayerTab:AddButton({
 	Name = "Speed Up",
 	Callback = function()
 function isNumber(str)
@@ -265,11 +264,11 @@ end
 })
 
 
-local Section = Tab3:AddSection({
+local CharacterSection = PlayerTab:AddSection({
 	Name = "Character"
 })
 
-Tab3:AddButton({
+PlayerTab:AddButton({
 	Name = "Noclip [T]",
 	Callback = function()
 local NoclipEnabled = false -- control noclip state
@@ -314,7 +313,7 @@ end)
   	end    
 })
 
-local Tab4 = Window:MakeTab({
+local TpTab = Window:MakeTab({
 	Name = "Teleports",
 	Icon = "rbxassetid://nil",
 	PremiumOnly = false
