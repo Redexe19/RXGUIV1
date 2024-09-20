@@ -1,3 +1,5 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Redexe19/RXGUIV1/main/rxscripttogglebutton"))()
+
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local Window = Rayfield:CreateWindow({
@@ -105,7 +107,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Redexe19/RXGUIV1/main
 })
 
 local Label = MainTab:CreateLabel("Both")
-
+--[[
 local Toggle = MainTab:CreateToggle({
    Name = "Auto Void",
    CurrentValue = false,
@@ -336,7 +338,7 @@ end)
 toggleScript(Value) -- set the true to false to deactivate script
    end,
 })
-
+--]]
 local Button = MainTab:CreateButton({
    Name = "Manual Void",
    Callback = function()
@@ -1130,7 +1132,3 @@ local Button = MiscTab:CreateButton({
 loadstring(game:HttpGet("https://raw.githubusercontent.com/tbao143/thaibao/main/TbaoHubAdmin"))()
    end,
 })
-
-wait(1.3)
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Redexe19/RXGUIV1/main/rxscripttogglebutton"))()
-end
