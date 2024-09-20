@@ -705,7 +705,7 @@ local AvatarSection = PlayerTab:CreateSection("Character")
 local Button = PlayerTab:CreateButton({
    Name = "Noclip [T]",
    Callback = function()
-   -- The function that takes place when the button is pressed
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Redexe19/RXGUIV1/refs/heads/main/noclip"))()
    end,
 })
 		
