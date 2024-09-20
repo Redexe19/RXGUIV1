@@ -92,7 +92,7 @@ local Label = MainTab:CreateLabel("PC")
 local Button = MainTab:CreateButton({
    Name = "Dash [E]",
    Callback = function()
-   -- The function that takes place when the button is pressed
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Redexe19/RXGUIV1/refs/heads/main/CamLockScript"))()
    end,
 })
 
@@ -351,7 +351,7 @@ local VisualSection = MainTab:CreateSection("Visual")
 local Button = MainTab:CreateButton({
    Name = "Camera Lock / Aimlock [Y]",
    Callback = function()
-   -- The function that takes place when the button is pressed
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Redexe19/RXGUIV1/refs/heads/main/CamLockScript"))()
    end,
 })				
 				
