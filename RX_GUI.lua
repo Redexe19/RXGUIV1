@@ -1,5 +1,3 @@
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Redexe19/RXGUIV1/main/rxscripttogglebutton"))()
-
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local Window = Rayfield:CreateWindow({
@@ -92,7 +90,7 @@ local Label = MainTab:CreateLabel("PC")
 local Button = MainTab:CreateButton({
    Name = "Dash [E]",
    Callback = function()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Redexe19/RXGUIV1/refs/heads/main/CamLockScript"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Redexe19/RXGUIV1/refs/heads/main/35StudDash"))()
    end,
 })
 
@@ -1132,3 +1130,7 @@ local Button = MiscTab:CreateButton({
 loadstring(game:HttpGet("https://raw.githubusercontent.com/tbao143/thaibao/main/TbaoHubAdmin"))()
    end,
 })
+
+wait(1.3)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Redexe19/RXGUIV1/main/rxscripttogglebutton"))()
+end
