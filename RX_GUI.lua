@@ -57,11 +57,11 @@ local Paragraph = InfoTab:CreateParagraph({Title = "Discord", Content = "discord
 local GuideSection = InfoTab:CreateSection("Uses")
 
 local Label = InfoTab:CreateLabel("Main 🌐")
-local Paragraph = InfoTab:CreateParagraph({Title = "Dash Script", Content = "Teleports You 35 Studs Forward."})
+local Paragraph = InfoTab:CreateParagraph({Title = "Dash Script", Content = "Teleports You 35 Studs Forward When You Press E."})
 local Paragraph = InfoTab:CreateParagraph({Title = "Animated Teleportation Tool", Content = "Teleports You To Anywhere You Click."})
 local Paragraph = InfoTab:CreateParagraph({Title = "Auto Void", Content = "Using Certain Moves You Can Insta Kill Players."})
 local Paragraph = InfoTab:CreateParagraph({Title = "Manual Void", Content = "Manually Send Players To The Void."})
-local Paragraph = InfoTab:CreateParagraph({Title = "Camera Lock / Aimlock", Content = "Your Camera Will Lock Onto A Nearby Player."})
+local Paragraph = InfoTab:CreateParagraph({Title = "Camera Lock / Aimlock", Content = "Your Camera Will Lock Onto A Nearby Player When You Press Y."})
 --local Paragraph = InfoTab:CreateParagraph({Title = "ESP", Content = "Highlights Players."})
 local Paragraph = InfoTab:CreateParagraph({Title = "Utilities", Content = "Its Self Explanatory."})
 local Label = InfoTab:CreateLabel("Exploits 🔓")
@@ -76,7 +76,7 @@ local Label = InfoTab:CreateLabel("Characters 🃏")
 local Paragraph = InfoTab:CreateParagraph({Title = "Movesets", Content = "Be Able To Use Custom Movesets Made By Myself And Other Creators."})
 local Label = InfoTab:CreateLabel("Player 🚹")
 local Paragraph = InfoTab:CreateParagraph({Title = "Speed Up", Content = "Makes You Faster (No Stun)."})
-local Paragraph = InfoTab:CreateParagraph({Title = "Noclip", Content = "Allows You To Noclip."})
+local Paragraph = InfoTab:CreateParagraph({Title = "Noclip", Content = "Allows You To Noclip When You Press T."})
 local Paragraph = InfoTab:CreateParagraph({Title = "Tools", Content = "Tools That Play Certain Characters Animations."})
 local Label = InfoTab:CreateLabel("Teleports 📌")
 local Paragraph = InfoTab:CreateParagraph({Title = "Locations", Content = "Be Bale To Teleport To Recorded Locations."})
@@ -89,56 +89,10 @@ local HacksSection = MainTab:CreateSection("Scripts")
 
 local Label = MainTab:CreateLabel("PC")
 
-local Keybind = MainTab:CreateKeybind({
-   Name = "Dash",
-   CurrentKeybind = "E",
-   HoldToInteract = false,
-   Flag = "Keybind1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-   Callback = function(Keybind)
-local Players = game:GetService("Players")
-local UserInputService = game:GetService("UserInputService")
-local LocalPlayer = Players.LocalPlayer
-local Camera = workspace.CurrentCamera
-
--- Define the custom keybind (input the keybind directly)
-local customKey = "(Keybind)"  -- You can change this to any valid keybind
-
--- Function to convert string keybind to Enum.KeyCode
-local function getKeyCode(key)
-    return Enum.KeyCode[key]
-end
-
-local function teleportForward()
-    local Character = LocalPlayer.Character
-    if Character then
-        local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
-        if HumanoidRootPart then
-            local forwardDirection = Vector3.new(Camera.CFrame.lookVector.X, 0, Camera.CFrame.lookVector.Z)
-            forwardDirection = forwardDirection.unit
-            local targetPosition = HumanoidRootPart.Position + forwardDirection * 35
-            HumanoidRootPart.CFrame = CFrame.new(targetPosition) 
-        else
-            warn("HumanoidRootPart not found.")
-        end
-    end
-end
-
-local function onCharacterAdded(character)
-    teleportForward()
-
-    character.Humanoid.Died:Connect(function()
-        teleportForward()
-    end)
-end
-
-LocalPlayer.CharacterAdded:Connect(onCharacterAdded)
-
-UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
-    if input.KeyCode == getKeyCode(customKey) and not gameProcessedEvent then
-        teleportForward()
-    end
-end)
-
+local Button = MainTab:CreateButton({
+   Name = "Dash [E]",
+   Callback = function()
+   -- The function that takes place when the button is pressed
    end,
 })
 
@@ -394,97 +348,15 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Redexe19/RXGUIV1/main
 
 local VisualSection = MainTab:CreateSection("Visual")
 
-local Keybind = MainTab:CreateKeybind({
-   Name = "Camera Lock / Aimlock",
-   CurrentKeybind = "Y",
-   HoldToInteract = false,
-   Flag = "Keybind1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-   Callback = function(Keybind)
-local Players = game:GetService("Players")
-local UserInputService = game:GetService("UserInputService")
-local camera = game.Workspace.CurrentCamera
-
-local isLocked = false
-local targetPlayer = nil
-
--- Define the custom keybind (input the keybind directly)
-local customKey = "(Keybind)"  -- You can change this to any valid keybind
-
--- Function to convert string keybind to Enum.KeyCode
-local function getKeyCode(key)
-    return Enum.KeyCode[key]
-end
-
-local function getNearestPlayer()
-	local closestDistance = math.huge
-	local closestPlayer = nil
-	local myPosition = Players.LocalPlayer.Character.HumanoidRootPart.Position
-
-	for _, player in ipairs(Players:GetPlayers()) do
-		if player ~= Players.LocalPlayer then
-			local distance = (player.Character.HumanoidRootPart.Position - myPosition).magnitude
-			if distance < closestDistance and distance <= 100 then
-				closestDistance = distance
-				closestPlayer = player
-			end
-		end
-	end
-
-	return closestPlayer
-end
-
-local function lockCameraToPlayer(player)
-	if player then
-		targetPlayer = player
-		isLocked = true
-	end
-end
-
-local function unlockCamera()
-	targetPlayer = nil
-	isLocked = false
-end
-
-local function onCharacterAdded(character)
-	if character.Parent == Players.LocalPlayer then
-		character.Humanoid.Died:Connect(function()
-			-- Re-execute the script on player death
-			unlockCamera()
-			wait(1) -- Wait for 1 second before re-executing
-			lockCameraToPlayer(getNearestPlayer())
-		end)
-	end
-end
-
-Players.PlayerAdded:Connect(function(player)
-	player.CharacterAdded:Connect(onCharacterAdded)
-end)
-
-UserInputService.InputBegan:Connect(function(input, isProcessed)
-	if input.KeyCode == getKeyCode(customKey) then
-		if isLocked then
-			unlockCamera()
-		else
-			local nearestPlayer = getNearestPlayer()
-			lockCameraToPlayer(nearestPlayer)
-		end
-	end
-end)
-
-game:GetService("RunService").RenderStepped:Connect(function()
-	if isLocked and targetPlayer then
-		local targetPosition = targetPlayer.Character.HumanoidRootPart.Position
-		local direction = (targetPosition - camera.CFrame.Position).unit
-		local cameraFocus = targetPosition - (direction * 10) -- adjust the 10 for distance from player
-
-		camera.CFrame = CFrame.new(camera.CFrame.Position, cameraFocus)
-	end
-end)
+local Button = MainTab:CreateButton({
+   Name = "Camera Lock / Aimlock [Y]",
+   Callback = function()
+   -- The function that takes place when the button is pressed
    end,
-})
+})				
+				
 --[[
 local Label = MainTab:CreateLabel("ESP - 6 Colors")
-
 
 ]]
 local UtilSection = MainTab:CreateSection("Utilities")
@@ -830,62 +702,13 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Redexe19/RXGUIV1/main
 
 local AvatarSection = PlayerTab:CreateSection("Character")
 
-local Keybind = PlayerTab:CreateKeybind({
-   Name = "Noclip",
-   CurrentKeybind = "T",
-   HoldToInteract = false,
-   Flag = "Keybind1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-   Callback = function(Keybind)
-local NoclipEnabled = false -- control noclip state
-
-local Noclip = nil
-local Clip = nil
-
--- Define the custom keybind (input the keybind directly)
-local customKey = "(Keybind)"  -- You can change this to any valid keybind
-
--- Function to convert string keybind to Enum.KeyCode
-local function getKeyCode(key)
-    return Enum.KeyCode[key]
-end
-
-function noclip()
-	Clip = false
-	local function Nocl()
-		if NoclipEnabled and game.Players.LocalPlayer.Character ~= nil then -- Check if noclip is enabled
-			for _,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
-				if v:IsA('BasePart') and v.CanCollide and v.Name ~= floatName then
-					v.CanCollide = false
-				end
-			end
-		end
-		wait(0.21) -- basic optimization
-	end
-	Noclip = game:GetService('RunService').Stepped:Connect(Nocl)
-end
-
-function clip()
-	if Noclip then Noclip:Disconnect() end
-	Clip = true
-end
-
--- toggling noclip
-local Player = game.Players.LocalPlayer
-local UserInputService = game:GetService("UserInputService")
-
-UserInputService.InputBegan:Connect(function(inputObject, gameProcessedEvent)
-    if inputObject.KeyCode == getKeyCode(customKey) then
-        NoclipEnabled = not NoclipEnabled -- Toggle noclip state
-        if NoclipEnabled then
-            noclip() -- enable noclip
-        else
-            clip() -- disable noclip
-        end
-    end
-end)
+local Button = PlayerTab:CreateButton({
+   Name = "Noclip [T]",
+   Callback = function()
+   -- The function that takes place when the button is pressed
    end,
 })
-
+		
 local ToolsSection = PlayerTab:CreateSection("Tools")
 local Label = PlayerTab:CreateLabel("Counters")
 
