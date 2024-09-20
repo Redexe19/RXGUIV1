@@ -980,7 +980,7 @@ tool.Parent = game.Players.LocalPlayer.Backpack
 })
 
 local Paragraph = PlayerTab:CreateParagraph({Title = "Coming Soon", Content = "Adding More Moves In The Future."})
---[[ test end
+-- test end - worked
 local TpTab = Window:CreateTab("Teleports 📌", nil) -- Title, Image
 local AreaSection = TpTab:CreateSection("Locations")
 
@@ -1054,15 +1054,7 @@ local Input = TpTab:CreateInput({
    PlaceholderText = "0, 0, 0",
    RemoveTextAfterFocusLost = false,
    Callback = function(Text)
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-
-local function teleportToPosition(position)
-    character:SetPrimaryPartCFrame(CFrame.new(position))
-end
-
-teleportToPosition(Vector3.new(Text))
-end)
+			print("not working rn")
    end,
 })
 
