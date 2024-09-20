@@ -101,7 +101,7 @@ local LocalPlayer = Players.LocalPlayer
 local Camera = workspace.CurrentCamera
 
 -- Define the custom keybind (input the keybind directly)
-local customKey = (Keybind)  -- You can change this to any valid keybind
+local customKey = "(Keybind)"  -- You can change this to any valid keybind
 
 -- Function to convert string keybind to Enum.KeyCode
 local function getKeyCode(key)
@@ -408,7 +408,7 @@ local isLocked = false
 local targetPlayer = nil
 
 -- Define the custom keybind (input the keybind directly)
-local customKey = (Keybind)  -- You can change this to any valid keybind
+local customKey = "(Keybind)"  -- You can change this to any valid keybind
 
 -- Function to convert string keybind to Enum.KeyCode
 local function getKeyCode(key)
@@ -842,7 +842,7 @@ local Noclip = nil
 local Clip = nil
 
 -- Define the custom keybind (input the keybind directly)
-local customKey = (Keybind)  -- You can change this to any valid keybind
+local customKey = "(Keybind)"  -- You can change this to any valid keybind
 
 -- Function to convert string keybind to Enum.KeyCode
 local function getKeyCode(key)
