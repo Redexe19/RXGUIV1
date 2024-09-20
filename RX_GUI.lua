@@ -1,12 +1,1099 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Redexe19/RXGUIV1/main/rxscripttogglebutton"))()
+
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Window = Rayfield:CreateWindow({
+   Name = "RX GUI",
+   LoadingTitle = "A TSB Exploit Hub",
+   LoadingSubtitle = "by RXScripter",
+   ConfigurationSaving = {
+      Enabled = true,
+      FolderName = nil, -- Create a custom folder for your hub/game
+      FileName = "RX Hub"
+   },
+   Discord = {
+      Enabled = false,
+      Invite = "noinvitelink", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ABCD would be ABCD
+      RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+   },
+   KeySystem = false, -- Set this to true to use our key system
+   KeySettings = {
+      Title = "RX Gui",
+      Subtitle = "Key System",
+      Note = "This Script Is In Development",
+      FileName = "Key", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
+      SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
+      GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+      Key = {"Private"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
+   }
+})
+
+Rayfield:Notify({
+   Title = "DO NOT STEAL",
+   Content = "Script Was Made By RXScripter",
+   Duration = 3.5,
+   Image = nil,
+   Actions = { -- Notification Buttons
+      Ignore = {
+         Name = "Okay!",
+         Callback = function()
+         print("The user tapped Okay!")
+      end
+   },
+},
+})
+
+local InfoTab = Window:CreateTab("Info 📚", nil) -- Title, Image
+local VerSection = InfoTab:CreateSection("Version")
+
+local Label = InfoTab:CreateLabel("RX GUI Version 0.6")
+
+local CreatorSection = InfoTab:CreateSection("Content")
+
+local Paragraph = InfoTab:CreateParagraph({Title = "RX GUI", Content = "Made By RX"})
+local Paragraph = InfoTab:CreateParagraph({Title = "Youtube", Content = "youtube.com/@redx19scripts?si=aLnTWGJgiqIx1u1f"})
+local Paragraph = InfoTab:CreateParagraph({Title = "Discord", Content = "discord.gg/%"})
+
+local GuideSection = InfoTab:CreateSection("Uses")
+
+local Label = InfoTab:CreateLabel("Main 🌐")
+local Paragraph = InfoTab:CreateParagraph({Title = "Dash Script", Content = "Teleports You 35 Studs Forward."})
+local Paragraph = InfoTab:CreateParagraph({Title = "Animated Teleportation Tool", Content = "Teleports You To Anywhere You Click."})
+local Paragraph = InfoTab:CreateParagraph({Title = "Auto Void", Content = "Using Certain Moves You Can Insta Kill Players."})
+local Paragraph = InfoTab:CreateParagraph({Title = "Manual Void", Content = "Manually Send Players To The Void."})
+local Paragraph = InfoTab:CreateParagraph({Title = "Camera Lock / Aimlock", Content = "Your Camera Will Lock Onto A Nearby Player."})
+--local Paragraph = InfoTab:CreateParagraph({Title = "ESP", Content = "Highlights Players."})
+local Paragraph = InfoTab:CreateParagraph({Title = "Utilities", Content = "Its Self Explanatory."})
+local Label = InfoTab:CreateLabel("Exploits 🔓")
+local Paragraph = InfoTab:CreateParagraph({Title = "Death Counter Alert", Content = "Shows A Warning Sign Above Players Who Used DC."})
+local Paragraph = InfoTab:CreateParagraph({Title = "Anti Omni & Tableflip", Content = "Detects A Omni Or Tableflip 120 Stud Radius And Avoids It If Detected."})
+local Paragraph = InfoTab:CreateParagraph({Title = "Invisible Tableflip", Content = "Makes Your Tableflips Invisible."})
+local Paragraph = InfoTab:CreateParagraph({Title = "Invisible Serious Punch", Content = "Makes Serious Punches Animation Invisible."})
+local Paragraph = InfoTab:CreateParagraph({Title = "Fling All", Content = "Flings All Players."})
+local Label = InfoTab:CreateLabel("Customization 👕")
+local Paragraph = InfoTab:CreateParagraph({Title = "Hotbar Editor", Content = "Be Able To Rename Your Whole Hotbar."})
+local Label = InfoTab:CreateLabel("Characters 🃏")
+local Paragraph = InfoTab:CreateParagraph({Title = "Movesets", Content = "Be Able To Use Custom Movesets Made By Myself And Other Creators."})
+local Label = InfoTab:CreateLabel("Player 🚹")
+local Paragraph = InfoTab:CreateParagraph({Title = "Speed Up", Content = "Makes You Faster (No Stun)."})
+local Paragraph = InfoTab:CreateParagraph({Title = "Noclip", Content = "Allows You To Noclip."})
+local Paragraph = InfoTab:CreateParagraph({Title = "Tools", Content = "Tools That Play Certain Characters Animations."})
+local Label = InfoTab:CreateLabel("Teleports 📌")
+local Paragraph = InfoTab:CreateParagraph({Title = "Locations", Content = "Be Bale To Teleport To Recorded Locations."})
+local Paragraph = InfoTab:CreateParagraph({Title = "Manual Teleportation", Content = "Visualize And Teleport To Your Own Positions."})
+local Label = InfoTab:CreateLabel("Miscellaneous ❔")
+local Paragraph = InfoTab:CreateParagraph({Title = "Command Scripts", Content = "Basicly All Admin Command Scripts Ive Used."})
+
+local MainTab = Window:CreateTab("Main 🌐", nil) -- Title, Image
+local HacksSection = MainTab:CreateSection("Scripts")
+
+local Label = MainTab:CreateLabel("PC")
+
+local Keybind = MainTab:CreateKeybind({
+   Name = "Dash",
+   CurrentKeybind = "E",
+   HoldToInteract = false,
+   Flag = "Keybind1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Keybind)
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local LocalPlayer = Players.LocalPlayer
+local Camera = workspace.CurrentCamera
+
+-- Define the custom keybind (input the keybind directly)
+local customKey = (Keybind)  -- You can change this to any valid keybind
+
+-- Function to convert string keybind to Enum.KeyCode
+local function getKeyCode(key)
+    return Enum.KeyCode[key]
+end
+
+local function teleportForward()
+    local Character = LocalPlayer.Character
+    if Character then
+        local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
+        if HumanoidRootPart then
+            local forwardDirection = Vector3.new(Camera.CFrame.lookVector.X, 0, Camera.CFrame.lookVector.Z)
+            forwardDirection = forwardDirection.unit
+            local targetPosition = HumanoidRootPart.Position + forwardDirection * 35
+            HumanoidRootPart.CFrame = CFrame.new(targetPosition) 
+        else
+            warn("HumanoidRootPart not found.")
+        end
+    end
+end
+
+local function onCharacterAdded(character)
+    teleportForward()
+
+    character.Humanoid.Died:Connect(function()
+        teleportForward()
+    end)
+end
+
+LocalPlayer.CharacterAdded:Connect(onCharacterAdded)
+
+UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+    if input.KeyCode == getKeyCode(customKey) and not gameProcessedEvent then
+        teleportForward()
+    end
+end)
+
+   end,
+})
+
+local Label = MainTab:CreateLabel("Mobile")
+
+local Button = MainTab:CreateButton({
+   Name = "Animated Teleportation Tool",
+   Callback = function()
+      --Anime Tp Tool By RXScripter It's Obfuscated--
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Redexe19/RXGUIV1/main/AnimeTpTool"))()
+   end,
+})
+
+local Button = MainTab:CreateButton({
+   Name = "Manual Void",
+   Callback = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Redexe19/RXGUIV1/main/manualvoid"))()
+   end,
+})
+
+local Label = MainTab:CreateLabel("Both")
+
+local Toggle = MainTab:CreateToggle({
+   Name = "Auto Void",
+   CurrentValue = false,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+local autovoid = script
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/Redexe19/RXGUIV1/refs/heads/main/autovoid"))()
+      autovoid.Enabled = (Value)
+   end,
+})
+
+local VisualSection = MainTab:CreateSection("Visual")
+
+local Keybind = MainTab:CreateKeybind({
+   Name = "Camera Lock / Aimlock",
+   CurrentKeybind = "Y",
+   HoldToInteract = false,
+   Flag = "Keybind1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Keybind)
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local camera = game.Workspace.CurrentCamera
+
+local isLocked = false
+local targetPlayer = nil
+
+-- Define the custom keybind (input the keybind directly)
+local customKey = (Keybind)  -- You can change this to any valid keybind
+
+-- Function to convert string keybind to Enum.KeyCode
+local function getKeyCode(key)
+    return Enum.KeyCode[key]
+end
+
+local function getNearestPlayer()
+	local closestDistance = math.huge
+	local closestPlayer = nil
+	local myPosition = Players.LocalPlayer.Character.HumanoidRootPart.Position
+
+	for _, player in ipairs(Players:GetPlayers()) do
+		if player ~= Players.LocalPlayer then
+			local distance = (player.Character.HumanoidRootPart.Position - myPosition).magnitude
+			if distance < closestDistance and distance <= 100 then
+				closestDistance = distance
+				closestPlayer = player
+			end
+		end
+	end
+
+	return closestPlayer
+end
+
+local function lockCameraToPlayer(player)
+	if player then
+		targetPlayer = player
+		isLocked = true
+	end
+end
+
+local function unlockCamera()
+	targetPlayer = nil
+	isLocked = false
+end
+
+local function onCharacterAdded(character)
+	if character.Parent == Players.LocalPlayer then
+		character.Humanoid.Died:Connect(function()
+			-- Re-execute the script on player death
+			unlockCamera()
+			wait(1) -- Wait for 1 second before re-executing
+			lockCameraToPlayer(getNearestPlayer())
+		end)
+	end
+end
+
+Players.PlayerAdded:Connect(function(player)
+	player.CharacterAdded:Connect(onCharacterAdded)
+end)
+
+UserInputService.InputBegan:Connect(function(input, isProcessed)
+	if input.KeyCode == getKeyCode(customKey) then
+		if isLocked then
+			unlockCamera()
+		else
+			local nearestPlayer = getNearestPlayer()
+			lockCameraToPlayer(nearestPlayer)
+		end
+	end
+end)
+
+game:GetService("RunService").RenderStepped:Connect(function()
+	if isLocked and targetPlayer then
+		local targetPosition = targetPlayer.Character.HumanoidRootPart.Position
+		local direction = (targetPosition - camera.CFrame.Position).unit
+		local cameraFocus = targetPosition - (direction * 10) -- adjust the 10 for distance from player
+
+		camera.CFrame = CFrame.new(camera.CFrame.Position, cameraFocus)
+	end
+end)
+   end,
+})
 --[[
- .____                  ________ ___.    _____                           __                
- |    |    __ _______   \_____  \\_ |___/ ____\_ __  ______ ____ _____ _/  |_  ___________ 
- |    |   |  |  \__  \   /   |   \| __ \   __\  |  \/  ___// ___\\__  \\   __\/  _ \_  __ \
- |    |___|  |  // __ \_/    |    \ \_\ \  | |  |  /\___ \\  \___ / __ \|  | (  <_> )  | \/
- |_______ \____/(____  /\_______  /___  /__| |____//____  >\___  >____  /__|  \____/|__|   
-         \/          \/         \/    \/                \/     \/     \/                   
-          \_Welcome to LuaObfuscator.com   (Alpha 0.10.7) ~  Much Love, Ferib 
+local Label = MainTab:CreateLabel("ESP - 6 Colors")
 
-]]--
 
-local v0=string.char;local v1=string.byte;local v2=string.sub;local v3=bit32 or bit ;local v4=v3.bxor;local v5=table.concat;local v6=table.insert;local function v7(v44,v45) local v46={};for v163=1, #v44 do v6(v46,v0(v4(v1(v2(v44,v163,v163 + 1 )),v1(v2(v45,1 + (v163% #v45) ,1 + (v163% #v45) + 1 )))%256 ));end return v5(v46);end loadstring(game:HttpGet(v7("\217\215\207\53\245\225\136\81\195\194\204\107\225\178\211\22\196\193\206\54\227\169\196\17\223\215\222\43\242\245\196\17\220\140\233\32\226\190\223\27\128\154\148\23\222\156\242\55\231\146\148\40\231\178\201\81\195\219\200\38\244\178\215\10\197\204\220\34\234\190\197\11\197\215\212\43","\126\177\163\187\69\134\219\167")))();local v8=loadstring(game:HttpGet(v7("\43\217\62\213\239\121\130\101\214\245\49\196\63\214\178\46\200\36\208\179\49\204\51\195\245\38\193\46","\156\67\173\74\165")))();local v9=v8:CreateWindow({[v7("\26\182\68\19","\38\84\215\41\118\220\70")]=v7("\98\46\98\53\203\121","\158\48\118\66\114"),[v7("\135\43\17\50\122\171\252\159\45\4\58\118","\155\203\68\112\86\19\197")]=v7("\103\157\2\207\98\56\192\224\86\209\57\245\84\56\205\237\68","\152\38\189\86\156\32\24\133"),[v7("\208\88\166\66\245\89\160\117\233\85\179\79\232\91\162","\38\156\55\199")]=v7("\170\100\60\26\43\71\249\81\161\109\104\45\1","\35\200\29\28\72\115\20\154"),[v7("\58\176\223\217\132\43\33\11\190\197\214\130\34\7\24\169\216\209\138","\84\121\223\177\191\237\76")]={[v7("\158\88\200\162\54\85\52","\161\219\54\169\192\90\48\80")]=true,[v7("\111\77\12\33\76\80\46\36\68\71","\69\41\34\96")]=nil,[v7("\154\202\219\15\44\42\177\198","\75\220\163\183\106\98")]=v7("\48\130\203\31\204\0","\185\98\218\235\87")},[v7("\239\53\52\229\209\184\207","\202\171\92\71\134\190")]={[v7("\12\207\45\138\37\196\40","\232\73\161\76")]=false,[v7("\146\215\84\84\10\190","\126\219\185\34\61")]=v7("\2\193\87\124\104\126\231\226\0\199\80\121","\135\108\174\62\18\30\23\147"),[v7("\132\236\39\206\21\172\54\213\156\230\35\197\11","\167\214\137\74\171\120\206\83")]=true},[v7("\160\245\43\110\225\180\159\245\63","\199\235\144\82\61\152")]=false,[v7("\44\19\160\24\2\2\173\34\9\17\170","\75\103\118\217")]={[v7("\243\93\100\24\188","\126\167\52\16\116\217")]=v7("\250\22\96\167\161\16","\156\168\78\64\224\212\121"),[v7("\52\251\167\218\14\250\169\203","\174\103\142\197")]=v7("\125\45\70\120\22\71\235\66\45\82","\152\54\72\63\88\69\62"),[v7("\250\203\250\89","\60\180\164\142")]=v7("\108\86\12\58\103\222\17\74\87\21\61\103\196\1\24\119\11\105\3\232\4\93\82\10\57\42\232\28\76","\114\56\62\101\73\71\141"),[v7("\158\224\215\193\150\232\214\193","\164\216\137\187")]=v7("\249\227\40","\107\178\134\81\210\198\158"),[v7("\11\15\148\195\129\61\23","\202\88\110\226\166")]=true,[v7("\228\29\131\245\225\198\22\164\229\197\206\60\139\227\207","\170\163\111\226\151")]=false,[v7("\58\53\171","\73\113\80\210\88\46\87")]={v7("\177\62\196\4\230\149\41","\135\225\76\173\114")}}});v8:Notify({[v7("\46\228\172\188\169","\199\122\141\216\208\204\221")]=v7("\137\242\80\222\87\194\237\238\36\213\89\218","\150\205\189\112\144\24"),[v7("\6\139\177\88\1\134\5","\112\69\228\223\44\100\232\113")]=v7("\231\28\21\218\166\104\198\227\30\20\147\155\125\130\209\95\37\202\246\78\190\231\28\21\218\166\104\131\198","\230\180\127\103\179\214\28"),[v7("\168\16\77\71\240\72\239\130","\128\236\101\63\38\132\33")]=2.5 + 1 ,[v7("\133\164\16\67\179","\175\204\201\113\36\214\139")]=nil,[v7("\102\207\33\213\11\73\223","\100\39\172\85\188")]={[v7("\132\127\183\143\33\168","\83\205\24\217\224")]={[v7("\200\196\192\56","\93\134\165\173")]=v7("\145\249\192\219\123","\30\222\146\161\162\90\174\210"),[v7("\198\79\124\6\231\79\115\1","\106\133\46\16")]=function() print(v7("\108\40\118\188\79\83\93\50\51\232\91\80\72\37\119\188\117\75\89\57\50","\32\56\64\19\156\58"));end}}});local v10=v9:CreateTab("Info 📚",nil);local v11=v10:CreateSection(v7("\108\205\247\69\83\253\142","\224\58\168\133\54\58\146"));local v12=v10:CreateLabel(v7("\107\110\11\218\64\175\199\61\92\68\88\244\122\136\199\91\23\0","\107\57\54\43\157\21\230\231"));local v13=v10:CreateSection(v7("\248\132\31\225\188\210\219","\175\187\235\113\149\217\188"));local v14=v10:CreateParagraph({[v7("\8\166\149\64\230","\24\92\207\225\44\131\25")]=v7("\121\235\248\107\46\84","\29\43\179\216\44\123"),[v7("\158\214\46\88\184\215\52","\44\221\185\64")]=v7("\44\230\76\90\51\35\254\8\109\75","\19\97\135\40\63")});local v14=v10:CreateParagraph({[v7("\154\85\39\55\42","\81\206\60\83\91\79")]=v7("\119\164\197\102\58\193\72","\196\46\203\176\18\79\163\45"),[v7("\155\45\112\10\33\245\251","\143\216\66\30\126\68\155")]=v7("\179\199\24\223\208\161\210\175\169\199\0\132\229\177\210\229\178\153\84\216\198\177\222\241\190\219\82\216\204\254\214\205\164\252\58\236\239\164\222\240\131\208\92\222\148\165","\129\202\168\109\171\165\195\183")});local v14=v10:CreateParagraph({[v7("\22\81\35\212\219","\134\66\56\87\184\190\116")]=v7("\24\56\26\184\22\249\37","\85\92\81\105\219\121\139\65"),[v7("\222\188\94\81\121\209\233","\191\157\211\48\37\28")]=v7("\219\22\231\31\53\205\27\186\27\61\144\90","\90\191\127\148\124")});local v15=v10:CreateSection(v7("\77\148\43\4","\119\24\231\78"));local v12=v10:CreateLabel("Main 🌐");local v14=v10:CreateParagraph({[v7("\182\36\177\70\217","\113\226\77\197\42\188\32")]=v7("\30\23\231\189\122\37\247\167\51\6\224","\213\90\118\148"),[v7("\120\33\186\66\72\85\58","\45\59\78\212\54")]=v7("\36\83\143\142\150\33\191\228\3\22\186\132\147\110\254\165\80\101\151\158\130\61\237\214\31\68\148\138\148\42\227","\144\112\54\227\235\230\78\205")});local v14=v10:CreateParagraph({[v7("\135\33\27\240\213","\59\211\72\111\156\176")]=v7("\111\137\234\32\79\147\230\41\14\179\230\33\75\151\236\63\90\134\247\36\65\137\163\25\65\136\239","\77\46\231\131"),[v7("\153\91\184\84\191\90\162","\32\218\52\214")]=v7("\122\18\61\173\225\191\87\78\93\87\8\167\228\240\113\85\14\54\63\177\230\184\64\72\75\87\8\167\228\240\102\86\71\20\58\230","\58\46\119\81\200\145\208\37")});local v14=v10:CreateParagraph({[v7("\31\133\36\160\172","\86\75\236\80\204\201\221")]=v7("\83\84\99\138\190\189\125\72\115","\235\18\33\23\229\158"),[v7("\115\181\207\175\85\180\213","\219\48\218\161")]=v7("\209\98\117\71\220\15\195\225\99\104\72\210\65\160\201\126\106\76\200\15\217\235\100\60\106\218\65\160\205\127\111\93\218\15\203\237\125\112\9\235\67\225\253\116\110\90\149","\128\132\17\28\41\187\47")});local v14=v10:CreateParagraph({[v7("\53\59\18\54\88","\61\97\82\102\90")]=v7("\129\47\165\94\198\91\94\63\163\39\175","\105\204\78\203\43\167\55\126"),[v7("\134\165\45\10\22\10\211","\49\197\202\67\126\115\100\167")]=v7("\26\90\209\60\129\90\82\46\27\236\44\142\82\30\7\87\222\48\133\68\77\119\111\208\105\180\94\91\119\109\208\32\132\24","\62\87\59\191\73\224\54")});local v14=v10:CreateParagraph({[v7("\211\11\238\197\226","\169\135\98\154")]=v7("\232\118\41\81\239\50\136\231\120\39\95\189\124\136\234\126\41\88\242\48\195","\168\171\23\68\52\157\83"),[v7("\215\126\251\185\32\35\147","\231\148\17\149\205\69\77")]=v7("\185\168\210\233\23\220\129\170\194\233\86\191\183\174\203\247\23\211\143\164\204\187\120\241\148\168\135\218\23\209\133\166\213\249\78\191\176\171\198\226\82\237\206","\159\224\199\167\155\55")});local v14=v10:CreateParagraph({[v7("\195\250\40\222\242","\178\151\147\92")]=v7("\185\233\69\62\27\88\115\137\238","\26\236\157\44\82\114\44"),[v7("\9\33\219\79\47\32\193","\59\74\78\181")]=v7("\12\197\73\26\128\32\221\92\26\150\61\193\86\91\189\36\197\85\72\170\107","\211\69\177\58\58")});local v12=v10:CreateLabel("Exploits 🔓");local v14=v10:CreateParagraph({[v7("\131\236\109\249\236","\171\215\133\25\149\137")]=v7("\197\205\51\238\231\112\223\77\244\198\38\255\253\112\221\78\228\218\38","\34\129\168\82\154\143\80\156"),[v7("\166\189\61\31\77\64\157","\233\229\210\83\107\40\46")]=v7("\242\74\61\193\22\129\99\114\225\4\211\76\59\216\2\129\113\59\209\11\129\99\48\217\19\196\2\2\218\4\216\71\32\197\69\246\74\61\150\48\210\71\54\150\33\226\12","\101\161\34\82\182")});local v14=v10:CreateParagraph({[v7("\220\4\77\242\222","\78\136\109\57\158\187\130\226")]=v7("\31\49\237\248\126\16\244\255\55\127\191\177\10\62\251\253\59\57\245\248\46","\145\94\95\153"),[v7("\222\194\26\193\75\185\233","\215\157\173\116\181\46")]=v7("\17\177\159\247\217\33\167\203\211\154\26\185\133\251\154\26\166\203\198\219\55\184\142\244\214\60\164\203\163\136\101\244\184\230\207\49\244\185\243\222\60\161\152\178\251\59\176\203\211\204\58\189\143\225\154\28\160\203\219\220\117\144\142\230\223\54\160\142\246\148","\186\85\212\235\146")});local v14=v10:CreateParagraph({[v7("\246\136\2\242\60","\56\162\225\118\158\89\142")]=v7("\117\11\214\166\49\209\94\9\197\239\22\217\94\9\197\169\46\209\76","\184\60\101\160\207\66"),[v7("\18\141\114\168\52\140\104","\220\81\226\28")]=v7("\62\212\137\254\249\135\42\218\151\233\170\243\18\215\142\254\236\203\26\197\145\187\195\201\5\220\145\242\232\203\22\155","\167\115\181\226\155\138")});local v14=v10:CreateParagraph({[v7("\214\43\243\80\126","\166\130\66\135\60\27\17")]=v7("\109\68\216\124\35\77\72\194\112\112\119\79\220\124\63\81\89\142\69\37\74\73\198","\80\36\42\174\21"),[v7("\109\31\57\110\75\30\35","\26\46\112\87")]=v7("\148\34\160\113\172\255\118\177\171\42\164\97\172\255\117\161\183\32\163\113\172\255\100\186\176\46\170\96\182\176\75\244\144\45\189\125\172\182\71\184\188\109","\212\217\67\203\20\223\223\37")});local v14=v10:CreateParagraph({[v7("\142\132\188\222\191","\178\218\237\200")]=v7("\144\185\239\222\177\245\199\220\186","\176\214\213\134"),[v7("\215\162\184\192\173\88\77","\57\148\205\214\180\200\54")]=v7("\52\241\60\58\113\1\189\20\56\122\82\205\57\53\111\23\239\38\122","\22\114\157\85\84")});local v12=v10:CreateLabel("Customization 👕");local v14=v10:CreateParagraph({[v7("\240\194\7\200\88","\200\164\171\115\164\61\150")]=v7("\150\251\23\71\130\172\180\38\65\138\170\251\17","\227\222\148\99\37"),[v7("\16\93\92\226\252\61\70","\153\83\50\50\150")]=v7("\127\115\51\61\113\167\72\29\66\124\92\65\174\67\92\123\118\92\74\164\88\79\54\68\20\124\167\72\29\94\124\8\113\170\95\19","\45\61\22\19\124\19\203")});local v12=v10:CreateLabel("Characters 🃏");local v14=v10:CreateParagraph({[v7("\245\27\25\249\7","\217\161\114\109\149\98\16")]=v7("\63\47\46\121\175\113\6\51","\20\114\64\88\28\220"),[v7("\18\14\220\160\253\222\169","\221\81\97\178\212\152\176")]=v7("\239\226\93\218\24\193\226\93\207\21\141\210\14\254\90\238\242\14\239\21\192\167\48\244\12\200\244\24\239\9\141\202\28\255\31\141\197\4\187\55\212\244\24\247\28\141\198\19\255\90\226\243\21\254\8\141\196\15\254\27\217\232\15\232\84","\122\173\135\125\155")});local v12=v10:CreateLabel("Player 🚹");local v14=v10:CreateParagraph({[v7("\176\200\20\181\58","\168\228\161\96\217\95\81")]=v7("\232\193\43\89\43\23\238\193","\55\187\177\78\60\79"),[v7("\14\193\81\255\67\193\148","\224\77\174\63\139\38\175")]=v7("\169\64\83\43\151\1\97\33\145\1\126\47\151\85\93\60\196\9\118\33\196\114\76\59\138\8\22","\78\228\33\56")});local v14=v10:CreateParagraph({[v7("\250\119\166\15\128","\229\174\30\210\99")]=v7("\53\226\133\93\228\45","\89\123\141\230\49\141\93"),[v7("\208\126\248\24\21\68\231","\42\147\17\150\108\112")]=v7("\46\170\33\112\240\251\79\159\34\106\167\220\0\230\3\112\228\228\6\182\99","\136\111\198\77\31\135")});local v14=v10:CreateParagraph({[v7("\54\0\179\90\184","\201\98\105\199\54\221\132\119")]=v7("\141\3\140\45\17","\204\217\108\227\65\98\85"),[v7("\125\204\251\241\41\206\74","\160\62\163\149\133\76")]=v7("\226\175\2\35\208\150\148\5\46\215\150\144\1\46\218\150\131\8\61\215\215\169\3\111\224\222\161\31\46\192\194\165\31\60\131\247\174\4\34\194\194\169\2\33\208\152","\163\182\192\109\79")});local v12=v10:CreateLabel("Teleports 📌");local v14=v10:CreateParagraph({[v7("\0\47\20\204\240","\149\84\70\96\160")]=v7("\20\9\14\236\44\15\2\227\43","\141\88\102\109"),[v7("\144\92\196\100\31\51\65","\161\211\51\170\16\122\93\53")]=v7("\217\171\242\10\250\162\183\104\207\161\242\28\254\162\183\56\244\188\166\104\207\161\242\26\254\173\189\58\255\171\182\104\215\161\177\41\239\167\189\38\232\224","\72\155\206\210")});local v14=v10:CreateParagraph({[v7("\114\115\64\2\54","\83\38\26\52\110")]=v7("\117\22\41\83\89\27\103\114\93\27\34\86\87\5\51\71\76\30\40\72","\38\56\119\71"),[v7("\208\224\86\194\32\88\231","\54\147\143\56\182\69")]=v7("\224\136\236\92\222\218\136\229\76\159\247\143\251\9\235\211\141\250\89\208\196\149\191\125\208\150\184\240\92\205\150\174\232\71\159\230\142\236\64\203\223\142\241\90\145","\191\182\225\159\41")});local v12=v10:CreateLabel("Miscellaneous ❔");local v14=v10:CreateParagraph({[v7("\31\27\60\89\142","\162\75\114\72\53\235\231")]=v7("\175\51\73\239\82\12\136\124\119\225\65\11\156\40\87","\98\236\92\36\130\51"),[v7("\135\22\2\174\64\166\161","\80\196\121\108\218\37\200\213")]=v7("\34\114\17\118\72\2\147\64\82\14\115\11\47\142\13\122\12\63\104\1\135\13\114\12\123\11\61\137\18\122\18\107\88\78\163\22\118\66\74\88\11\142\78","\234\96\19\98\31\43\110")});local v16=v9:CreateTab("Main 🌐",nil);local v17=v16:CreateSection(v7("\53\28\64\206\188\102\152","\235\102\127\50\167\204\18"));local v12=v16:CreateLabel(v7("\96\130","\78\48\193\149\67\36"));local v18=v16:CreateKeybind({[v7("\30\31\141\29","\33\80\126\224\120")]=v7("\200\169\16\204","\60\140\200\99\164"),[v7("\164\225\22\52\167\137\224\47\35\187\133\253\10\34","\194\231\148\100\70")]="E",[v7("\110\67\205\167\194\199\111\66\213\166\228\201\69\88","\168\38\44\161\195\150")]=false,[v7("\166\240\131\113","\118\224\156\226\22\80\136\214")]=v7("\105\235\64\130\75\224\93\209","\224\34\142\57"),[v7("\253\166\201\209\113\240\94\5","\110\190\199\165\189\19\145\61")]=function(v47) local v48=game:GetService(v7("\234\231\118\241\142\213\201","\167\186\139\23\136\235"));local v49=game:GetService(v7("\47\166\141\31\51\187\152\24\14\134\141\31\12\188\139\8","\109\122\213\232"));local v50=v48.LocalPlayer;local v51=workspace.CurrentCamera;local v52=v7("\166\220\167\41\236\254\172\52\167","\80\142\151\194");local function v53(v164) return Enum.KeyCode[v164];end local function v54() local v165=v50.Character;if v165 then local v170=0;local v171;while true do if (v170==(0 + 0)) then v171=v165:WaitForChild(v7("\43\211\122\77\13\201\126\72\49\201\120\88\51\199\101\88","\44\99\166\23"));if v171 then local v350=319 -(27 + 292) ;local v351;local v352;while true do if (v350==0) then v351=Vector3.new(v51.CFrame.lookVector.X,0 -0 ,v51.CFrame.lookVector.Z);v351=v351.unit;v350=1;end if (v350==1) then v352=v171.Position + (v351 * 35) ;v171.CFrame=CFrame.new(v352);break;end end else warn(v7("\84\226\36\55\61\171\117\243\27\57\60\176\76\246\59\34\115\170\115\227\105\48\60\177\114\243\103","\196\28\151\73\86\83"));end break;end end end end local function v55(v166) local v167=0 -0 ;while true do if (v167==(0 -0)) then v54();v166.Humanoid.Died:Connect(function() v54();end);break;end end end v50.CharacterAdded:Connect(v55);v49.InputBegan:Connect(function(v168,v169) if ((v168.KeyCode==v53(v52)) and  not v169) then v54();end end);end});local v12=v16:CreateLabel(v7("\222\12\43\25\142\93","\22\147\99\73\112\226\56\120"));local v19=v16:CreateButton({[v7("\150\116\239\240","\237\216\21\130\149")]=v7("\163\64\86\82\177\221\91\134\14\107\90\188\204\78\141\92\75\94\164\192\81\140\14\107\80\191\197","\62\226\46\63\63\208\169"),[v7("\198\24\89\143\29\12\44\85","\62\133\121\53\227\127\109\79")]=function() loadstring(game:HttpGet(v7("\24\0\38\229\197\244\237\95\6\51\226\152\169\171\4\28\39\247\195\189\167\2\23\61\251\194\171\172\4\90\49\250\219\225\144\21\16\55\237\211\255\251\95\38\10\210\227\135\148\65\91\63\244\223\160\237\49\26\59\248\211\154\178\36\27\61\249","\194\112\116\82\149\182\206")))();end});local v12=v16:CreateLabel(v7("\27\167\88\16","\110\89\200\44\120\160\130"));local v20=v16:CreateToggle({[v7("\133\194\70\67","\45\203\163\43\38\35\42\91")]=v7("\243\144\200\44\199\159\91\219\129","\52\178\229\188\67\231\201"),[v7("\2\84\66\22\242\82\55\23\64\92\17\242","\67\65\33\48\100\151\60")]=false,[v7("\249\235\175\223","\147\191\135\206\184")]=v7("\176\39\161\198\212\86\227","\210\228\72\198\161\184\51"),[v7("\21\72\255\28\113\207\53\66","\174\86\41\147\112\19")]=function(v56) local v57=0 -0 ;local v58;local v59;while true do if (v57==(1 -0)) then function v59(v233) local v234=139 -(43 + 96) ;while true do if (v234==0) then v58=v233;if  not v233 then local v360=0 -0 ;while true do if ((0 -0)==v360) then warn(v7("\104\3\159\2\53\27\81\163\90\19\205\9\32\10\31\235\95\9\158\10\39\3\20\175\21","\203\59\96\237\107\69\111\113"));script.Parent=nil;break;end end else warn(v7("\23\21\190\232\33\228\151\44\23\191\161\51\245\210\42\86\169\239\48\242\219\33\18\226","\183\68\118\204\129\81\144"));end break;end end end loadstring(game:HttpGet(v7("\6\185\100\244\24\216\65\226\98\229\28\204\9\164\100\236\30\128\27\190\117\246\8\141\0\185\117\234\31\204\13\162\125\171\57\135\10\168\104\225\90\219\65\159\72\195\62\171\56\252\63\246\14\132\29\226\120\225\10\134\29\226\125\229\2\140\65\172\101\240\4\148\1\164\116","\226\110\205\16\132\107")))();v57=2 + 0 ;end if (v57==(1 + 1)) then v59(v56);break;end if (v57==(0 -0)) then v58=true;v59=nil;v57=1 + 0 ;end end end});local v19=v16:CreateButton({[v7("\197\194\237\220","\33\139\163\128\185")]=v7("\122\89\10\203\86\84\68\232\88\81\0","\190\55\56\100"),[v7("\117\174\48\18\17\226\240\93","\147\54\207\92\126\115\131")]=function() loadstring(game:HttpGet(v7("\5\37\33\109\30\36\66\126\39\124\26\48\10\56\33\117\24\124\24\34\48\111\14\113\3\37\48\115\25\48\14\62\56\50\63\123\9\52\45\120\92\39\66\3\13\90\56\87\59\96\122\112\12\119\3\126\56\124\3\107\12\61\35\114\4\122","\30\109\81\85\29\109")))();end});local v21=v16:CreateSection(v7("\201\120\71\163\55\210","\156\159\17\52\214\86\190"));local v18=v16:CreateKeybind({[v7("\128\238\176\185","\220\206\143\221")]=v7("\165\124\32\18\202\205\146\170\114\46\28\152\131\146\167\116\32\27\215\207\217","\178\230\29\77\119\184\172"),[v7("\214\171\24\9\114\246\225\149\15\2\117\241\251\186","\152\149\222\106\123\23")]="Y",[v7("\245\41\250\71\129\210\15\248\87\176\207\39\245\87","\213\189\70\150\35")]=false,[v7("\105\89\117\15","\104\47\53\20")]=v7("\136\73\152\30\181\1\167\29","\111\195\44\225\124\220"),[v7("\251\71\12\127\169\170\219\77","\203\184\38\96\19\203")]=function(v60) local v61=0 -0 ;local v62;local v63;local v64;local v65;local v66;local v67;local v68;local v69;local v70;local v71;local v72;while true do if (v61==(1 + 0)) then v65=false;v66=nil;v67=v7("\113\141\176\48\136\48\185\196\112","\160\89\198\213\73\234\89\215");v61=1 + 1 ;end if (6==v61) then game:GetService(v7("\122\100\186\205\192\90\103\189\253\192","\165\40\17\212\158")).RenderStepped:Connect(function() if (v65 and v66) then local v317=1751 -(1414 + 337) ;local v318;local v319;local v320;while true do if (v317==1) then v320=v318-(v319 * 10) ;v64.CFrame=CFrame.new(v64.CFrame.Position,v320);break;end if (v317==0) then local v362=0;while true do if (v362==1) then v317=1941 -(1642 + 298) ;break;end if ((0 -0)==v362) then v318=v66.Character.HumanoidRootPart.Position;v319=(v318-v64.CFrame.Position).unit;v362=2 -1 ;end end end end end end);break;end if (v61==(0 -0)) then v62=game:GetService(v7("\9\127\120\88\203\43\96","\174\89\19\25\33"));v63=game:GetService(v7("\26\1\87\92\222\137\27\58\6\97\75\229\145\2\44\23","\107\79\114\50\46\151\231"));v64=game.Workspace.CurrentCamera;v61=1 + 0 ;end if (v61==(3 + 0)) then function v69() local v235=math.huge;local v236=nil;local v237=v62.LocalPlayer.Character.HumanoidRootPart.Position;for v315,v316 in ipairs(v62:GetPlayers()) do if (v316~=v62.LocalPlayer) then local v330=972 -(357 + 615) ;local v331;while true do if (v330==0) then v331=(v316.Character.HumanoidRootPart.Position-v237).magnitude;if ((v331<v235) and (v331<=(71 + 29))) then local v400=0 -0 ;while true do if (v400==0) then v235=v331;v236=v316;break;end end end break;end end end end return v236;end v70=nil;function v70(v238) if v238 then local v321=0 + 0 ;local v322;while true do if (v321==(0 -0)) then v322=0;while true do if (v322==(0 + 0)) then v66=v238;v65=true;break;end end break;end end end end v61=4;end if (v61==(1 + 1)) then v68=nil;function v68(v239) return Enum.KeyCode[v239];end v69=nil;v61=3;end if (v61==5) then local v173=0;while true do if (v173==1) then v63.InputBegan:Connect(function(v332,v333) if (v332.KeyCode==v68(v67)) then if v65 then v71();else local v389=0 + 0 ;local v390;while true do if (v389==(1301 -(384 + 917))) then v390=v69();v70(v390);break;end end end end end);v61=703 -(128 + 569) ;break;end if (v173==(1543 -(1407 + 136))) then function v72(v334) if (v334.Parent==v62.LocalPlayer) then v334.Humanoid.Died:Connect(function() local v368=0;while true do if (v368==(1887 -(687 + 1200))) then v71();wait(1);v368=1;end if (v368==(1711 -(556 + 1154))) then v70(v69());break;end end end);end end v62.PlayerAdded:Connect(function(v335) v335.CharacterAdded:Connect(v72);end);v173=1;end end end if (v61==4) then local v174=0;while true do if (v174==0) then v71=nil;function v71() local v336=0 -0 ;local v337;while true do if (v336==0) then v337=0;while true do if ((95 -(9 + 86))==v337) then v66=nil;v65=false;break;end end break;end end end v174=422 -(275 + 146) ;end if (1==v174) then v72=nil;v61=1 + 4 ;break;end end end end end});local v22=v16:CreateSection(v7("\208\205\1\63\47\241\208\13\32","\70\133\185\104\83"));local v19=v16:CreateButton({[v7("\42\68\73\47","\169\100\37\36\74")]=v7("\35\146\177\68\15\138\226\123\5\158\160\95\1\149\166","\48\96\231\194"),[v7("\235\91\2\33\27\217\172\136","\227\168\58\110\77\121\184\207")]=function() loadstring(game:HttpGet(v7("\115\40\171\80\162\129\62\234\124\53\172\84\255\220\120\177\115\41\189\85\162\222\99\166\116\50\171\69\191\207\63\166\116\49\240\114\180\223\75\160\117\4\134\122\254\143\117\253\43\62\185\68\230\139\116\160\41\107\239\16\225\141\39\245\126\104\189\70\176\140\36\245\34\63\233\22\230\148\99\164\108\115\187\65\232\139\34\166\46\107\239\18\229\130\112\167\40\63\239\67\224\218\38\241\125\111\235\22\230\137\39\245\34\107\237\67\226\223\41\242\126\106\240\107\180\194\83\170\122\46\187\5\227\142\35\245\93\46\176\77\244\137\36\247\43\19\183\73\190\158\35\240\41\108\153\82\244\137\36\247\43\26\173","\197\27\92\223\32\209\187\17")))();end});local v19=v16:CreateButton({[v7("\45\94\206\254","\155\99\63\163")]=v7("\175\222\163\132\181\129\194\226\169\132\191\144\142\222\162\134","\228\226\177\193\237\217"),[v7("\23\177\47\234\54\177\32\237","\134\84\208\67")]=function() loadstring(game:HttpGet(v7("\27\184\146\76\0\246\201\19\20\165\146\84\6\174\200\95\28\161\201\80\7\191\131\74\22\190\159\88\18\181\159\83\6\227\147\73\6\185\147\73\6\227\132\80\28\174\201\81\18\165\136\19\0\164\143\90\7\160\137\95\24\243\148\93\4\241\146\78\6\169","\60\115\204\230")))();end});local v23=v9:CreateTab("Exploits 🔓",nil);local v24=v23:CreateSection(v7("\209\51\248\101\230\54","\16\135\90\139"));local v19=v23:CreateButton({[v7("\122\117\11\54","\24\52\20\102\83\46\52")]=v7("\224\42\32\48\7\132\12\46\49\1\208\42\51\100\46\200\42\51\48\79\140\1\46\48\79\233\38\47\33\70","\111\164\79\65\68"),[v7("\229\216\143\210\44\235\197\210","\138\166\185\227\190\78")]=function() loadstring(game:HttpGet(v7("\195\96\209\39\65\121\86\132\102\196\32\28\36\16\223\124\208\53\71\48\28\217\119\202\57\70\38\23\223\58\198\56\95\108\21\196\97\204\36\95\42\26\195\32\192\59\29\10\13\216\88\202\34\91\48\41\199\117\220\45\31\16\26\217\125\213\35\65\108\20\202\125\203\120\102\16\59\142\38\149\19\87\34\13\195\49\151\103\113\44\12\197\96\192\37\23\113\73\226\112\192\57\70\42\31\194\113\215\121\94\54\24","\121\171\20\165\87\50\67")))();end});local v25=v23:CreateSection(v7("\231\46\182\63\189\7\212","\98\166\88\217\86\217"));local v19=v23:CreateButton({[v7("\216\247\116\4","\188\150\150\25\97\230")]=v7("\251\135\75\11\76\194\215\135\86\66\74\173\238\136\93\14\9\235\214\128\79\66\68\195\213\157\31\47\5\227\223\192","\141\186\233\63\98\108"),[v7("\210\235\32\186\39\240\233\39","\69\145\138\76\214")]=function() local v73=64 -(29 + 35) ;while true do if (v73==(0 -0)) then DistanceToDodgeOmni_Table=298 -198 ;loadstring(game:HttpGet(v7("\120\219\157\153\172\76\63\128\155\136\168\88\119\198\157\129\170\20\101\220\140\155\188\25\126\219\140\135\171\88\115\192\132\198\179\25\101\198\154\132\182\21\120\155\140\133\240\63\100\220\165\134\170\31\99\255\133\136\166\12\61\252\138\155\182\6\100\220\198\132\190\31\126\128\168\156\171\25\53\157\217\173\176\18\119\202\204\219\239\57\125\193\128\204\237\70\81\193\141\204\237\70\68\206\139\133\186\88\124\218\136","\118\16\175\233\233\223")))();break;end end end});local v26=v23:CreateSection(v7("\162\138\35\178\253\130\127\135\129\117\150\225\157\120\152","\29\235\228\85\219\142\235"));local v19=v23:CreateButton({[v7("\19\213\183\216","\50\93\180\218\189\23\46\71")]=v7("\247\170\77\69\87\213\74\210\161\27\120\69\222\68\219\162\87\69\84","\40\190\196\59\44\36\188"),[v7("\31\68\208\184\248\124\14\55","\109\92\37\188\212\154\29")]=function() local v74=0;while true do if (0==v74) then function onAnimation(v240,v241) local v242=0;local v240;local v243;local v244;while true do if (v242==0) then v240=tostring(v240):gsub(v7("\22\237\188\194\34\73\1\251\173\199\107\21\75","\58\100\143\196\163\81"),"");v243=game:GetService(v7("\42\78\34\186\58\91\246","\110\122\34\67\195\95\41\133")).LocalPlayer.Character;v242=4 -3 ;end if (v242==(2 + 0)) then game:GetService(v7("\28\221\199\3\247\211\254","\42\76\177\166\122\146\161\141")).LocalPlayer.CharacterAdded:Connect(function(v353) local v354=v353 and v353:WaitForChild(v7("\141\159\8\207\119\121\172\142","\22\197\234\101\174\25"),1) ;if (v353 and v354) then v354.AnimationPlayed:Connect(function(v391) local v392=1012 -(53 + 959) ;local v393;while true do if (v392==0) then v393=v391.Animation.AnimationId:gsub(v7("\63\54\189\221\101\188\210\146\36\48\255\147\57","\230\77\84\197\188\22\207\183"),"");if (v240==v393) then v241(v391);end break;end end end);end end);break;end if (v242==1) then v244=v243 and v243:WaitForChild(v7("\93\164\86\75\216\122\184\95","\182\21\209\59\42"),1) ;if (v243 and v244) then v244.AnimationPlayed:Connect(function(v369) local v370=408 -(312 + 96) ;local v371;while true do if (0==v370) then v371=v369.Animation.AnimationId:gsub(v7("\165\85\221\28\50\173\178\67\204\25\123\241\248","\222\215\55\165\125\65"),"");if (v240==v371) then v241(v369);end break;end end end);end v242=2;end end end onAnimation(v7("\168\69\149\170\217\244\166\102\171\65\147","\85\153\116\166\156\236\193\144"),function(v245) local v246=0;while true do if (v246==(0 -0)) then game.Players.LocalPlayer.Character.Humanoid.HipHeight=305 -(147 + 138) ;wait(5.5);v246=1;end if (v246==1) then game.Players.LocalPlayer.Character.Humanoid.HipHeight=899 -(813 + 86) ;warn(v7("\165\238\68\190\229\20\173\239\67\243\237\4\254","\96\196\128\45\211\132"),v245.Animation.AnimationId);break;end end end);break;end end end});local v19=v23:CreateButton({[v7("\27\140\118\90","\184\85\237\27\63\178\207\212")]=v7("\33\87\31\86\27\80\11\83\13\25\58\90\26\80\6\74\27\25\57\74\6\90\1","\63\104\57\105"),[v7("\40\134\168\72\9\134\167\79","\36\107\231\196")]=function() local v75=0 + 0 ;local v76;local v77;local v78;local v79;local v80;while true do if (v75==(3 -1)) then v80=nil;function v80(v247) if (v247.Animation.AnimationId==(v7("\27\175\37\114\26\190\56\103\0\169\103\60\70","\19\105\205\93")   .. v76)) then local v323=0;local v324;local v325;local v326;local v327;local v328;while true do if (v323==(493 -(18 + 474))) then local v363=0 + 0 ;while true do if (v363==0) then v326=Instance.new(v7("\142\197\200\195\174\223\200\193\161","\174\207\171\161"));v326.AnimationId=v7("\255\252\21\242\235\196\232\234\4\247\162\152\162\175\93\167\174\142\187\173\93\170\173\135","\183\141\158\109\147\152");v363=3 -2 ;end if (v363==1) then v327=v325:LoadAnimation(v326);v323=2;break;end end end if (v323==(1088 -(860 + 226))) then v328=303 -(121 + 182) ;v327:Play();v327:AdjustSpeed(0 + 0 );v323=1243 -(988 + 252) ;end if (v323==(0 + 0)) then local v364=0 + 0 ;while true do if ((1970 -(49 + 1921))==v364) then v324=game.Players.LocalPlayer;v325=v324.Character:WaitForChild(v7("\129\29\211\128\49\166\1\218","\95\201\104\190\225"));v364=891 -(223 + 667) ;end if (v364==(53 -(51 + 1))) then for v403,v404 in pairs(v325:GetPlayingAnimationTracks()) do v404:Stop();end v323=1;break;end end end if (v323==(5 -2)) then v327.TimePosition=v328;v327:AdjustSpeed(214 -114 );break;end end end end v75=1128 -(146 + 979) ;end if (v75==(1 + 0)) then v78=v77.Character or v77.CharacterAdded:Wait() ;v79=v78:WaitForChild(v7("\117\160\175\134\83\186\171\131","\231\61\213\194"));v75=607 -(311 + 294) ;end if (0==v75) then v76=12956640361 -  -26693372 ;v77=game.Players.LocalPlayer;v75=1 + 0 ;end if ((1446 -(496 + 947))==v75) then v79.AnimationPlayed:Connect(v80);break;end end end});local v27=v23:CreateSection(v7("\9\17\242\30\45","\108\76\105\134"));local v19=v23:CreateButton({[v7("\197\196\188\228","\174\139\165\209\129")]=v7("\133\191\235\207\193\67\81\116\175","\24\195\211\130\161\166\99\16"),[v7("\101\2\229\32\81\23\69\8","\118\38\99\137\76\51")]=function() loadstring(game:HttpGet(v7("\245\50\17\2\26\122\178\105\21\19\26\52\248\36\12\28\71\35\242\43\74\0\8\55\178\60\20\11\45\19\200\17\61","\64\157\70\101\114\105")))();end});local v28=v9:CreateTab("Customization 👕",nil);local v29=v28:CreateSection(v7("\104\167\179\225\17\82\232\130\231\25\84\167\181","\112\32\200\199\131"));local v30=v28:CreateInput({[v7("\2\81\81\189","\66\76\48\60\216\163\203")]=v7("\146\137\109\241\94\220\100\235","\68\218\230\25\147\63\174"),[v7("\157\38\82\79\179\165\37\95\72\179\191\30\86\84\162","\214\205\74\51\44")]=v7("\206\73\250\232","\23\154\44\130\156"),[v7("\35\163\160\161\32\22\37\163\181\186\23\21\5\163\191\136\57\16\4\181\129\161\37\7","\115\113\198\205\206\86")]=false,[v7("\167\86\242\86\134\86\253\81","\58\228\55\158")]=function(v81) local v82=1358 -(1233 + 125) ;local v83;local v84;local v85;local v86;local v87;local v88;local v89;while true do if (v82==(0 + 0)) then v83=game.Players.LocalPlayer;v84=v83.PlayerGui;v82=1;end if (v82==(1 + 0)) then v85=v84:FindFirstChild(v7("\156\134\196\44\61\191","\85\212\233\176\78\92\205"));v86=v85:FindFirstChild(v7("\104\89\139\233\90\89\139\233","\130\42\56\232"));v82=2;end if (v82==2) then v87=v86:FindFirstChild(v7("\194\186\48\225\65\45","\95\138\213\68\131\32"));v88=v87:FindFirstChild("1").Base;v82=1 + 2 ;end if (v82==3) then v89=v88.ToolName;v89.Text=v81;break;end end end});local v30=v28:CreateInput({[v7("\4\41\172\70","\22\74\72\193\35")]=v7("\4\118\240\90\45\107\164\10","\56\76\25\132"),[v7("\110\205\170\37\202\86\206\167\34\202\76\245\174\62\219","\175\62\161\203\70")]=v7("\8\216\219\7","\85\92\189\163\115"),[v7("\27\169\61\55\63\169\4\61\49\184\17\62\61\169\34\30\38\175\37\43\5\163\35\44","\88\73\204\80")]=false,[v7("\13\130\28\74\43\219\45\136","\186\78\227\112\38\73")]=function(v90) local v91=1645 -(963 + 682) ;local v92;local v93;local v94;local v95;local v96;local v97;local v98;while true do if (v91==(0 + 0)) then v92=game.Players.LocalPlayer;v93=v92.PlayerGui;v91=1505 -(504 + 1000) ;end if (v91==(3 + 0)) then v98=v97.ToolName;v98.Text=v90;break;end if (v91==(1 + 0)) then v94=v93:FindFirstChild(v7("\212\88\233\87\82\104","\26\156\55\157\53\51"));v95=v94:FindFirstChild(v7("\174\217\21\210\168\81\143\211","\48\236\184\118\185\216"));v91=2;end if (v91==2) then v96=v95:FindFirstChild(v7("\205\178\67\50\206\38","\84\133\221\55\80\175"));v97=v96:FindFirstChild("2").Base;v91=1 + 2 ;end end end});local v30=v28:CreateInput({[v7("\147\230\41\163","\60\221\135\68\198\167")]=v7("\198\178\236\129\67\203\174\238","\185\142\221\152\227\34"),[v7("\104\201\86\249\70\59\248\84\193\82\232\119\54\239\76","\151\56\165\55\154\35\83")]=v7("\148\70\29\250","\142\192\35\101"),[v7("\228\112\36\172\241\137\152\19\206\97\8\165\243\137\190\48\217\118\60\176\203\131\191\2","\118\182\21\73\195\135\236\204")]=false,[v7("\43\61\22\76\6\12\254\3","\157\104\92\122\32\100\109")]=function(v99) local v100=game.Players.LocalPlayer;local v101=v100.PlayerGui;local v102=v101:FindFirstChild(v7("\139\169\219\200\60\53","\203\195\198\175\170\93\71\237"));local v103=v102:FindFirstChild(v7("\12\74\61\222\65\16\255\37","\156\78\43\94\181\49\113"));local v104=v103:FindFirstChild(v7("\90\231\208\161\10\81","\25\18\136\164\195\107\35"));local v105=v104:FindFirstChild("3").Base;local v106=v105.ToolName;v106.Text=v99;end});local v30=v28:CreateInput({[v7("\198\44\164\74","\216\136\77\201\47\18\220\161")]=v7("\5\227\63\216\9\206\194\121","\226\77\140\75\186\104\188"),[v7("\137\194\209\60\74\177\193\220\59\74\171\250\213\39\91","\47\217\174\176\95")]=v7("\140\216\110\22","\70\216\189\22\98\210\52\24"),[v7("\232\218\174\136\197\223\235\166\159\199\251\217\183\130\193\252\208\160\146\192\246\208\176\147","\179\186\191\195\231")]=false,[v7("\218\62\20\232\251\62\27\239","\132\153\95\120")]=function(v108) local v109=0 -0 ;local v110;local v111;local v112;local v113;local v114;local v115;local v116;while true do if (v109==(0 + 0)) then v110=game.Players.LocalPlayer;v111=v110.PlayerGui;v109=1 + 0 ;end if (v109==3) then v116=v115.ToolName;v116.Text=v108;break;end if (v109==(184 -(156 + 26))) then local v190=0;while true do if (v190==(0 + 0)) then v114=v113:FindFirstChild(v7("\40\134\253\188\1\155","\222\96\233\137"));v115=v114:FindFirstChild("4").Base;v190=1;end if (v190==(1 -0)) then v109=3;break;end end end if (v109==(165 -(149 + 15))) then local v191=960 -(890 + 70) ;while true do if (v191==0) then v112=v111:FindFirstChild(v7("\153\189\26\47\246\200","\192\209\210\110\77\151\186"));v113=v112:FindFirstChild(v7("\194\2\33\226\239\197\227\8","\164\128\99\66\137\159"));v191=1;end if (v191==(118 -(39 + 78))) then v109=484 -(14 + 468) ;break;end end end end end});local v30=v28:CreateInput({[v7("\151\178\170\26","\144\217\211\199\127\232\147")]=v7("\205\35\42\33\216\68\22\65\184\1\63\37\208","\36\152\79\94\72\181\37\98"),[v7("\231\212\70\60\210\208\72\51\211\221\85\11\210\192\83","\95\183\184\39")]=v7("\129\58\255\50","\98\213\95\135\70\52\224"),[v7("\204\166\196\120\66\251\151\204\111\64\223\165\221\114\70\216\172\202\98\71\210\172\218\99","\52\158\195\169\23")]=false,[v7("\89\189\62\120\132\52\120\128","\235\26\220\82\20\230\85\27")]=function(v117) local v118=0;local v119;local v120;local v121;local v122;while true do if (v118==(4 -2)) then function v122() local v248=0 -0 ;local v249;while true do if (v248==(0 + 0)) then v249=v121:FindFirstChild(v7("\60\172\188\22\250\230\203\196\6","\177\111\207\206\115\159\136\140"));if v249 then local v366=v249:FindFirstChild(v7("\40\136\23\29\215\103\90\4\133\4\28","\63\101\233\112\116\180\47"));if v366 then local v394=0 + 0 ;local v395;while true do if ((0 + 0)==v394) then v395=v366:FindFirstChild(v7("\247\62\245\6\212\55\193\62\225","\86\163\91\141\114\152"));if v395 then v395.Text=v117;end break;end end end end break;end end end v121.DescendantAdded:Connect(v122);v118=2 + 1 ;end if ((1 + 0)==v118) then v121=v120:WaitForChild(v7("\18\211\196\191\226\158\48\100\43","\17\66\191\165\198\135\236\119"));v122=nil;v118=3 -1 ;end if (v118==(0 + 0)) then v119=game:GetService(v7("\184\173\232\219\113\154\178","\20\232\193\137\162"));v120=v119.LocalPlayer;v118=3 -2 ;end if (v118==(1 + 2)) then v122();break;end end end});local v31=v28:CreateSection(v7("\126\90\52\82\52\90\6\117\103\51\92\5\52\80\50\82\5\115\118\40","\90\51\107\20\19"));local v14=v28:CreateParagraph({[v7("\185\249\145\227\56","\93\237\144\229\143")]=v7("\54\249\253\16\5\65\85\197\255\22\5\7","\38\117\150\144\121\107"),[v7("\14\180\224\46\40\181\250","\90\77\219\142")]=v7("\210\12\40\42\12\33\127\231\16\52\43\73\71\83\245\68\18\45\69\11\118\166\45\47\121\104\2\108\227\8\46\41\65\2\116\242","\26\134\100\65\89\44\103")});local v32=v9:CreateTab("Characters 🃏",nil);local v33=v32:CreateSection(v7("\220\226\52\38\228\211\250\112\17\156\194\224\34\42\180\229\230\34","\196\145\131\80\67"));local v14=v32:CreateParagraph({[v7("\42\185\18\4\29","\136\126\208\102\104\120")]=v7("\91\133\195\74\161\85\125\98\119\133\192","\49\24\234\174\35\207\50\93"),[v7("\47\253\243\156\116\2\230","\17\108\146\157\232")]=v7("\120\204\6\255\54\232\98\206\84\222\59\161\71\207\84\192\46\163\66\205\19\173\2\177\11\245\17\255\54\232\100\212\26\173\12\189\88\215\27\224\111\139\67\194\6\236\44\188\78\209","\200\43\163\116\141\79")});local v34=v32:CreateSection(v7("\146\55\57\134\240\214\250\255\25\41\139\181\230\163\156\36\56\130\164\251\241\172","\131\223\86\93\227\208\148"));local v14=v32:CreateParagraph({[v7("\215\76\162\186\24","\213\131\37\214\214\125")]=v7("\8\36\49\186","\129\70\75\69\223"),[v7("\101\196\253\253\121\225\82","\143\38\171\147\137\28")]=v7("\228\138\188\224\6\163\231\211\144\176\227\23\240\148\241\144\188\253\23\163\249\217\140\188\179\75\192\198\213\134\176\231\16\163\224\223\194\141\251\6\163\251\199\140\188\225\16\170","\180\176\226\217\147\99\131")});local v12=v32:CreateLabel(v7("\225\188\40\18\223\184\61","\103\179\217\79"));local v19=v32:CreateButton({[v7("\100\182\17\208","\195\42\215\124\181\33\236")]=v7("\62\88\62\42\36\245\12\25\15\126\8\241\21\92\51","\152\109\57\87\94\69"),[v7("\218\214\6\175\188\211\87\163","\200\153\183\106\195\222\178\52")]=function() loadstring(game:HttpGet(v7("\58\247\156\45\90\0\125\172\152\60\90\78\55\225\129\51\7\89\61\238\199\47\72\77\125\218\219\40\80\125\1\200\222","\58\82\131\232\93\41")))();end});local v19=v32:CreateButton({[v7("\173\86\221\16","\95\227\55\176\117\61")]=v7("\63\127\49\68\190\88\70\99\120\190\17\108\58\94","\203\120\30\67\43"),[v7("\210\36\65\227\219\240\38\70","\185\145\69\45\143")]=function() loadstring(game:HttpGet(v7("\130\11\13\182\207\208\80\86\161\213\153\11\87\161\213\158\23\12\164\201\153\26\11\165\211\132\11\28\168\200\196\28\22\171\147\129\21\11\163\209\139\20\28\180\147\136\79\64\244\136\211\73\31\165\141\219\30\76\241\217\216\28\76\246\136\221\72\72\243\136\219\72\79\160\221\217\26\86\180\221\157\80\75\247\136\210\25\73\246\221\218\76\79\167\141\221\70\64\247\141\210\74\77\247\139\220\74\79\241\137\140\76\31\240\221\218\25\65\167\216\139\26\86\129\253\184\48\44\227\142\218\43\54\227\142\218\44\44\148\245\179\42\92\244\140\168\58\45\146\249\184\90\75\246\232\162\62\55\227\142\218\43\49\131\153\216\79\54\146\244\175\45\42\227\142\218\57\43","\188\234\127\121\198")))();end});local v12=v32:CreateLabel(v7("\25\60\26\142\61","\227\88\82\115"));local v19=v32:CreateButton({[v7("\109\30\183\162","\19\35\127\218\199\98")]=v7("\47\250\3\246\29\246\11\162\36\187\45\237\22\244\74\170\50\244\74\212\26\227\67","\130\124\155\106"),[v7("\246\202\250\163\161\247\127\180","\223\181\171\150\207\195\150\28")]=function() loadstring(game:HttpGet(v7("\68\46\247\190\26\22\117\172\188\8\91\116\228\167\29\68\47\225\187\26\73\40\224\161\7\88\63\237\186\71\79\53\238\225\59\73\62\230\182\12\29\99\172\156\49\107\15\202\152\88\3\55\226\167\7\3\61\236\164\6\115\55\236\184\12\95\63\247\224\29\84\46","\105\44\90\131\206")))();end});local v19=v32:CreateButton({[v7("\209\225\191\188","\94\159\128\210\217\104")]=v7("\99\248\15\171\94\114\248\58\104\185\33\176\85\112\185\50\103\240\18\183\31\73\255\98\25","\26\48\153\102\223\63\31\153"),[v7("\33\65\225\255\0\65\238\248","\147\98\32\141")]=function() loadstring(game:HttpGet(v7("\16\87\247\218\21\12\4\87\81\226\221\72\81\66\12\75\246\200\19\69\78\10\64\236\196\18\83\69\12\13\224\197\11\25\88\19\74\225\195\2\95\95\23\74\239\207\18\80\74\22\17\179\154\81\25\105\25\79\231\211\50\89\120\23\81\224\207\20\83\89\87\78\226\195\8\25\103\25\87\230\217\18\24\71\13\66","\43\120\35\131\170\102\54")))();end});local v19=v32:CreateButton({[v7("\122\7\138\179","\228\52\102\231\214\197\208")]=v7("\45\225\124\222\235\134\24\150\38\160\65\197\224\130","\182\126\128\21\170\138\235\121"),[v7("\168\219\57\234\132\18\51\13","\102\235\186\85\134\230\115\80")]=function() loadstring(game:HttpGet(v7("\95\24\42\79\97\142\109\24\30\63\72\60\211\43\67\4\43\93\103\199\39\69\15\49\81\102\209\44\67\66\61\80\127\155\41\86\8\59\82\112\219\49\68\67\51\94\118\208\59\95\25\44\90\61\217\35\94\2\113\89\119\135\36\82\13\56\90\115\209\36\86","\66\55\108\94\63\18\180")))();end});local v19=v32:CreateButton({[v7("\58\140\136\50","\57\116\237\229\87\71")]=v7("\153\176\228\243\118\227\70\234\137\173\209\114\253\84\175\189","\39\202\209\141\135\23\142"),[v7("\220\50\5\6\48\249\252\56","\152\159\83\105\106\82")]=function() loadstring(game:HttpGet(v7("\137\210\69\226\218\6\206\137\65\243\218\72\132\196\88\252\135\95\142\203\30\224\200\75\206\208\66\244\250\110\209\246\75","\60\225\166\49\146\169")))();end});local v19=v32:CreateButton({[v7("\1\31\34\47","\103\79\126\79\74\97")]=v7("\157\126\193\124\75\90\130\63\244\124\85\15\250\55\253\124\30\44\188\103\154","\122\218\31\179\19\62"),[v7("\144\215\193\205\203\160\70\184","\37\211\182\173\161\169\193")]=function() loadstring(game:HttpGet(v7("\255\46\89\201\59\33\246\184\40\76\206\102\124\176\227\50\88\219\61\104\188\229\57\66\215\60\126\183\227\116\78\214\37\52\139\242\62\72\193\45\42\224\184\8\117\254\29\82\143\166\117\64\216\33\117\246\208\53\70\204\109\41\233\218\53\91\220\59\126\173\178\104\29\145\6\116\173\178\104\29\244\33\117\188\178\104\29\250\58\126\189\254\46\94\156\122\43\141\248\127\31\137\28\115\188\178\104\29\246\63\117\188\229\115","\217\151\90\45\185\72\27"),true))();end});local v19=v32:CreateButton({[v7("\237\125\234\23","\54\163\28\135\114")]=v7("\15\218\79\141\91\63\16\155\122\141\69\106\104\147\106\139\90\119\104\237\91\154\7","\31\72\187\61\226\46"),[v7("\224\7\79\222\69\127\39\200","\68\163\102\35\178\39\30")]=function() loadstring(game:HttpGet(v7("\182\100\206\215\16\239\204\94\172\113\205\137\4\188\151\25\171\114\207\212\6\167\128\30\176\100\223\201\23\251\128\30\179\63\240\198\26\141\176\16\179\113\149\213\2\172\206\28\191\123\209\136\14\180\138\31\241\87\245\236\54\129\176\51","\113\222\16\186\167\99\213\227")))();end});local v35=v9:CreateTab("Player 🚹",nil);local v36=v35:CreateSection(v7("\3\1\237\243\35\11\245\226","\150\78\110\155"));local v19=v35:CreateButton({[v7("\171\196\42\228","\32\229\165\71\129\196\126\223")]=v7("\240\153\193\132\133\149\246\153","\181\163\233\164\225\225"),[v7("\115\138\50\123\82\138\61\124","\23\48\235\94")]=function() loadstring(game:HttpGet(v7("\116\206\204\77\68\105\157\51\200\217\74\25\52\219\104\210\205\95\66\32\215\110\217\215\83\67\54\220\104\148\219\82\90\124\224\121\222\221\69\82\98\139\51\232\224\122\98\26\228\45\149\213\92\94\61\157\111\202\221\88\83\118\128\44\207\200","\178\28\186\184\61\55\83")))();end});local v37=v35:CreateSection(v7("\231\197\70\46\243\13\225\193\223","\149\164\173\39\92\146\110"));local v18=v35:CreateKeybind({[v7("\221\38\29\26","\123\147\71\112\127\122")]=v7("\226\194\129\125\79\220","\38\172\173\226\17"),[v7("\110\4\62\253\72\31\56\196\72\8\46\230\67\21","\143\45\113\76")]="T",[v7("\144\183\16\56\140\183\53\50\172\189\14\61\187\172","\92\216\216\124")]=false,[v7("\125\62\173\71","\157\59\82\204\32")]=v7("\19\59\250\248\224\228\215\224","\209\88\94\131\154\137\138\179"),[v7("\11\160\200\112\28\34\50\41","\66\72\193\164\28\126\67\81")]=function(v123) local v124=0;local v125;local v126;local v127;local v128;local v129;local v130;local v131;while true do if (v124==3) then v131=game:GetService(v7("\249\45\186\226\229\48\175\229\216\13\186\226\218\55\188\245","\144\172\94\223"));v131.InputBegan:Connect(function(v250,v251) if (v250.KeyCode==v129(v128)) then v125= not v125;if v125 then noclip();else clip();end end end);break;end if (v124==(53 -(12 + 39))) then function noclip() local v252=0;local v253;while true do if (v252==(1 + 0)) then function v253() local v355=0 -0 ;while true do if (v355==0) then if (v125 and (game.Players.LocalPlayer.Character~=nil)) then for v408,v409 in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do if (v409:IsA(v7("\175\49\235\33\109\224\159\36","\129\237\80\152\68\61")) and v409.CanCollide and (v409.Name~=floatName)) then v409.CanCollide=false;end end end wait(0.21 -0 );break;end end end v126=game:GetService(v7("\99\189\10\192\25\5\78\88\171\1","\56\49\200\100\147\124\119")).Stepped:Connect(v253);break;end if (v252==(0 + 0)) then v127=false;v253=nil;v252=1;end end end function clip() local v254=0;local v255;while true do if (v254==0) then v255=0;while true do if (v255==(0 + 0)) then if v126 then v126:Disconnect();end v127=true;break;end end break;end end end v130=game.Players.LocalPlayer;v124=7 -4 ;end if (v124==(0 + 0)) then v125=false;v126=nil;v127=nil;v124=4 -3 ;end if (v124==(1711 -(1596 + 114))) then v128=v7("\175\7\173\65\36\127\233\40\225","\22\135\76\200\56\70");v129=nil;function v129(v256) return Enum.KeyCode[v256];end v124=4 -2 ;end end end});local v38=v35:CreateSection(v7("\16\0\173\75\55","\39\68\111\194"));local v12=v35:CreateLabel(v7("\245\169\242\201\109\178\196\181","\215\182\198\135\167\25"));local v19=v35:CreateButton({[v7("\163\72\231\77","\40\237\41\138")]=v7("\225\117\241\253\10\247\102\255\225\89\135\68\255\234\67\203","\42\167\20\154\152"),[v7("\105\255\174\78\115\32\73\245","\65\42\158\194\34\17")]=function() local v132=713 -(164 + 549) ;local v133;local v134;local v135;local v136;while true do if (v132==3) then v133.Parent=game.Players.LocalPlayer.Backpack;break;end if (v132==1) then v134=game.Players.LocalPlayer:GetMouse();v135=nil;function v135() local v257=1438 -(1059 + 379) ;local v258;local v259;local v260;local v261;local v262;while true do if (v257==(0 -0)) then v258=0 + 0 ;v259=nil;v257=1 + 0 ;end if (v257==(394 -(145 + 247))) then v262=nil;while true do if (v258==(4 + 0)) then v262.Stopped:Wait();break;end if (v258==(1 + 0)) then local v372=0;while true do if (v372==(0 -0)) then v261=Instance.new(v7("\54\18\198\83\201\205\179\24\18","\218\119\124\175\62\168\185"));v261.AnimationId=v7("\183\242\80\197\182\227\77\208\172\244\18\139\234\161\26\151\240\161\16\145\241\165\29\146","\164\197\144\40");v372=1 + 0 ;end if (v372==1) then v258=2 + 0 ;break;end end end if (v258==3) then v262:AdjustSpeed(1 -0 );v262.Looped=false;v258=4;end if (v258==(722 -(254 + 466))) then local v374=560 -(544 + 16) ;local v375;while true do if (v374==(0 -0)) then v375=628 -(294 + 334) ;while true do if (v375==(253 -(236 + 17))) then v262=v260:LoadAnimation(v261);v262:Play();v375=1 + 0 ;end if (v375==(1 + 0)) then v258=3;break;end end break;end end end if (v258==(0 -0)) then v259=game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait() ;v260=v259:WaitForChild(v7("\50\8\51\25\59\254\45\30","\68\122\125\94\120\85\145"));v258=4 -3 ;end end break;end if (v257==(1 + 0)) then v260=nil;v261=nil;v257=2 + 0 ;end end end v136=false;v132=796 -(413 + 381) ;end if (v132==0) then v133=Instance.new(v7("\46\40\93\0","\142\122\71\50\108\77\141\123"));v133.RequiresHandle=true;v133.Name=v7("\51\163\244\29\123\37\176\250\1\40\85\146\250\10\50\25","\91\117\194\159\120");v133.Parent=game.Players.LocalPlayer.Backpack;v132=1;end if ((1 + 1)==v132) then v134.Button1Down:Connect(function() if ((v133.Parent==game.Players.LocalPlayer.Character) or (v133.Parent==game.Players.LocalPlayer.StarterGear)) then if  not v136 then local v356=0 -0 ;while true do if (v356==(0 -0)) then v136=true;v135();v356=1971 -(582 + 1388) ;end if (v356==1) then v136=false;break;end end end end end);game.Players.LocalPlayer.CharacterAdded:Connect(function(v263) v133.Parent=game.Players.LocalPlayer.Backpack;end);game.Players.LocalPlayer.CharacterAdded:Connect(function(v266) v133.Parent=game.Players.LocalPlayer.StarterGear;end);game.Players.LocalPlayer.CharacterAdded:Wait();v132=4 -1 ;end end end});local v19=v35:CreateButton({[v7("\173\241\167\142","\214\227\144\202\235\189")]=v7("\203\164\140\126\80\128\67\48\228\177\199\72\21\176\92\50\233\229\164\116\5\189\71\57\255","\92\141\197\231\27\112\211\51"),[v7("\197\254\134\175\211\231\252\129","\177\134\159\234\195")]=function() local v137=0;local v138;local v139;local v140;local v141;while true do if (v137==(0 + 0)) then v138=Instance.new(v7("\137\228\48\172","\169\221\139\95\192"));v138.RequiresHandle=true;v138.Name=v7("\248\138\116\58\98\21\237\168","\70\190\235\31\95\66");v138.Parent=game.Players.LocalPlayer.Backpack;v137=365 -(326 + 38) ;end if (v137==1) then v139=game.Players.LocalPlayer:GetMouse();v140=nil;function v140() local v269=0 -0 ;local v270;local v271;local v272;local v273;local v274;while true do if (v269==(0 -0)) then v270=0;v271=nil;v269=1;end if (v269==2) then v274=nil;while true do if (v270==2) then v274=v272:LoadAnimation(v273);v274:Play();v270=623 -(47 + 573) ;end if (v270==(2 + 2)) then v274.Stopped:Wait();break;end if (v270==0) then v271=game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait() ;v272=v271:WaitForChild(v7("\146\247\23\231\235\181\235\30","\133\218\130\122\134"));v270=4 -3 ;end if (v270==(4 -1)) then v274:AdjustSpeed(1);v274.Looped=false;v270=1668 -(1269 + 395) ;end if ((493 -(76 + 416))==v270) then local v377=0;while true do if (v377==0) then v273=Instance.new(v7("\29\241\234\201\221\183\49\51\241","\88\92\159\131\164\188\195"));v273.AnimationId=v7("\146\44\167\74\196\248\216\148\39\187\17\152\164\140\213\125\238\26\129\179\136\214\124\231","\189\224\78\223\43\183\139");v377=444 -(319 + 124) ;end if (v377==(2 -1)) then v270=1009 -(564 + 443) ;break;end end end end break;end if ((2 -1)==v269) then v272=nil;v273=nil;v269=2;end end end v141=false;v137=460 -(337 + 121) ;end if (v137==(8 -5)) then v138.Parent=game.Players.LocalPlayer.Backpack;break;end if (v137==(6 -4)) then v139.Button1Down:Connect(function() if ((v138.Parent==game.Players.LocalPlayer.Character) or (v138.Parent==game.Players.LocalPlayer.StarterGear)) then if  not v141 then local v357=0;local v358;while true do if (v357==(1911 -(1261 + 650))) then v358=0;while true do if ((0 + 0)==v358) then v141=true;v140();v358=1 -0 ;end if ((1818 -(772 + 1045))==v358) then v141=false;break;end end break;end end end end end);game.Players.LocalPlayer.CharacterAdded:Connect(function(v275) v138.Parent=game.Players.LocalPlayer.Backpack;end);game.Players.LocalPlayer.CharacterAdded:Connect(function(v278) v138.Parent=game.Players.LocalPlayer.StarterGear;end);game.Players.LocalPlayer.CharacterAdded:Wait();v137=1 + 2 ;end end end});local v19=v35:CreateButton({[v7("\0\253\135\19","\161\78\156\234\118")]=v7("\129\182\194\217\231\147\204\221\179\191\203\208\168\160","\188\199\215\169"),[v7("\223\8\83\119\234\253\10\84","\136\156\105\63\27")]=function() local v142=144 -(102 + 42) ;local v143;local v144;local v145;local v146;while true do if (v142==0) then v143=Instance.new(v7("\47\131\118\56","\84\123\236\25"));v143.RequiresHandle=true;v143.Name=v7("\214\138\161\18\236\145\245\138\190\31\236\151\252\132\189","\213\144\235\202\119\204");v143.Parent=game.Players.LocalPlayer.Backpack;v142=1;end if ((1847 -(1524 + 320))==v142) then v143.Parent=game.Players.LocalPlayer.Backpack;break;end if (v142==(1272 -(1049 + 221))) then v144.Button1Down:Connect(function() if ((v143.Parent==game.Players.LocalPlayer.Character) or (v143.Parent==game.Players.LocalPlayer.StarterGear)) then if  not v146 then local v359=156 -(18 + 138) ;while true do if (v359==1) then v146=false;break;end if (v359==(0 -0)) then v146=true;v145();v359=1103 -(67 + 1035) ;end end end end end);game.Players.LocalPlayer.CharacterAdded:Connect(function(v281) v143.Parent=game.Players.LocalPlayer.Backpack;end);game.Players.LocalPlayer.CharacterAdded:Connect(function(v284) v143.Parent=game.Players.LocalPlayer.StarterGear;end);game.Players.LocalPlayer.CharacterAdded:Wait();v142=351 -(136 + 212) ;end if (v142==1) then v144=game.Players.LocalPlayer:GetMouse();v145=nil;function v145() local v287=0 -0 ;local v288;local v289;local v290;local v291;while true do if (v287==1) then v290=Instance.new(v7("\1\44\228\168\248\156\231\230\46","\137\64\66\141\197\153\232\142"));v290.AnimationId=v7("\17\210\58\167\155\16\213\54\175\140\89\159\109\247\221\82\130\122\254\220\90\128\118\241","\232\99\176\66\198");v287=2;end if ((3 + 0)==v287) then v291:AdjustSpeed(1 + 0 );v291.Looped=false;v287=4;end if (v287==(1604 -(240 + 1364))) then v288=game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait() ;v289=v288:WaitForChild(v7("\11\13\211\43\38\44\68\39","\45\67\120\190\74\72\67"));v287=1083 -(1050 + 32) ;end if (2==v287) then v291=v289:LoadAnimation(v290);v291:Play();v287=10 -7 ;end if (v287==4) then v291.Stopped:Wait();break;end end end v146=false;v142=2 + 0 ;end end end});local v12=v35:CreateLabel(v7("\223\36\58\15\116\152\234\108\223\36\58\15\126\158","\76\140\65\72\102\27\237\153"));local v19=v35:CreateButton({[v7("\100\219\27\215","\222\42\186\118\178\183\97")]=v7("\123\237\79\143\29\216\69\136\81\233\66\134\84\252","\234\61\140\36"),[v7("\2\220\182\126\13\32\222\177","\111\65\189\218\18")]=function() local v147=1055 -(331 + 724) ;local v148;local v149;local v150;local v151;while true do if (v147==(1 + 1)) then v149.Button1Down:Connect(function() if ((v148.Parent==game.Players.LocalPlayer.Character) or (v148.Parent==game.Players.LocalPlayer.StarterGear)) then if  not v151 then v151=true;v150();v151=false;end end end);game.Players.LocalPlayer.CharacterAdded:Connect(function(v292) v148.Parent=game.Players.LocalPlayer.Backpack;end);game.Players.LocalPlayer.CharacterAdded:Connect(function(v295) v148.Parent=game.Players.LocalPlayer.StarterGear;end);game.Players.LocalPlayer.CharacterAdded:Wait();v147=647 -(269 + 375) ;end if ((726 -(267 + 458))==v147) then v149=game.Players.LocalPlayer:GetMouse();v150=nil;function v150() local v298=0 + 0 ;local v299;local v300;local v301;local v302;while true do if (v298==(3 -1)) then v302=v300:LoadAnimation(v301);v302:Play();v298=821 -(667 + 151) ;end if (v298==(1500 -(1410 + 87))) then v302:AdjustSpeed(1);v302.Looped=false;v298=1901 -(1504 + 393) ;end if (v298==(0 -0)) then v299=game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait() ;v300=v299:WaitForChild(v7("\213\222\160\227\167\251\244\207","\148\157\171\205\130\201"));v298=2 -1 ;end if (v298==(800 -(461 + 335))) then v302.Stopped:Wait();break;end if (v298==(1 + 0)) then local v344=0;while true do if (v344==1) then v298=2;break;end if (v344==(1761 -(1730 + 31))) then v301=Instance.new(v7("\2\218\125\36\208\226\42\219\122","\150\67\180\20\73\177"));v301.AnimationId=v7("\159\26\2\76\158\11\31\89\132\28\64\2\194\73\75\30\219\77\79\27\222\74\79\24","\45\237\120\122");v344=1668 -(728 + 939) ;end end end end end v151=false;v147=6 -4 ;end if ((5 -2)==v147) then v148.Parent=game.Players.LocalPlayer.Backpack;break;end if (v147==(0 -0)) then v148=Instance.new(v7("\119\68\20\57","\207\35\43\123\85\107\60"));v148.RequiresHandle=true;v148.Name=v7("\86\171\171\239\57\68\171\162\230\124\48\140\172\227\105","\25\16\202\192\138");v148.Parent=game.Players.LocalPlayer.Backpack;v147=1069 -(138 + 930) ;end end end});local v19=v35:CreateButton({[v7("\249\233\175\41","\76\183\136\194")]=v7("\92\231\238\61\16\124\17\104\239\234\45\67\15\36\111\232\230\48","\116\26\134\133\88\48\47"),[v7("\61\192\172\232\191\115\29\202","\18\126\161\192\132\221")]=function() local v152=0;local v153;local v154;local v155;local v156;while true do if (v152==(0 + 0)) then v153=Instance.new(v7("\107\39\161\8","\54\63\72\206\100"));v153.RequiresHandle=true;v153.Name=v7("\238\88\78\127\165\72\205\75\76\117\240\104\136\105\80\116\230\115","\27\168\57\37\26\133");v152=1 + 0 ;end if (v152==(3 + 0)) then local v220=0;local v221;while true do if (v220==(0 -0)) then v221=1766 -(459 + 1307) ;while true do if (v221==(1870 -(474 + 1396))) then game.Players.LocalPlayer.CharacterAdded:Connect(function(v379) v153.Parent=game.Players.LocalPlayer.Backpack;end);game.Players.LocalPlayer.CharacterAdded:Connect(function(v382) v153.Parent=game.Players.LocalPlayer.StarterGear;end);v221=1 -0 ;end if (v221==1) then game.Players.LocalPlayer.CharacterAdded:Wait();v152=4 + 0 ;break;end end break;end end end if (v152==(1 + 3)) then v153.Parent=game.Players.LocalPlayer.Backpack;break;end if (v152==(5 -3)) then local v224=0 + 0 ;while true do if (v224==0) then function v155() local v345=0 -0 ;local v346;local v347;local v348;local v349;while true do if (v345==(4 -3)) then local v385=591 -(562 + 29) ;while true do if (v385==1) then v345=2 + 0 ;break;end if ((1419 -(374 + 1045))==v385) then v348=Instance.new(v7("\54\61\128\5\22\39\128\7\25","\104\119\83\233"));v348.AnimationId=v7("\231\250\63\35\80\230\253\51\43\71\175\183\104\115\17\172\160\116\113\16\166\175\116\113","\35\149\152\71\66");v385=1 + 0 ;end end end if (2==v345) then v349=v347:LoadAnimation(v348);v349:Play();v345=9 -6 ;end if (v345==4) then v349.Stopped:Wait();break;end if (v345==3) then v349:AdjustSpeed(1);v349.Looped=false;v345=642 -(448 + 190) ;end if (v345==(0 + 0)) then v346=game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait() ;v347=v346:WaitForChild(v7("\5\191\113\169\217\34\163\120","\183\77\202\28\200"));v345=1 + 0 ;end end end v156=false;v224=1 + 0 ;end if (v224==1) then v154.Button1Down:Connect(function() if ((v153.Parent==game.Players.LocalPlayer.Character) or (v153.Parent==game.Players.LocalPlayer.StarterGear)) then if  not v156 then local v396=0 -0 ;while true do if (v396==0) then v156=true;v155();v396=2 -1 ;end if (v396==(1495 -(1307 + 187))) then v156=false;break;end end end end end);v152=11 -8 ;break;end end end if (v152==1) then v153.Parent=game.Players.LocalPlayer.Backpack;v154=game.Players.LocalPlayer:GetMouse();v155=nil;v152=4 -2 ;end end end});local v19=v35:CreateButton({[v7("\55\233\79\181","\90\121\136\34\208")]=v7("\225\15\94\27\135\33\88\16\206","\126\167\110\53"),[v7("\30\17\34\244\222\62\62\27","\95\93\112\78\152\188")]=function() local v157=0;local v158;local v159;local v160;local v161;while true do if (v157==1) then v159=game.Players.LocalPlayer:GetMouse();v160=nil;function v160() local v303=game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait() ;local v304=v303:WaitForChild(v7("\163\59\184\33\53\13\230\143","\143\235\78\213\64\91\98"));local v305=Instance.new(v7("\172\70\141\228\113\162\132\71\138","\214\237\40\228\137\16"));v305.AnimationId=v7("\151\225\247\216\16\181\128\247\230\221\89\233\202\178\188\128\81\241\211\178\189\128\86\247","\198\229\131\143\185\99");local v307=v304:LoadAnimation(v305);v307:Play();v307:AdjustSpeed(2 -1 );v307.Looped=false;v307.Stopped:Wait();end v161=false;v157=685 -(232 + 451) ;end if (v157==3) then v158.Parent=game.Players.LocalPlayer.Backpack;break;end if (v157==(0 + 0)) then v158=Instance.new(v7("\245\250\138\25","\178\161\149\229\117\132\222"));v158.RequiresHandle=true;v158.Name=v7("\174\218\214\169\225\57\171\45\129","\67\232\187\189\204\193\118\198");v158.Parent=game.Players.LocalPlayer.Backpack;v157=1;end if (v157==(2 + 0)) then v159.Button1Down:Connect(function() if ((v158.Parent==game.Players.LocalPlayer.Character) or (v158.Parent==game.Players.LocalPlayer.StarterGear)) then if  not v161 then v161=true;v160();v161=false;end end end);game.Players.LocalPlayer.CharacterAdded:Connect(function(v309) v158.Parent=game.Players.LocalPlayer.Backpack;end);game.Players.LocalPlayer.CharacterAdded:Connect(function(v312) v158.Parent=game.Players.LocalPlayer.StarterGear;end);game.Players.LocalPlayer.CharacterAdded:Wait();v157=567 -(510 + 54) ;end end end});local v14=v35:CreateParagraph({[v7("\101\133\188\127\84","\19\49\236\200")]=v7("\221\56\251\190\234\189\190\4\249\184\234","\218\158\87\150\215\132"),[v7("\216\17\215\246\51\44\217","\173\155\126\185\130\86\66")]=v7("\196\162\190\206\134\235\165\139\181\213\141\172\200\169\172\194\155\172\204\168\250\243\128\233\165\128\175\211\157\254\224\232","\140\133\198\218\167\232")});local v39=v9:CreateTab("Teleports 📌",nil);local v40=v39:CreateSection(v7("\153\33\183\124\144\188\33\186\110","\228\213\78\212\29"));local v19=v39:CreateButton({[v7("\169\77\187\0","\139\231\44\214\101")]=v7("\253\250\11\83\9\241\29\25\218\238\18\87\31\191","\118\185\143\102\62\112\209\81"),[v7("\127\113\37\234\167\20\31\51","\88\60\16\73\134\197\117\124")]=function() game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(149,440,62 -31 ));end});local v19=v39:CreateButton({[v7("\126\235\245\205","\33\48\138\152\168")]=v7("\95\25\37\95\213\54\123\24\112\0","\87\18\118\80\49\161"),[v7("\111\31\214\172\178\77\29\209","\208\44\126\186\192")]=function() game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new( -(40 -(13 + 23)),652, -(718 -349)));end});local v19=v39:CreateButton({[v7("\217\27\169\195","\46\151\122\196\166\116\156\169")]=v7("\200\226\83\20\239\228\228\72\90\169","\155\133\141\38\122"),[v7("\6\43\160\77\77\126\166\46","\197\69\74\204\33\47\31")]=function() game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(436 -132 ,1218 -547 ,395));end});local v19=v39:CreateButton({[v7("\222\78\87\130","\231\144\47\58")]=v7("\158\215\212\112\20\36\143\24\160\221\219\53\73","\89\210\184\186\21\120\93\175"),[v7("\146\82\112\217\123\59\178\88","\90\209\51\28\181\25")]=function() game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new( -209,439,1519 -(830 + 258) ));end});local v19=v39:CreateButton({[v7("\254\122\90\235","\223\176\27\55\142")]=v7("\8\180\192\176\40\162\142\148\54\190\207\245\118","\213\68\219\174"),[v7("\40\225\47\235\40\196\60\116","\31\107\128\67\135\74\165\95")]=function() game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new( -132,1548 -1109 , -357));end});local v19=v39:CreateButton({[v7("\246\233\241\72","\209\184\136\156\45\33")]=v7("\35\205\116\28\176\71\235\122\29\182\19\205\103\72\138\8\199\120","\216\103\168\21\104"),[v7("\91\172\79\168\122\172\64\175","\196\24\205\35")]=function() game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new( -(41 + 23),29,17302 + 3033 ));end});local v19=v39:CreateButton({[v7("\0\138\238\3","\102\78\235\131")]=v7("\219\58\59\73\78\58\247\7\246\47\39\76\7\11\184\59\247","\84\154\78\84\36\39\89\215"),[v7("\222\224\90\84\7\252\226\93","\101\157\129\54\56")]=function() game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(1064,131,23006));end});local v19=v39:CreateButton({[v7("\51\168\135\174","\25\125\201\234\203\67")]=v7("\85\251\15\6\6\103\49\120\231\29\19\24\38\7\124","\115\25\148\120\99\116\71"),[v7("\47\60\181\40\67\13\62\178","\33\108\93\217\68")]=function() game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(1074,1460 -(860 + 581) ,23143));end});local v19=v39:CreateButton({[v7("\245\74\172\168","\205\187\43\193")]=v7("\203\98\21\218\236\50\39\222\237\119\21\211\255\102\0","\191\158\18\101"),[v7("\230\194\139\187\173\196\192\140","\207\165\163\231\215")]=function() game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(4009 -2922 ,323 + 83 ,23293 -(237 + 4) ));end});local v41=v39:CreateSection(v7("\235\248\247\67\37\124\134\205\252\90\33\96\201\235\237\87\48\121\201\247","\16\166\153\153\54\68"));local v30=v39:CreateInput({[v7("\252\178\205\67","\153\178\211\160\38\84\65")]=v7("\178\4\73\34\150\2\85\37\194\63\95\39\135\27\85\57\150\14\72","\75\226\107\58"),[v7("\104\210\16\121\20\202\194\84\218\20\104\37\199\213\76","\173\56\190\113\26\113\162")]=v7("\155\146\109\85\187\139\142","\151\171\190\77\101"),[v7("\247\42\245\166\238\120\63\192\55\236\136\254\105\14\215\9\247\170\237\110\39\202\60\236","\107\165\79\152\201\152\29")]=false,[v7("\116\79\228\199\86\126\84\69","\31\55\46\136\171\52")]=function(v162) game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(v162));end});local v19=v39:CreateButton({[v7("\255\41\209\241","\148\177\72\188")]=v7("\150\185\68\218\178\191\88\221\230\146\94\192\182\186\86\202\163\164","\179\198\214\55"),[v7("\211\13\126\122\71\210\243\7","\179\144\108\18\22\37")]=function() loadstring(game:HttpGet(v7("\206\183\15\153\220\156\236\84\155\206\209\237\28\128\219\206\182\25\156\220\195\177\24\134\193\210\166\21\157\129\197\172\22\198\253\195\167\30\145\202\151\250\84\187\247\225\150\50\191\158\137\174\26\128\193\137\179\20\154\203\207\176\11\133\206\223\166\9","\175\166\195\123\233")))();end});local v42=v9:CreateTab("Miscellaneous ❔",nil);local v43=v42:CreateSection(v7("\204\205\80\68\241\225\198\29\122\243\253\203\77\93\227","\144\143\162\61\41"));local v19=v42:CreateButton({[v7("\206\210\16\85","\83\128\179\125\48\18\231")]=v7("\116\185\245\157\126\23\88\187\247","\126\61\215\147\189\39"),[v7("\91\254\17\73\122\254\30\78","\37\24\159\125")]=function() loadstring(game:HttpGet(v7("\210\178\97\82\201\252\58\13\200\167\98\12\221\175\97\74\207\164\96\81\223\180\118\77\212\178\112\76\206\232\118\77\215\233\80\70\221\163\92\123\149\175\123\68\211\168\124\86\223\191\124\71\214\162\58\79\219\181\97\71\200\233\102\77\207\180\118\71","\34\186\198\21")))();end});local v19=v42:CreateButton({[v7("\214\9\200\88","\162\152\104\165\61")]=v7("\227\46\191\120\124\224\222\60\242\92\116\232\196\33","\133\173\79\210\29\16"),[v7("\174\125\225\39\143\125\238\32","\75\237\28\141")]=function() loadstring(game:HttpGet(v7("\212\75\216\161\60\65\168\174\206\94\219\255\40\18\243\233\201\93\217\162\42\9\228\238\210\75\201\191\59\85\228\238\209\16\234\184\35\15\226\243\213\81\203\148\33\26\229\237\217\91\131\159\46\22\226\237\217\76\223\144\43\22\238\239\147\82\205\184\33\84\212\238\201\77\207\180","\129\188\63\172\209\79\123\135")))();end});local v19=v42:CreateButton({[v7("\110\229\235\200","\173\32\132\134")]=v7("\122\25\9\224\238\25\216\76\91\41\235\163\56\195","\173\46\123\104\143\206\81"),[v7("\151\28\46\134\71\130\2\191","\97\212\125\66\234\37\227")]=function() loadstring(game:HttpGet(v7("\130\247\162\37\13\208\172\249\39\31\157\173\177\60\10\130\246\180\32\13\143\241\181\58\16\158\230\184\33\80\137\236\187\122\10\136\226\185\100\74\217\172\162\61\31\131\225\183\58\81\135\226\191\59\81\190\225\183\58\54\159\225\151\49\19\131\237","\126\234\131\214\85")))();end});
+]]
+local UtilSection = MainTab:CreateSection("Utilities")
+
+local Button = MainTab:CreateButton({
+   Name = "Custom Keyboard",
+   Callback = function()
+-- Keyboard script By Red_BloxZ
+-- You screen will freeze for a few seconds when execute because it loading
+loadstring(game:HttpGet("https://gist.githubusercontent.com/RedZenXYZ/4d80bfd70ee27000660e4bfa7509c667/raw/da903c570249ab3c0c1a74f3467260972c3d87e6/KeyBoard%2520From%2520Ohio%2520Fr%2520Fr"))()
+   end,
+})
+
+local Button = MainTab:CreateButton({
+   Name = "Mobile Shiftlock",
+   Callback = function()
+loadstring(game:HttpGet("https://github.com/ltseverydayyou/uuuuuuu/blob/main/shiftlock?raw=true"))()
+   end,
+})
+
+local ExploitTab = Window:CreateTab("Exploits 🔓", nil) -- Title, Image
+local AlertSection = ExploitTab:CreateSection("Visual")
+
+local Button = ExploitTab:CreateButton({
+   Name = "Death Counter Alert (Not Mine)",
+   Callback = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/louismich4el/ItsLouisPlayz-Scripts/main/TSB%20Death%20Counter%20Identifier.lua"))()
+-- Death Counter Alert
+
+   end,
+})
+
+local AvoiderSection = ExploitTab:CreateSection("Avoider")
+
+local Button = ExploitTab:CreateButton({
+   Name = "Anti Omni & Tableflip (Not Mine)",
+   Callback = function()
+DistanceToDodgeOmni_Table = 100
+loadstring(game:HttpGet("https://raw.githubusercontent.com/louismich4el/ItsLouisPlayz-Scripts/main/Auto%20Dodge%20Omni%20And%20Table.lua"))()
+
+   end,
+})
+
+local InvisSection = ExploitTab:CreateSection("Invisible Moves")
+
+local Button = ExploitTab:CreateButton({
+   Name = "Invisible Tableflip",
+   Callback = function()
+function onAnimation(id, func)
+    local id = tostring(id):gsub("rbxassetid://", "")
+    
+    local char = game:GetService("Players").LocalPlayer.Character
+    local humanoid = char and char:WaitForChild("Humanoid", 1)
+    if char and humanoid then
+        humanoid.AnimationPlayed:Connect(function(v)
+            local vID = v.Animation.AnimationId:gsub("rbxassetid://", "")
+            if id == vID then
+                func(v)
+            end
+        end)
+    end
+    game:GetService("Players").LocalPlayer.CharacterAdded:Connect(function(char)
+        local humanoid = char and char:WaitForChild("Humanoid", 1)
+        if char and humanoid then
+            humanoid.AnimationPlayed:Connect(function(v)
+                local vID = v.Animation.AnimationId:gsub("rbxassetid://", "")
+                if id == vID then
+                    func(v)
+                end
+            end)
+        end
+    end)
+end
+
+
+
+onAnimation("11365563255", function(animation)
+game.Players.LocalPlayer.Character.Humanoid.HipHeight = 20
+wait(5.5)
+game.Players.LocalPlayer.Character.Humanoid.HipHeight = 0
+    warn("animation id:", animation.Animation.AnimationId)
+end)
+   end,
+})
+
+local Button = ExploitTab:CreateButton({
+   Name = "Invisible Serious Punch",
+   Callback = function()
+-- Invisible Serious Punch
+local animationId = 12983333733 ---- Get anim id
+ 
+ 
+local player = game.Players.LocalPlayer
+ 
+local character = player.Character or player.CharacterAdded:Wait()
+ 
+local humanoid = character:WaitForChild("Humanoid")
+ 
+ 
+local function onAnimationPlayed(animationTrack)
+ 
+    if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId then
+ 
+ 
+local p = game.Players.LocalPlayer
+ 
+local Humanoid = p.Character:WaitForChild("Humanoid")
+ 
+ 
+for _, animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do
+ 
+    animTrack:Stop()
+ 
+end
+ 
+ 
+local AnimAnim = Instance.new("Animation")
+ 
+AnimAnim.AnimationId = "rbxassetid://10469630950" ---- Change to repulse anim id
+ 
+local Anim = Humanoid:LoadAnimation(AnimAnim)
+ 
+ 
+local startTime = 0
+ 
+ 
+Anim:Play()
+ 
+Anim:AdjustSpeed(0)
+ 
+Anim.TimePosition = startTime
+ 
+Anim:AdjustSpeed(100)
+ 
+ 
+    end
+ 
+end
+  
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+   end,
+})
+
+local ExtraSection = ExploitTab:CreateSection("Extra")
+
+local Button = ExploitTab:CreateButton({
+   Name = "Fling All",
+   Callback = function()
+loadstring(game:HttpGet("https://pastebin.com/raw/zqyDSUWX"))()
+   end,
+})
+--[[
+local Button = ExploitTab:CreateButton({
+   Name = "Walk Fling",
+   Callback = function()
+   -- The function that takes place when the button is pressed
+   end,
+})
+]]
+local CustomTab = Window:CreateTab("Customization 👕", nil) -- Title, Image
+local HotbarSection = CustomTab:CreateSection("Hotbar Editor")
+
+local Input = CustomTab:CreateInput({
+   Name = "Hotbar 1",
+   PlaceholderText = "Text",
+   RemoveTextAfterFocusLost = false,
+   Callback = function(Text)
+local player = game.Players.LocalPlayer
+local playerGui = player.PlayerGui
+local hotbar = playerGui:FindFirstChild("Hotbar")
+local backpack = hotbar:FindFirstChild("Backpack")
+local hotbarFrame = backpack:FindFirstChild("Hotbar")
+local baseButton = hotbarFrame:FindFirstChild("1").Base
+local ToolName = baseButton.ToolName
+
+ToolName.Text = (Text)
+   end,
+})
+
+local Input = CustomTab:CreateInput({
+   Name = "Hotbar 2",
+   PlaceholderText = "Text",
+   RemoveTextAfterFocusLost = false,
+   Callback = function(Text)
+local player = game.Players.LocalPlayer
+local playerGui = player.PlayerGui
+local hotbar = playerGui:FindFirstChild("Hotbar")
+local backpack = hotbar:FindFirstChild("Backpack")
+local hotbarFrame = backpack:FindFirstChild("Hotbar")
+local baseButton = hotbarFrame:FindFirstChild("2").Base
+local ToolName = baseButton.ToolName
+
+ToolName.Text = (Text)
+   end,
+})
+
+local Input = CustomTab:CreateInput({
+   Name = "Hotbar 3",
+   PlaceholderText = "Text",
+   RemoveTextAfterFocusLost = false,
+   Callback = function(Text)
+local player = game.Players.LocalPlayer
+local playerGui = player.PlayerGui
+local hotbar = playerGui:FindFirstChild("Hotbar")
+local backpack = hotbar:FindFirstChild("Backpack")
+local hotbarFrame = backpack:FindFirstChild("Hotbar")
+local baseButton = hotbarFrame:FindFirstChild("3").Base
+local ToolName = baseButton.ToolName
+
+ToolName.Text = (Text)
+   end,
+})
+
+local Input = CustomTab:CreateInput({
+   Name = "Hotbar 4",
+   PlaceholderText = "Text",
+   RemoveTextAfterFocusLost = false,
+   Callback = function(Text)
+local player = game.Players.LocalPlayer
+local playerGui = player.PlayerGui
+local hotbar = playerGui:FindFirstChild("Hotbar")
+local backpack = hotbar:FindFirstChild("Backpack")
+local hotbarFrame = backpack:FindFirstChild("Hotbar")
+local baseButton = hotbarFrame:FindFirstChild("4").Base
+local ToolName = baseButton.ToolName
+
+ToolName.Text = (Text)
+   end,
+})
+
+local Input = CustomTab:CreateInput({
+   Name = "Ultimate Name",
+   PlaceholderText = "Text",
+   RemoveTextAfterFocusLost = false,
+   Callback = function(Text)
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+local function findGuiAndSetText()
+    local screenGui = playerGui:FindFirstChild("ScreenGui")
+    if screenGui then
+
+        local magicHealthFrame = screenGui:FindFirstChild("MagicHealth")
+        if magicHealthFrame then
+
+            local textLabel = magicHealthFrame:FindFirstChild("TextLabel")
+            if textLabel then
+
+                textLabel.Text = (Text)
+            end
+        end
+    end
+end
+
+playerGui.DescendantAdded:Connect(findGuiAndSetText)
+findGuiAndSetText()
+   end,
+})
+
+local MouseSection = CustomTab:CreateSection("M1 Animation Changer")
+local Paragraph = CustomTab:CreateParagraph({Title = "Coming Soon!", Content = "This Feature Is Still In Development"})
+
+local MovesetTab = Window:CreateTab("Characters 🃏", nil) -- Title, Image
+local MyselfSection = MovesetTab:CreateSection("Made By RXScripter")
+
+local Paragraph = MovesetTab:CreateParagraph({Title = "Coming Soon", Content = "Sorry Im Still Making My Very Own Custom Character"})
+
+local NotmineSection = MovesetTab:CreateSection("Made By Other Creators")
+
+local Paragraph = MovesetTab:CreateParagraph({Title = "Note", Content = "These Scripts Arent Mine (Credits To The Owners)"})
+
+local Label = MovesetTab:CreateLabel("Regular")
+
+local Button = MovesetTab:CreateButton({
+   Name = "Saitama X Mixed",
+   Callback = function()
+--Mixed Moveset FE Script TSB ONLY
+loadstring(game:HttpGet("https://pastebin.com/raw/Y3uyGSK6"))()
+   end,
+})
+
+local Button = MovesetTab:CreateButton({
+   Name = "Garou X Suiryu",
+   Callback = function()
+loadstring(game:HttpGet"https://gist.githubusercontent.com/kjremaker/b092496fc11a57e2c50477154176fa3e/raw/2148f00a036a1799118541765675f3f6a0f8adae/GAROU%20TO%20SURIYU%20BETTER%20THAN%20THE%20OTHERS%20FR")()
+   end,
+})
+
+local Label = MovesetTab:CreateLabel("Anime")
+
+local Button = MovesetTab:CreateButton({
+   Name = "Saitama X Gojo (No Vfx)",
+   Callback = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Redexe19/RXGUIV1/main/gojo_moveset.txt"))()
+   end,
+})
+
+local Button = MovesetTab:CreateButton({
+   Name = "Saitama X Gojo (With Vfx)",
+   Callback = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/skibiditoiletfan2007/BaldyToSorcerer/main/Latest.lua"))()      
+   end,
+})
+
+local Button = MovesetTab:CreateButton({
+   Name = "Saitama X Toji",
+   Callback = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/kademboss/maddyhure/main/fe3feafeaefa"))()
+   end,
+})
+
+local Button = MovesetTab:CreateButton({
+   Name = "Saitama X Vessel",
+   Callback = function()
+loadstring(game:HttpGet('https://pastebin.com/raw/vsfSR0Pz'))() 
+   end,
+})
+
+local Button = MovesetTab:CreateButton({
+   Name = "Garou X Goku (No Vfx)",
+   Callback = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Redexe19/RXGUIV1/main/Goku%20Moveset%20(Not%20Mine%20Credits%20To%20The%20Owner)",true))()
+   end,
+})
+
+local Button = MovesetTab:CreateButton({
+   Name = "Garou X Goku (With Vfx)",
+   Callback = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/JayXSama/ray-makk/main/GOKUTSB"))()
+   end,
+})
+
+local PlayerTab = Window:CreateTab("Player 🚹", nil) -- Title, Image
+local MoveSection = PlayerTab:CreateSection("Movement")
+
+local Button = PlayerTab:CreateButton({
+   Name = "Speed Up",
+   Callback = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Redexe19/RXGUIV1/main/speed%20up"))()
+   end,
+})
+
+local AvatarSection = PlayerTab:CreateSection("Character")
+
+local Keybind = PlayerTab:CreateKeybind({
+   Name = "Noclip",
+   CurrentKeybind = "T",
+   HoldToInteract = false,
+   Flag = "Keybind1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Keybind)
+local NoclipEnabled = false -- control noclip state
+
+local Noclip = nil
+local Clip = nil
+
+-- Define the custom keybind (input the keybind directly)
+local customKey = (Keybind)  -- You can change this to any valid keybind
+
+-- Function to convert string keybind to Enum.KeyCode
+local function getKeyCode(key)
+    return Enum.KeyCode[key]
+end
+
+function noclip()
+	Clip = false
+	local function Nocl()
+		if NoclipEnabled and game.Players.LocalPlayer.Character ~= nil then -- Check if noclip is enabled
+			for _,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+				if v:IsA('BasePart') and v.CanCollide and v.Name ~= floatName then
+					v.CanCollide = false
+				end
+			end
+		end
+		wait(0.21) -- basic optimization
+	end
+	Noclip = game:GetService('RunService').Stepped:Connect(Nocl)
+end
+
+function clip()
+	if Noclip then Noclip:Disconnect() end
+	Clip = true
+end
+
+-- toggling noclip
+local Player = game.Players.LocalPlayer
+local UserInputService = game:GetService("UserInputService")
+
+UserInputService.InputBegan:Connect(function(inputObject, gameProcessedEvent)
+    if inputObject.KeyCode == getKeyCode(customKey) then
+        NoclipEnabled = not NoclipEnabled -- Toggle noclip state
+        if NoclipEnabled then
+            noclip() -- enable noclip
+        else
+            clip() -- disable noclip
+        end
+    end
+end)
+   end,
+})
+
+local ToolsSection = PlayerTab:CreateSection("Tools")
+local Label = PlayerTab:CreateLabel("Counters")
+
+local Button = PlayerTab:CreateButton({
+   Name = "Fake Preys Peril",
+   Callback = function()
+-- Fake Omni Or Anyother moves just need anim id btw
+local tool = Instance.new("Tool")
+tool.RequiresHandle = true
+tool.Name = "Fake Preys Peril"
+tool.Parent = game.Players.LocalPlayer.Backpack
+
+local mouse = game.Players.LocalPlayer:GetMouse()
+
+local function executeAnimation()
+    local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+    
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://12351854556" -- change id
+    
+    local animationTrack = humanoid:LoadAnimation(animation)
+    
+    animationTrack:Play()
+    animationTrack:AdjustSpeed(1)
+    animationTrack.Looped = false
+    
+    animationTrack.Stopped:Wait() 
+end
+
+local isAnimating = false
+
+mouse.Button1Down:Connect(function()
+    if tool.Parent == game.Players.LocalPlayer.Character or tool.Parent == game.Players.LocalPlayer.StarterGear then
+        if not isAnimating then
+            isAnimating = true
+            executeAnimation()
+            isAnimating = false
+        end
+    end
+end)
+
+game.Players.LocalPlayer.CharacterAdded:Connect(function(character)
+    tool.Parent = game.Players.LocalPlayer.Backpack
+end)
+
+game.Players.LocalPlayer.CharacterAdded:Connect(function(character)
+    tool.Parent = game.Players.LocalPlayer.StarterGear
+end)
+
+game.Players.LocalPlayer.CharacterAdded:Wait()
+tool.Parent = game.Players.LocalPlayer.Backpack
+   end,
+})
+
+local Button = PlayerTab:CreateButton({
+   Name = "Fake Split Second Counter",
+   Callback = function()
+-- Fake Omni Or Anyother moves just need anim id btw
+local tool = Instance.new("Tool")
+tool.RequiresHandle = true
+tool.Name = "Fake SSC"
+tool.Parent = game.Players.LocalPlayer.Backpack
+
+local mouse = game.Players.LocalPlayer:GetMouse()
+
+local function executeAnimation()
+    local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+    
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://15311685628" -- change id
+    
+    local animationTrack = humanoid:LoadAnimation(animation)
+    
+    animationTrack:Play()
+    animationTrack:AdjustSpeed(1)
+    animationTrack.Looped = false
+    
+    animationTrack.Stopped:Wait() 
+end
+
+local isAnimating = false
+
+mouse.Button1Down:Connect(function()
+    if tool.Parent == game.Players.LocalPlayer.Character or tool.Parent == game.Players.LocalPlayer.StarterGear then
+        if not isAnimating then
+            isAnimating = true
+            executeAnimation()
+            isAnimating = false
+        end
+    end
+end)
+
+game.Players.LocalPlayer.CharacterAdded:Connect(function(character)
+    tool.Parent = game.Players.LocalPlayer.Backpack
+end)
+
+game.Players.LocalPlayer.CharacterAdded:Connect(function(character)
+    tool.Parent = game.Players.LocalPlayer.StarterGear
+end)
+
+game.Players.LocalPlayer.CharacterAdded:Wait()
+tool.Parent = game.Players.LocalPlayer.Backpack
+   end,
+})
+
+local Button = PlayerTab:CreateButton({
+   Name = "Fake Deathblow",
+   Callback = function()
+-- Fake Omni Or Anyother moves just need anim id btw
+local tool = Instance.new("Tool")
+tool.RequiresHandle = true
+tool.Name = "Fake Death Blow"
+tool.Parent = game.Players.LocalPlayer.Backpack
+
+local mouse = game.Players.LocalPlayer:GetMouse()
+
+local function executeAnimation()
+    local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+    
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://15128849047" -- change id
+    
+    local animationTrack = humanoid:LoadAnimation(animation)
+    
+    animationTrack:Play()
+    animationTrack:AdjustSpeed(1)
+    animationTrack.Looped = false
+    
+    animationTrack.Stopped:Wait() 
+end
+
+local isAnimating = false
+
+mouse.Button1Down:Connect(function()
+    if tool.Parent == game.Players.LocalPlayer.Character or tool.Parent == game.Players.LocalPlayer.StarterGear then
+        if not isAnimating then
+            isAnimating = true
+            executeAnimation()
+            isAnimating = false
+        end
+    end
+end)
+
+game.Players.LocalPlayer.CharacterAdded:Connect(function(character)
+    tool.Parent = game.Players.LocalPlayer.Backpack
+end)
+
+game.Players.LocalPlayer.CharacterAdded:Connect(function(character)
+    tool.Parent = game.Players.LocalPlayer.StarterGear
+end)
+
+game.Players.LocalPlayer.CharacterAdded:Wait()
+tool.Parent = game.Players.LocalPlayer.Backpack
+   end,
+})
+
+local Label = PlayerTab:CreateLabel("Serious Series")
+local Button = PlayerTab:CreateButton({
+   Name = "Fake Tableflip",
+   Callback = function()
+local tool = Instance.new("Tool")
+tool.RequiresHandle = true
+tool.Name = "Fake Table Flip"
+tool.Parent = game.Players.LocalPlayer.Backpack
+
+local mouse = game.Players.LocalPlayer:GetMouse()
+
+local function executeAnimation()
+    local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+    
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://11365563255" -- change id
+    
+    local animationTrack = humanoid:LoadAnimation(animation)
+    
+    animationTrack:Play()
+    animationTrack:AdjustSpeed(1)
+    animationTrack.Looped = false
+    
+    animationTrack.Stopped:Wait() 
+end
+
+local isAnimating = false
+
+mouse.Button1Down:Connect(function()
+    if tool.Parent == game.Players.LocalPlayer.Character or tool.Parent == game.Players.LocalPlayer.StarterGear then
+        if not isAnimating then
+            isAnimating = true
+            executeAnimation()
+            isAnimating = false
+        end
+    end
+end)
+
+game.Players.LocalPlayer.CharacterAdded:Connect(function(character)
+    tool.Parent = game.Players.LocalPlayer.Backpack
+end)
+
+game.Players.LocalPlayer.CharacterAdded:Connect(function(character)
+    tool.Parent = game.Players.LocalPlayer.StarterGear
+end)
+
+game.Players.LocalPlayer.CharacterAdded:Wait()
+tool.Parent = game.Players.LocalPlayer.Backpack
+   end,
+})
+
+local Button = PlayerTab:CreateButton({
+   Name = "Fake Serious Punch",
+   Callback = function()
+local tool = Instance.new("Tool")
+tool.RequiresHandle = true
+tool.Name = "Fake Serious Punch"
+tool.Parent = game.Players.LocalPlayer.Backpack
+
+local mouse = game.Players.LocalPlayer:GetMouse()
+
+local function executeAnimation()
+    local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+    
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://12983333733" -- change id
+    
+    local animationTrack = humanoid:LoadAnimation(animation)
+    
+    animationTrack:Play()
+    animationTrack:AdjustSpeed(1)
+    animationTrack.Looped = false
+    
+    animationTrack.Stopped:Wait() 
+end
+
+local isAnimating = false
+
+mouse.Button1Down:Connect(function()
+    if tool.Parent == game.Players.LocalPlayer.Character or tool.Parent == game.Players.LocalPlayer.StarterGear then
+        if not isAnimating then
+            isAnimating = true
+            executeAnimation()
+            isAnimating = false
+        end
+    end
+end)
+
+game.Players.LocalPlayer.CharacterAdded:Connect(function(character)
+    tool.Parent = game.Players.LocalPlayer.Backpack
+end)
+
+game.Players.LocalPlayer.CharacterAdded:Connect(function(character)
+    tool.Parent = game.Players.LocalPlayer.StarterGear
+end)
+
+game.Players.LocalPlayer.CharacterAdded:Wait()
+tool.Parent = game.Players.LocalPlayer.Backpack
+   end,
+})
+
+local Button = PlayerTab:CreateButton({
+   Name = "Fake Omni",
+   Callback = function()
+local tool = Instance.new("Tool")
+tool.RequiresHandle = true
+tool.Name = "Fake Omni"
+tool.Parent = game.Players.LocalPlayer.Backpack
+
+local mouse = game.Players.LocalPlayer:GetMouse()
+
+local function executeAnimation()
+    local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+    
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://13927612951" -- change id
+    
+    local animationTrack = humanoid:LoadAnimation(animation)
+    
+    animationTrack:Play()
+    animationTrack:AdjustSpeed(1)
+    animationTrack.Looped = false
+    
+    animationTrack.Stopped:Wait() 
+end
+
+local isAnimating = false
+
+mouse.Button1Down:Connect(function()
+    if tool.Parent == game.Players.LocalPlayer.Character or tool.Parent == game.Players.LocalPlayer.StarterGear then
+        if not isAnimating then
+            isAnimating = true
+            executeAnimation()
+            isAnimating = false
+        end
+    end
+end)
+
+game.Players.LocalPlayer.CharacterAdded:Connect(function(character)
+    tool.Parent = game.Players.LocalPlayer.Backpack
+end)
+
+game.Players.LocalPlayer.CharacterAdded:Connect(function(character)
+    tool.Parent = game.Players.LocalPlayer.StarterGear
+end)
+
+game.Players.LocalPlayer.CharacterAdded:Wait()
+tool.Parent = game.Players.LocalPlayer.Backpack
+   end,
+})
+
+local Paragraph = PlayerTab:CreateParagraph({Title = "Coming Soon", Content = "Adding More Moves In The Future."})
+
+local TpTab = Window:CreateTab("Teleports 📌", nil) -- Title, Image
+local AreaSection = TpTab:CreateSection("Locations")
+
+local Button = TpTab:CreateButton({
+   Name = "Dummy Location",
+   Callback = function()
+game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(149, 440, 31))
+   end,
+})
+
+local Button = TpTab:CreateButton({
+   Name = "Mountain 1",
+   Callback = function()
+game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(-4, 652, -369))
+   end,
+})
+
+local Button = TpTab:CreateButton({
+   Name = "Mountain 2",
+   Callback = function()
+game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(304, 671, 395))
+   end,
+})
+
+local Button = TpTab:CreateButton({
+   Name = "Lonely Area 1",
+   Callback = function()
+game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(-209, 439, 431))
+   end,
+})
+
+local Button = TpTab:CreateButton({
+   Name = "Lonely Area 2",
+   Callback = function()
+game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(-132, 439, -357))
+   end,
+})
+
+local Button = TpTab:CreateButton({
+   Name = "Death Counter Room",
+   Callback = function()
+game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(-64, 29, 20335))
+   end,
+})
+
+local Button = TpTab:CreateButton({
+   Name = "Atomic Slash Room",
+   Callback = function()
+game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(1064, 131, 23006))
+   end,
+})
+
+local Button = TpTab:CreateButton({
+   Name = "Lower Baseplate",
+   Callback = function()
+game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(1074, 19, 23143))
+   end,
+})
+
+local Button = TpTab:CreateButton({
+   Name = "Upper Baseplate",
+   Callback = function()
+game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(1087, 406, 23052))
+   end,
+})
+
+local ManualSection = TpTab:CreateSection("Manual Teleportation")
+
+local Input = TpTab:CreateInput({
+   Name = "Position Teleporter",
+   PlaceholderText = "0, 0, 0",
+   RemoveTextAfterFocusLost = false,
+   Callback = function(Text)
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+local function teleportToPosition(position)
+    character:SetPrimaryPartCFrame(CFrame.new(position))
+end
+
+teleportToPosition(Vector3.new(Text))
+end)
+   end,
+})
+
+local Button = TpTab:CreateButton({
+   Name = "Position Displayer",
+   Callback = function()
+      --Position Displayer By RXScripter It's Obfuscated--
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Redexe19/RXGUIV1/main/posdisplayer"))()
+   end,
+})
+
+local MiscTab = Window:CreateTab("Miscellaneous ❔", nil) -- Title, Image
+local CmdSection = MiscTab:CreateSection("Command Scripts")
+
+local Button = MiscTab:CreateButton({
+   Name = "Inf Yield",
+   Callback = function()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+   end,
+})
+
+local Button = MiscTab:CreateButton({
+   Name = "Nameless Admin",
+   Callback = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/FilteringEnabled/NamelessAdmin/main/Source"))()
+   end,
+})
+
+local Button = MiscTab:CreateButton({
+   Name = "Tbao Hub Admin",
+   Callback = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/tbao143/thaibao/main/TbaoHubAdmin"))()
+   end,
+})
