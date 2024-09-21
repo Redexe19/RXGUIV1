@@ -1065,7 +1065,7 @@ local Button = TpTab:CreateButton({
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Redexe19/RXGUIV1/main/posdisplayer"))()
    end,
 })
-
+--[[
 local MiscTab = Window:CreateTab("Miscellaneous ❔", nil) -- Title, Image
 local CmdSection = MiscTab:CreateSection("Command Scripts")
 
@@ -1089,3 +1089,4 @@ local Button = MiscTab:CreateButton({
 loadstring(game:HttpGet("https://raw.githubusercontent.com/tbao143/thaibao/main/TbaoHubAdmin"))()
    end,
 })
+]]
