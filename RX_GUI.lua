@@ -1054,7 +1054,10 @@ local Input = TpTab:CreateInput({
    PlaceholderText = "0, 0, 0",
    RemoveTextAfterFocusLost = false,
    Callback = function(Text)
-			print("not working rn")
+local player = game.Players.LocalPlayer
+
+local position = Vector3.new(Text) -- Change the coordinates to your desired position
+player.Character.HumanoidRootPart.CFrame = CFrame.new(position)
    end,
 })
 
