@@ -161,17 +161,94 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Redexe19/RXGUIV1/main
 
 local Label = MainTab:CreateLabel("Both")
 
-local Toggle = MainTab:CreateToggle({
+local Button = MainTab:CreateButton({
    Name = "Auto Void",
-   CurrentValue = false,
-   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-   Callback = function(Value)
-local autovoid = script
-      loadstring(game:HttpGet("https://raw.githubusercontent.com/Redexe19/RXGUIV1/refs/heads/main/autovoid"))()
-      autovoid.Enabled = (Value)
+   Callback = function()
+-- PART CREATION
+local player = game.Players.LocalPlayer
+
+local part = Instance.new("Part")
+part.Parent = game.Workspace
+part.Size = Vector3.new(250, 1, 250)
+part.Position = Vector3.new(150, -495, 30) 
+part.Anchored = true
+part.CanCollide = true
+part.Transparency = 0.3
+-- END
+-- TELEPORT FUNCTION
+local function teleportPlayer()
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+local teleportPosition = CFrame.new(150, -493, 30) -- coords to tp 
+
+-- saves pos
+local startPos = character.PrimaryPart.CFrame
+    
+humanoid.Parent = nil
+character:SetPrimaryPartCFrame(teleportPosition)
+humanoid.Parent = character
+
+wait(1.4) -- Wait for 1.4 seconds
+
+-- teleport back to original location
+humanoid.Parent = nil
+character:SetPrimaryPartCFrame(startPos)
+humanoid.Parent = character
+end
+-- END
+-- ANIMATION DETECTION
+function onAnimation(id, func)
+    id = tostring(id):gsub("rbxassetid://", "")
+    
+    local function checkAnimation(char)
+        local humanoid = char and char:WaitForChild("Humanoid", 1)
+        if char and humanoid then
+            humanoid.AnimationPlayed:Connect(function(v)
+                local vID = v.Animation.AnimationId:gsub("rbxassetid://", "")
+                if id == vID then
+                    func(v)
+                end
+            end)
+        end
+    end
+    
+    checkAnimation(game.Players.LocalPlayer.Character)
+    game.Players.LocalPlayer.CharacterAdded:Connect(checkAnimation)
+end
+-- ANIMATIONS AND THEIR FUNCTIONS
+onAnimation("14705929107", function(animation)
+    wait(1.9)
+    teleportPlayer()
+    warn("animation id:", animation.Animation.AnimationId)
+end)
+
+onAnimation("12296113986", function(animation)
+    wait(1)
+    teleportPlayer()
+    warn("animation id:", animation.Animation.AnimationId)
+end)
+
+onAnimation("15145462680", function(animation)
+    wait(1.7)
+    teleportPlayer()
+    warn("animation id:", animation.Animation.AnimationId)
+end)
+
+onAnimation("12273188754", function(animation)
+    wait(1.3)
+    teleportPlayer()
+    warn("animation id:", animation.Animation.AnimationId)
+end)
+
+onAnimation("16139108718", function(animation)
+    wait(0.2)
+    teleportPlayer()
+    warn("animation id:", animation.Animation.AnimationId)
+end)
    end,
 })
-
 local VisualSection = MainTab:CreateSection("Visual")
 
 local Keybind = MainTab:CreateKeybind({
