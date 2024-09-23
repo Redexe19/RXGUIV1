@@ -376,6 +376,13 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/louismich4el/ItsLouis
    end,
 })
 
+local Button = ExploitTab:CreateButton({
+   Name = "Anti Death Counter",
+   Callback = function()
+   -- The function that takes place when the button is pressed
+   end,
+})
+
 local InvisSection = ExploitTab:CreateSection("Invisible Moves")
 
 local Button = ExploitTab:CreateButton({
