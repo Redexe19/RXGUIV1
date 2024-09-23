@@ -1133,4 +1133,11 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Redexe19/RXGUIV1/main
 })
 
 local MiscTab = Window:CreateTab("Miscellaneous ❔", nil) -- Title, Image
-local Paragraph = MiscTab:CreateParagraph({Title = "Coming Soon", Content = "Nothing Here Yet"})
+local ServerSection = MiscTab:CreateSection("Server")
+
+local Button = MiscTab:CreateButton({
+   Name = "Rejoin",
+   Callback = function()
+game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId, game.Players.LocalPlayer)
+   end,
+})
