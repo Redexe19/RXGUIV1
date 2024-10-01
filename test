@@ -90,12 +90,36 @@ end
 
 local Dropdown = MainTab:CreateDropdown({
    Name = "Dropdown Example",
-   Options = {"Option 1","Option 2"},
-   CurrentOption = {"Option 1"},
+   Options = {"flyhigh","haha","mountain"},
+   CurrentOption = {"flyhigh"},
    MultipleOptions = false,
    Flag = "Dropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Option)
-   -- The function that takes place when the selected option is changed
-   -- The variable (Option) is a table of strings for the current selected options
-   end,
+local function checkText(textToCheck, textToScriptMapping)
+  for targetText, scriptToExecute in pairs(textToScriptMapping) do
+    if textToCheck == targetText then
+      scriptToExecute() -- Call the function directly
+      return -- Stop checking after a match is found
+    end
+  end
+end
+
+-- Example usage:
+local textToScriptMapping = {
+  ["mountain"] = function()
+    game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(520, 440, 293))
+  end,
+  ["haha"] = function()
+    game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(520, 1000, 100))
+  end,
+  ["flyhigh"] = function()
+game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(0, 1000, 0))
+  end,
+}
+
+-- Get the text input from the user (replace with your actual input method)
+local userInput = "(Option)"
+
+checkText(userInput, textToScriptMapping)
+      end,
 })
