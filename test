@@ -1,0 +1,101 @@
+local Window = Rayfield:CreateWindow({
+   Name = "RX Test",
+   LoadingTitle = "testing version of rx gui",
+   LoadingSubtitle = "by rx",
+   ConfigurationSaving = {
+      Enabled = true,
+      FolderName = nil, -- Create a custom folder for your hub/game
+      FileName = "Big Hub"
+   },
+   Discord = {
+      Enabled = false,
+      Invite = "noinvitelink", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ABCD would be ABCD
+      RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+   },
+   KeySystem = false, -- Set this to true to use our key system
+   KeySettings = {
+      Title = "Untitled",
+      Subtitle = "Key System",
+      Note = "No method of obtaining the key is provided",
+      FileName = "Key", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
+      SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
+      GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+      Key = {"Hello"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
+   }
+})
+
+local MainTab = Window:CreateTab("Incoming Features Testing", nil) -- Title, Image
+local Section = MainTab:CreateSection("idk im testing")
+
+local Paragraph = MainTab:CreateParagraph({Title = "lets see if its long", Content = "uh hello im testing. uh hello im testing. uh hello im testing. uh hello im testing. uh hello im testing. uh hello im testing. uh hello im testing. uh hello im testing. uh hello im testing. uh hello im testing. uh hello im testing. uh hello im testing. uh hello im testing. uh hello im testing. uh hello im testing. uh hello im testing. uh hello im testing. uh hello im testing. "})
+
+local Toggle = MainTab:CreateToggle({
+   Name = "idk",
+   CurrentValue = false,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+   -- The function that takes place when the toggle is pressed
+   -- The variable (Value) is a boolean on whether the toggle is true or false
+   end,
+})
+
+local Toggle = MainTab:CreateToggle({
+   Name = "idk",
+   CurrentValue = false,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+   -- The function that takes place when the toggle is pressed
+   -- The variable (Value) is a boolean on whether the toggle is true or false
+   end,
+})
+
+local Slider = MainTab:CreateSlider({
+   Name = "uh hp safe location",
+   Range = {0, 100},
+   Increment = 10,
+   Suffix = "Bananas",
+   CurrentValue = 30,
+   Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+   local player = game.Players.LocalPlayer
+local character = player.Character
+local humanoid = character:WaitForChild("Humanoid")
+local savedPosition = nil
+
+local function teleportToLocation(position)
+  character.HumanoidRootPart.CFrame = CFrame.new(position)
+end
+
+local function checkHealth()
+  if humanoid.Health <= (Value) then
+    savedPosition = character.HumanoidRootPart.CFrame.Position
+    for i = 1, 5 do
+      teleportToLocation(Vector3.new(1018, 442, -692))
+      wait(0.2)
+    end
+    wait(20)
+    if savedPosition then
+      teleportToLocation(savedPosition)
+      savedPosition = nil
+    end
+  end
+end
+
+while true do
+  wait(0.1)
+  checkHealth()
+end
+   end,
+})
+
+local Dropdown = MainTab:CreateDropdown({
+   Name = "Dropdown Example",
+   Options = {"Option 1","Option 2"},
+   CurrentOption = {"Option 1"},
+   MultipleOptions = false,
+   Flag = "Dropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Option)
+   -- The function that takes place when the selected option is changed
+   -- The variable (Option) is a table of strings for the current selected options
+   end,
+})
