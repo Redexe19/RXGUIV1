@@ -299,10 +299,10 @@ humanoid.AnimationPlayed:Connect(onAnimationPlayed)
 local SafeSection = ExploitTab:CreateSection("Safety")
 
 local Slider = ExploitTab:CreateSlider({
-   Name = "Slider Example",
+   Name = "Health Safe Location Teleport",
    Range = {0, 100},
-   Increment = 10,
-   Suffix = "Bananas",
+   Increment = 1,
+   Suffix = "HP",
    CurrentValue = 20,
    Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
