@@ -1,0 +1,126 @@
+-- PART CREATION
+local player = game.Players.LocalPlayer
+
+local part = Instance.new("Part")
+part.Parent = game.Workspace
+part.Size = Vector3.new(250, 1, 250)
+part.Position = Vector3.new(150, -499, 30)
+part.Anchored = true
+part.CanCollide = true
+part.Transparency = 0.3
+-- END
+
+-- TELEPORT FUNCTION
+local teleportPosition = CFrame.new(150, -497, 30) -- Default to "Void" position
+
+local function punishTp()
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+
+    -- saves pos
+    local startPos = character.PrimaryPart.CFrame
+
+    humanoid.Parent = nil
+    character:SetPrimaryPartCFrame(teleportPosition)
+    humanoid.Parent = character
+
+    wait(1.4) -- Wait for 1.4 seconds
+
+    -- teleport back to original location
+    humanoid.Parent = nil
+    character:SetPrimaryPartCFrame(startPos)
+    humanoid.Parent = character
+end
+-- END
+
+-- ANIMATION DETECTION
+local toggleActive = false
+
+function onAnimation(id, func)
+    id = tostring(id):gsub("rbxassetid://", "")
+    
+    local function checkAnimation(char)
+        local humanoid = char and char:WaitForChild("Humanoid", 1)
+        if char and humanoid then
+            humanoid.AnimationPlayed:Connect(function(v)
+                if toggleActive then
+                    local vID = v.Animation.AnimationId:gsub("rbxassetid://", "")
+                    if id == vID then
+                        func(v)
+                    end
+                end
+            end)
+        end
+    end
+    
+    checkAnimation(game.Players.LocalPlayer.Character)
+    game.Players.LocalPlayer.CharacterAdded:Connect(checkAnimation)
+end
+
+-- ANIMATIONS AND THEIR FUNCTIONS
+onAnimation("14705929107", function(animation)
+    wait(1.9)
+    punishTp()
+    warn("animation id:", animation.Animation.AnimationId)
+end)
+
+onAnimation("12296113986", function(animation)
+    wait(1)
+    punishTp()
+    warn("animation id:", animation.Animation.AnimationId)
+end)
+
+onAnimation("15145462680", function(animation)
+    wait(1.7)
+    punishTp()
+    warn("animation id:", animation.Animation.AnimationId)
+end)
+
+onAnimation("12273188754", function(animation)
+    wait(1.3)
+    punishTp()
+    warn("animation id:", animation.Animation.AnimationId)
+end)
+
+onAnimation("16139108718", function(animation)
+    wait(0.1)
+    punishTp()
+    warn("animation id:", animation.Animation.AnimationId)
+end)
+
+-- UI TOGGLE AND DROPDOWN INTEGRATION
+
+local Toggle = MainTab:CreateToggle({
+   Name = "Auto Void",
+   CurrentValue = false,
+   Flag = "Toggle1",
+   Callback = function(Value)
+       toggleActive = Value
+       print("Auto Void Toggle is now", toggleActive and "ON" or "OFF")
+   end,
+})
+
+local Dropdown = MainTab:CreateDropdown({
+   Name = "Punish Location",
+   Options = {"Void", "Map Center", "Beach", "Mountain", "Outside Area", "Lower Baseplate", "Upper Baseplate", "Atomic Slash Room", "DC Room"},
+   CurrentOption = {"Void"},
+   MultipleOptions = false,
+   Flag = "Dropdown1",
+   Callback = function(Option)
+       -- Set teleportPosition based on selected option
+       local positions = {
+           Void = Vector3.new(150, -497, 30),
+           ["Map Center"] = Vector3.new(149, 440, 31),
+           Beach = Vector3.new(723, 440, -218),
+           Mountain = Vector3.new(-4, 652, -369),
+           ["Outside Area"] = Vector3.new(-132, 439, -357),
+           ["Lower Baseplate"] = Vector3.new(1074, 19, 23143),
+           ["Upper Baseplate"] = Vector3.new(1087, 406, 23052),
+           ["Atomic Slash Room"] = Vector3.new(1064, 131, 23006),
+           ["DC Room"] = Vector3.new(-64, 29, 20335),
+       }
+       teleportPosition = CFrame.new(positions[Option[1]])
+       print("Punish Location set to", Option[1])
+   end,
+})
