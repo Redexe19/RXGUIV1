@@ -91,7 +91,7 @@ end)
 
 -- UI TOGGLE AND DROPDOWN INTEGRATION
 
-local Toggle = MainTab:CreateToggle({
+local Toggle = ExploitTab:CreateToggle({
    Name = "Auto Void",
    CurrentValue = false,
    Flag = "Toggle1",
@@ -101,7 +101,7 @@ local Toggle = MainTab:CreateToggle({
    end,
 })
 
-local Dropdown = MainTab:CreateDropdown({
+local Dropdown = ExploitTab:CreateDropdown({
    Name = "Punish Location",
    Options = {"Void", "Map Center", "Beach", "Mountain", "Outside Area", "Lower Baseplate", "Upper Baseplate", "Atomic Slash Room", "DC Room"},
    CurrentOption = {"Void"},
