@@ -1,0 +1,60 @@
+-- KILL NOTIFICATION
+local player = game.Players.LocalPlayer
+local leaderstats = player:WaitForChild("leaderstats")
+local totalKills = leaderstats:WaitForChild("Total Kills")
+
+-- Possible positions for the TextLabel
+local positions = {
+    UDim2.new(0.5, 0, 0.5, 0),    -- Center
+    UDim2.new(0.5, 0, 0.25, 0),   -- Center Up
+    UDim2.new(0.5, 0, 0.75, 0),   -- Center Down
+    UDim2.new(0.25, 0, 0.5, 0),   -- Center Left
+    UDim2.new(0.75, 0, 0.5, 0)    -- Center Right
+}
+
+-- Function to create and display the +1 gui
+local function showKillIndicator()
+    -- Create a new ScreenGui
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.Parent = player.PlayerGui
+    screenGui.ResetOnSpawn = false
+    
+    -- Create a new TextLabel
+    local textLabel = Instance.new("TextLabel")
+    textLabel.Size = UDim2.new(0.2, 0, 0.1, 0) -- Adjust size as necessary
+    textLabel.Text = "+1"
+    textLabel.BackgroundTransparency = 1
+    textLabel.TextScaled = true
+    textLabel.Font = Enum.Font.Arcade -- Set to Arcade font
+    textLabel.TextColor3 = Color3.new(1, 1, 1) -- White text
+    textLabel.Parent = screenGui
+
+    -- Pick a random position
+    local randomPosition = positions[math.random(1, #positions)]
+    textLabel.Position = randomPosition
+
+    -- Wait for 1 second before fading out
+    wait(1)
+
+    -- Tween the transparency to fade out over 0.85 seconds
+    local tweenService = game:GetService("TweenService")
+    local tweenInfo = TweenInfo.new(0.85, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
+    local goal = {TextTransparency = 1}
+
+    local tween = tweenService:Create(textLabel, tweenInfo, goal)
+    tween:Play()
+
+    -- Remove the gui after the tween completes
+    tween.Completed:Connect(function()
+        screenGui:Destroy()
+    end)
+end
+
+-- Listen for changes in Total Kills value
+local previousKills = totalKills.Value
+totalKills:GetPropertyChangedSignal("Value"):Connect(function()
+    if totalKills.Value > previousKills then
+        showKillIndicator() -- Show +1 indicator when Total Kills increases
+    end
+    previousKills = totalKills.Value
+end)
