@@ -1,0 +1,9 @@
+local folder = game.Workspace:WaitForChild("Map"):WaitForChild("Trees")
+return function(state)
+    for _, part in ipairs(folder:GetChildren()) do
+        if part:IsA("BasePart") then
+            part.Transparency = state and 1 or 0
+            part.CanCollide = not state
+        end
+    end
+end
