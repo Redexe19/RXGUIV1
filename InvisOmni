@@ -1,5 +1,5 @@
 -- Invisible Serious Punch
-local animationId = 12983333733 ---- Get anim id
+local animationId = 13927612951 ---- Get anim id
  
  
 local player = game.Players.LocalPlayer
