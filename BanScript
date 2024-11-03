@@ -1,0 +1,113 @@
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = game.CoreGui
+
+local frame = Instance.new("Frame")
+frame.Parent = screenGui
+frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+frame.Position = UDim2.new(0.5, 0, 0.5, 0)
+frame.Size = UDim2.new(0, 250, 0, 100)
+frame.AnchorPoint = Vector2.new(0.5, 0.5)
+
+-- Add the border
+local border = Instance.new("Frame")
+border.Parent = frame
+border.BackgroundColor3 = Color3.new(50, 50, 50) -- White
+border.BorderSizePixel = 3
+border.Size = UDim2.new(1, 0, 1, 0)
+border.Position = UDim2.new(0, 0, 0, 0)
+
+-- Dragging variables
+local dragging = false
+local dragInput
+local dragStart
+local startPos
+
+local function update(input)
+    local delta = input.Position - dragStart
+    frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+end
+
+-- Connect events for dragging
+frame.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        dragging = true
+        dragStart = input.Position
+        startPos = frame.Position
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+            end
+        end)
+    end
+end)
+
+frame.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+        dragInput = input
+    end
+end)
+
+frame.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        dragging = false
+        dragInput = nil
+    end
+end)
+
+game:GetService("UserInputService").InputChanged:Connect(function(input)
+    if input == dragInput and dragging then
+        update(input)
+    end
+end)
+
+local textLabel = Instance.new("TextLabel")
+textLabel.Parent = frame
+textLabel.Text = "Are You Sure You Wanna Get Banned?"
+textLabel.TextColor3 = Color3.new(1, 1, 1)
+textLabel.TextSize = 14
+textLabel.Size = UDim2.new(1, 0, 0, 20)
+textLabel.TextWrapped = true
+textLabel.Font = Enum.Font.Arcade -- Changed font to Arcade
+textLabel.Position = UDim2.new(0, 0, 0, 10)
+textLabel.TextScaled = true -- Enable text scaling
+
+local yesButton = Instance.new("TextButton")
+yesButton.Parent = frame
+yesButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+yesButton.TextColor3 = Color3.new(1, 1, 1)
+yesButton.Text = "Yes"
+yesButton.Size = UDim2.new(0.4, 0, 0, 20)
+yesButton.Position = UDim2.new(0.3, 0, 0.5, 0)
+yesButton.Font = Enum.Font.Arcade -- Changed font to Arcade
+yesButton.MouseButton1Click:Connect(function()
+  local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+local humanoid = character:WaitForChild("Humanoid")
+
+local animation = Instance.new("Animation")
+animation.AnimationId = "rbxassetid://18447913645"
+
+local animationTrack = humanoid:LoadAnimation(animation)
+
+animationTrack:Play()
+
+animationTrack:AdjustSpeed(1)
+animationTrack.Looped = false
+    screenGui:Destroy()
+end)
+yesButton.TextScaled = true  -- Enable text scaling
+
+local noButton = Instance.new("TextButton")
+noButton.Parent = frame
+noButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+noButton.TextColor3 = Color3.new(1, 1, 1)
+noButton.Text = "No"
+noButton.Size = UDim2.new(0.4, 0, 0, 20)
+noButton.Position = UDim2.new(0.3, 0, 0.7, 0)
+noButton.Font = Enum.Font.Arcade -- Changed font to Arcade
+noButton.MouseButton1Click:Connect(function()
+  game.Players.LocalPlayer:Kick("\n\nI'd Rather Still Kick You For Running This Ban Script")
+    screenGui:Destroy()
+end)
+noButton.TextScaled = true  -- Enable text scaling
