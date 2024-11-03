@@ -1,0 +1,50 @@
+-- KILL DISPLAY
+local TweenService = game:GetService("TweenService")
+local player = game.Players.LocalPlayer
+local leaderstats = player:WaitForChild("leaderstats")
+local totalKills = leaderstats:FindFirstChild("Total Kills")
+
+if totalKills then
+    -- Create the ScreenGui
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.Parent = game.CoreGui
+
+    -- Create the TextLabel
+    local textLabel = Instance.new("TextLabel")
+    textLabel.Parent = screenGui
+    textLabel.Text = tostring(totalKills.Value)
+    textLabel.Font = Enum.Font.Arcade
+    textLabel.TextScaled = true
+    textLabel.BackgroundTransparency = 1
+    textLabel.Position = UDim2.new(0.55, -100, 0, 0)
+    textLabel.Size = UDim2.new(0, 100, 0, 100)
+    textLabel.TextColor3 = Color3.fromRGB(255, 255, 255) -- Start as white
+
+    -- Define tween information
+    local tweenInfo = TweenInfo.new(0.50, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut) -- 0.50s fade time
+    local targetWhite = { TextColor3 = Color3.fromRGB(255, 255, 255) } -- White target
+    local targetRed = { TextColor3 = Color3.fromRGB(255, 0, 0) } -- Red target
+
+    -- Store the previous value of Total Kills
+    local previousValue = totalKills.Value
+
+    -- Function to fade text color from red to white after 0.50 seconds
+    local function fadeToWhite()
+        wait(0.90) -- Wait for 0.50 seconds before starting the fade
+        local tweenWhite = TweenService:Create(textLabel, tweenInfo, targetWhite)
+        tweenWhite:Play() -- Start fade to white
+    end
+
+    -- Update text label when "Total Kills" changes
+    totalKills:GetPropertyChangedSignal("Value"):Connect(function()
+        local currentValue = totalKills.Value
+        if currentValue ~= previousValue then
+            textLabel.Text = tostring(currentValue)
+            textLabel.TextColor3 = Color3.fromRGB(255, 0, 0) -- Instantly change to red
+            fadeToWhite() -- Start the fade process after the wait
+
+            -- Update the previous value
+            previousValue = currentValue
+        end
+    end)
+end
