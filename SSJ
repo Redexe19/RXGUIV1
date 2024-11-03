@@ -1,0 +1,203 @@
+-- SHADOW CLONE JUTSU
+-- Place this LocalScript in StarterPlayer > StarterPlayerScripts
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local clones = {}
+local cloneCount = 5
+local key = Enum.KeyCode.J
+local debounce = false
+
+-- Animation IDs
+local spawnAnimationId = "rbxassetid://13497875049"
+local walkAnimationId = "rbxassetid://7815618175"
+
+-- Custom function to be executed on each teleport
+local function customFunction()
+    local humanoid = character:WaitForChild("Humanoid")
+
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://15957361339"
+
+    local animationTrack = humanoid:LoadAnimation(animation)
+    animationTrack:Play()
+    animationTrack:AdjustSpeed(1)
+    animationTrack.Looped = false
+    -- Add any additional custom behavior here
+end
+
+-- Custom function to be executed when cloning starts
+local function onCloningStart()
+    local humanoid = character:WaitForChild("Humanoid")
+
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://13073745835"
+
+    local animationTrack = humanoid:LoadAnimation(animation)
+    animationTrack:Play()
+    animationTrack:AdjustSpeed(1)
+    animationTrack.Looped = false
+    -- Add any additional behavior for the start of cloning here
+end
+
+-- Function to get a random player excluding the local player
+local function getRandomPlayer()
+    local players = game.Players:GetPlayers()
+    local validPlayers = {}
+    
+    for _, otherPlayer in ipairs(players) do
+        if otherPlayer ~= player then
+            table.insert(validPlayers, otherPlayer)
+        end
+    end
+    
+    if #validPlayers == 0 then
+        return nil
+    end
+
+    return validPlayers[math.random(1, #validPlayers)]
+end
+
+-- Function to create clones and make them move towards random players
+local function createClones()
+    -- Call the custom function for cloning start
+    onCloningStart()
+
+    -- Get the player's current CFrame to use for clone orientation
+    local playerCFrame = character.PrimaryPart.CFrame
+
+    -- Create all clones first
+    for i = 1, cloneCount do
+        -- Clone character and setup properties
+        local clone = character:Clone()
+        clone.Parent = workspace
+        clone.Name = "Clone_" .. i
+
+        -- Set clone's position around the local player, keeping the same orientation
+        local offsetX = math.random(-10, 10) -- Change these values for different spawn ranges
+        local offsetZ = math.random(-10, 10) -- Change these values for different spawn ranges
+        local spawnPosition = playerCFrame.Position + Vector3.new(offsetX, 0, offsetZ)
+
+        -- Set the CFrame to maintain the player's orientation
+        clone:SetPrimaryPartCFrame(CFrame.new(spawnPosition, spawnPosition + playerCFrame.LookVector))
+
+        -- Add clone to the list for teleporting and destroying later
+        table.insert(clones, clone)
+    end
+
+    -- Load and play the spawn animation for all clones at the same time
+    local spawnTracks = {}
+    
+    for _, clone in ipairs(clones) do
+        local humanoid = clone:FindFirstChildOfClass("Humanoid")
+        if humanoid then
+            humanoid.WalkSpeed = 32
+
+            -- Load the spawn animation
+            local animator = Instance.new("Animator")
+            animator.Parent = humanoid
+
+            local spawnAnimation = Instance.new("Animation")
+            spawnAnimation.AnimationId = spawnAnimationId
+
+            -- Play the spawn animation
+            local animationTrack = animator:LoadAnimation(spawnAnimation)
+            animationTrack:Play()
+            table.insert(spawnTracks, animationTrack) -- Collect all animation tracks
+        end
+    end
+
+    -- Wait for all spawn animations to finish before proceeding
+    for _, track in ipairs(spawnTracks) do
+        track.Stopped:Wait()
+    end
+
+    -- After all spawn animations, start walking towards random players
+    for _, clone in ipairs(clones) do
+        local humanoid = clone:FindFirstChildOfClass("Humanoid")
+        if humanoid then
+            -- Load and play the walk animation
+            local animator = humanoid:FindFirstChildOfClass("Animator")
+            local walkAnimation = Instance.new("Animation")
+            walkAnimation.AnimationId = walkAnimationId
+            animator:LoadAnimation(walkAnimation):Play()
+
+            -- Function to move the clone to a new target
+            local function moveToNewTarget()
+                local targetPlayer = getRandomPlayer()
+                if targetPlayer and targetPlayer.Character then
+                    local targetPosition = targetPlayer.Character.PrimaryPart.Position
+                    humanoid:MoveTo(targetPosition)
+                else
+                    -- If no valid player, keep searching after a short delay
+                    wait(1)
+                    moveToNewTarget()
+                end
+            end
+
+            -- Start moving the clone towards a random player
+            moveToNewTarget()
+
+            -- Connect to MoveToFinished event
+            humanoid.MoveToFinished:Connect(function(reached)
+                if reached then
+                    moveToNewTarget() -- Move to another player if reached
+                else
+                    -- If not reached (e.g., player died), find a new target immediately
+                    wait(1)
+                    moveToNewTarget()
+                end
+            end)
+        end
+    end
+end
+
+-- Function to destroy all clones
+local function destroyClones()
+    for _, clone in ipairs(clones) do
+        if clone then
+            clone:Destroy()
+        end
+    end
+    -- Clear the clones table
+    clones = {}
+end
+
+-- Function to teleport player to each clone and destroy the clone
+local function teleportToClones()
+    for i, clone in ipairs(clones) do
+        player.Character:SetPrimaryPartCFrame(clone.PrimaryPart.CFrame)
+
+        -- Call the custom function here
+        customFunction()
+
+        clone:Destroy()
+        wait(0.2)
+    end
+    -- Clear the clones table after teleporting and destroying
+    clones = {}
+end
+
+-- Toggle function for key press
+local function onKeyPress(input)
+    if input.KeyCode == key and not debounce then
+        debounce = true
+
+        if #clones == 0 then
+            createClones()
+        else
+            teleportToClones()
+        end
+
+        debounce = false
+    end
+end
+
+-- Connect key press event
+game:GetService("UserInputService").InputBegan:Connect(onKeyPress)
+
+-- Connect to the humanoid's Died event to destroy all clones when player's health reaches 0
+local humanoid = character:WaitForChild("Humanoid")
+humanoid.Died:Connect(function()
+    destroyClones()
+end)
