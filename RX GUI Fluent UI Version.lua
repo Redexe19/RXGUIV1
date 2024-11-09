@@ -493,45 +493,82 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/louismich4el/ItsLouis
         Content = "Scripts That Kills Players\n(Doesnt Increase Total Kills)"
     })
     
--- TELEPORT FUNCTION
-teleportPosition = CFrame.new(150, -497, 30) -- Default to "Void" position
 
-function punishTp()
-    player = game.Players.LocalPlayer
-    character = player.Character or player.CharacterAdded:Wait()
-    humanoid = character:WaitForChild("Humanoid")
+    Tabs.Expl:AddButton({
+        Title = "Manual Void",
+        Description = "Teleport Players To The Void\n(PC Version) Keybind is G",
+        Callback = function()
+            Window:Dialog({
+                Title = "Execute Script?",
+                Content = "Y/N",
+                Buttons = {
+                    {
+                        Title = "Confirm",
+                        Callback = function()
+                            loadstring(game:HttpGet("https://raw.githubusercontent.com/Redexe19/RXGUIV1/refs/heads/main/ManualVoidPcVerPressG"))()
+                        end
+                    },
+                    {
+                        Title = "Cancel",
+                        Callback = function()
+                            print("Cancelled the dialog.")
+                        end
+                    }
+                }
+            })
+        end
+    })
+
+Could you make this local ui library script still work without the word local
+
+-- PART CREATION
+local player = game.Players.LocalPlayer
+
+local part = Instance.new("Part")
+part.Parent = game.Workspace
+part.Size = Vector3.new(250, 1, 250)
+part.Position = Vector3.new(150, -499, 30)
+part.Anchored = true
+part.CanCollide = true
+part.Transparency = 0.3
+-- END
+
+-- TELEPORT FUNCTION
+local teleportPosition = CFrame.new(150, -497, 30) -- Default to "Void" position
+
+local function punishTp()
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
 
     -- saves pos
-    startPos = character.PrimaryPart.CFrame
+    local startPos = character.PrimaryPart.CFrame
 
-    -- Temporarily disable humanoid's movement (without removing it)
-    humanoid.PlatformStand = true
-
-    -- Teleport the character to the teleportPosition
+    humanoid.Parent = nil
     character:SetPrimaryPartCFrame(teleportPosition)
+    humanoid.Parent = character
 
     wait(1.4) -- Wait for 1.4 seconds
 
-    -- Teleport back to original position
+    -- teleport back to original location
+    humanoid.Parent = nil
     character:SetPrimaryPartCFrame(startPos)
-
-    -- Re-enable humanoid's movement
-    humanoid.PlatformStand = false
+    humanoid.Parent = character
 end
 -- END
 
 -- ANIMATION DETECTION
-toggleActive = false
+local toggleActive = false
 
 function onAnimation(id, func)
     id = tostring(id):gsub("rbxassetid://", "")
     
-    function checkAnimation(char)
-        humanoid = char and char:WaitForChild("Humanoid", 1)
+    local function checkAnimation(char)
+        local humanoid = char and char:WaitForChild("Humanoid", 1)
         if char and humanoid then
             humanoid.AnimationPlayed:Connect(function(v)
                 if toggleActive then
-                    vID = v.Animation.AnimationId:gsub("rbxassetid://", "")
+                    local vID = v.Animation.AnimationId:gsub("rbxassetid://", "")
                     if id == vID then
                         func(v)
                     end
@@ -577,14 +614,14 @@ end)
 
 -- UI TOGGLE AND DROPDOWN INTEGRATION
 
-Toggle = Tabs.Expl:AddToggle("AutoVoidToggle", {Title = "Auto Void or Punish", Default = false })
+local Toggle = Tabs.Expl:AddToggle("AutoVoidToggle", {Title = "Auto Void or Punish", Default = false })
 
 Toggle:OnChanged(function(Value)
     toggleActive = Value
-    print("autovoidorpunish", toggleActive and "ON" or "OFF")
+    print("Auto Void Toggle", toggleActive and "ON" or "OFF")
 end)
 
-Dropdown = Tabs.Expl:AddDropdown("PunishLocation", {
+local Dropdown = Tabs.Expl:AddDropdown("PunishLocation", {
     Title = "Punish Locations",
     Values = {"Void", "Map Center", "Beach", "Mountain", "Outside Area", "Lower Baseplate", "Upper Baseplate", "Atomic Slash Room", "DC Room"},
     Multi = false,
@@ -595,8 +632,8 @@ Dropdown:SetValue("Void")
 
 Dropdown:OnChanged(function(Value)
     -- Set teleportPosition based on selected option
-    positions = {
-        Void = Vector3.new(1500, -497, 1500),
+    local positions = {
+        Void = Vector3.new(150, -497, 30),
         ["Map Center"] = Vector3.new(149, 440, 31),
         Beach = Vector3.new(723, 440, -218),
         Mountain = Vector3.new(-4, 652, -369),
@@ -607,58 +644,8 @@ Dropdown:OnChanged(function(Value)
         ["DC Room"] = Vector3.new(-64, 29, 20335),
     }
     teleportPosition = CFrame.new(positions[Value])
-    print("punishlocation?", Value)
+    print("Punish Location", Value)
 end)
-    
-    Tabs.Expl:AddButton({
-        Title = "Manual Punish",
-        Description = "Bring Players To Certain Locations\n(Mobile Version)",
-        Callback = function()
-            Window:Dialog({
-                Title = "Execute Script?",
-                Content = "Y/N",
-                Buttons = {
-                    {
-                        Title = "Confirm",
-                        Callback = function()
-                            loadstring(game:HttpGet("https://raw.githubusercontent.com/Redexe19/RXGUIV1/refs/heads/main/ManualPunishMobileVer"))()
-                        end
-                    },
-                    {
-                        Title = "Cancel",
-                        Callback = function()
-                            print("Cancelled the dialog.")
-                        end
-                    }
-                }
-            })
-        end
-    })
-    
-    Tabs.Expl:AddButton({
-        Title = "Manual Void",
-        Description = "Teleport Players To The Void\n(PC Version) Keybind is G",
-        Callback = function()
-            Window:Dialog({
-                Title = "Execute Script?",
-                Content = "Y/N",
-                Buttons = {
-                    {
-                        Title = "Confirm",
-                        Callback = function()
-                            loadstring(game:HttpGet("https://raw.githubusercontent.com/Redexe19/RXGUIV1/refs/heads/main/ManualVoidPcVerPressG"))()
-                        end
-                    },
-                    {
-                        Title = "Cancel",
-                        Callback = function()
-                            print("Cancelled the dialog.")
-                        end
-                    }
-                }
-            })
-        end
-    })
     
     Tabs.Expl:AddButton({
         Title = "Manual Void",
