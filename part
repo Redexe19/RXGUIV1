@@ -1,0 +1,9 @@
+local player = game.Players.LocalPlayer
+
+local part = Instance.new("Part")
+part.Parent = game.Workspace
+part.Size = Vector3.new(250, 1, 250)
+part.Position = Vector3.new(150, -499, 30) 
+part.Anchored = true
+part.CanCollide = true
+part.Transparency = 0.7
