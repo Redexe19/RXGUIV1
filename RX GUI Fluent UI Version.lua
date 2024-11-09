@@ -496,24 +496,27 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/louismich4el/ItsLouis
 -- TELEPORT FUNCTION
 teleportPosition = CFrame.new(150, -497, 30) -- Default to "Void" position
 
-local function punishTp()
-    local player = game.Players.LocalPlayer
-    local character = player.Character or player.CharacterAdded:Wait()
-    local humanoid = character:WaitForChild("Humanoid")
+function punishTp()
+    player = game.Players.LocalPlayer
+    character = player.Character or player.CharacterAdded:Wait()
+    humanoid = character:WaitForChild("Humanoid")
 
     -- saves pos
-    local startPos = character.PrimaryPart.CFrame
+    startPos = character.PrimaryPart.CFrame
 
-    humanoid.Parent = nil
+    -- Temporarily disable humanoid's movement (without removing it)
+    humanoid.PlatformStand = true
+
+    -- Teleport the character to the teleportPosition
     character:SetPrimaryPartCFrame(teleportPosition)
-    humanoid.Parent = character
 
     wait(1.4) -- Wait for 1.4 seconds
 
-    -- teleport back to original location
-    humanoid.Parent = nil
+    -- Teleport back to original position
     character:SetPrimaryPartCFrame(startPos)
-    humanoid.Parent = character
+
+    -- Re-enable humanoid's movement
+    humanoid.PlatformStand = false
 end
 -- END
 
