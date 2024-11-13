@@ -1,0 +1,54 @@
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+-- Create Screen GUI
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = player:WaitForChild("PlayerGui")
+screenGui.Name = "StatsDisplay"
+
+-- Create text labels for WalkSpeed, JumpPower, and Gravity
+local offset = UDim2.new(0, 20, 0, 20)  -- Offset from the corner
+local labelSize = UDim2.new(0, 200, 0, 50)  -- Standard size for each label
+
+local function createLabel(text, position)
+    local label = Instance.new("TextLabel", screenGui)
+    label.Size = labelSize
+    label.Position = position + offset
+    label.TextScaled = true
+    label.TextColor3 = Color3.new(1, 1, 1)  -- White text
+    label.BackgroundColor3 = Color3.new(0, 0, 0)  -- Black background
+    label.BackgroundTransparency = 0.4  -- Transparency of 0.4
+    label.Text = text
+    return label
+end
+
+local speedLabel = createLabel("WalkSpeed:", UDim2.new(0, 10, 0, 10))
+local jumpLabel = createLabel("JumpPower:", UDim2.new(0, 10, 0, 70))
+local gravityLabel = createLabel("Gravity:", UDim2.new(0, 10, 0, 130))
+
+-- Function to update stats
+local function updateStats()
+    speedLabel.Text = "WalkSpeed: " .. humanoid.WalkSpeed
+    jumpLabel.Text = "JumpPower: " .. humanoid.JumpPower
+    gravityLabel.Text = "Gravity: " .. workspace.Gravity
+end
+
+-- Update every second
+local updateConnection
+updateConnection = game:GetService("RunService").Heartbeat:Connect(function()
+    if not humanoid or humanoid.Health <= 0 then
+        screenGui.Enabled = false
+        updateConnection:Disconnect()
+        return
+    end
+    updateStats()
+end)
+
+-- Handle respawn to re-enable GUI
+player.CharacterAdded:Connect(function(newCharacter)
+    character = newCharacter
+    humanoid = character:WaitForChild("Humanoid")
+    screenGui.Enabled = true
+    updateStats()
+end)
