@@ -1,0 +1,43 @@
+-- TAB SCRIPT BY RX BANNABLE ON TSB PLEASE DONT USE
+-- Create the ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Create the TextButton
+local button = Instance.new("TextButton")
+button.Parent = screenGui
+button.Size = UDim2.new(0, 100, 0, 50)
+button.Position = UDim2.new(0.5, -50, 0.5, -25)
+button.BackgroundTransparency = 1
+button.TextScaled = true
+button.Font = Enum.Font.Arcade
+button.Text = "Press Me"
+button.Draggable = true
+button.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+-- Function to anchor/unanchor character
+local function setAnchoredState(character, state)
+    for _, part in ipairs(character:GetDescendants()) do
+        if part:IsA("BasePart") then
+            part.Anchored = state
+        end
+    end
+end
+
+-- Toggle Freeze/Unfreeze functionality
+local frozen = false
+button.MouseButton1Click:Connect(function()
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+
+    if character then
+        if frozen then
+            setAnchoredState(character, false) -- Unfreeze character
+            button.Text = "Tab"
+        else
+            setAnchoredState(character, true) -- Freeze character
+            button.Text = "UnTab"
+        end
+        frozen = not frozen
+    end
+end)
