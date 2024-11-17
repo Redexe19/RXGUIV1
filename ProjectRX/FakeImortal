@@ -1,0 +1,25 @@
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+-- First teleport
+character:SetPrimaryPartCFrame(CFrame.new(0, -400, 0))
+
+-- Variable to track respawn status
+local respawned = false
+
+-- Function to handle respawn teleportation
+local function onCharacterAdded(newCharacter)
+    character = newCharacter
+    wait(1.5)  -- Wait for 2 seconds after respawn
+
+    if not respawned then
+        character:SetPrimaryPartCFrame(CFrame.new(-447, -20, -8))
+        respawned = true
+        
+        -- Self-delete after teleport
+        script:Destroy()
+    end
+end
+
+-- Connect the function to the character's respawn event
+player.CharacterAdded:Connect(onCharacterAdded)
