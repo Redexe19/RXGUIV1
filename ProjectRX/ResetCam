@@ -1,0 +1,29 @@
+local player = game.Players.LocalPlayer
+local camera = game.Workspace.CurrentCamera
+local resetPosition = Vector3.new(0, 5, 0)  -- Change to your desired reset position
+local stuckThreshold = 0.5  -- Threshold distance to determine if stuck
+local checkInterval = 1  -- Interval to check camera status
+
+local lastCameraPosition = camera.CFrame.Position
+local isCameraReset = false  -- To prevent multiple resets
+
+-- Function to reset the camera
+local function resetCamera()
+    camera.CFrame = CFrame.new(resetPosition)
+    isCameraReset = true
+end
+
+-- Function to check if the camera is stuck
+local function checkCamera()
+    if (camera.CFrame.Position - lastCameraPosition).Magnitude < stuckThreshold then
+        if not isCameraReset then
+            resetCamera()
+        end
+    else
+        lastCameraPosition = camera.CFrame.Position
+    end
+end
+
+-- Check the camera once after a delay
+wait(checkInterval)
+checkCamera()
