@@ -1,0 +1,49 @@
+local char = game.Players.LocalPlayer.Character
+
+getgenv().LArmCol = char['Left Arm'].ChildAdded:Connect(function(pp)
+    if pp.Name == 'WaterPalm' then
+        for i, v in pairs(pp:WaitForChild('ConstantEmit'):GetChildren()) do
+            v.Color = ColorSequence.new{
+                ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 0, 0)), 
+                ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 0, 0))  
+            }
+        end
+
+        pp:WaitForChild('WaterTrail').Color = ColorSequence.new{
+            ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 0, 0)), 
+            ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 0, 0))  
+        }
+    end
+end)
+
+getgenv().CCol = char.ChildAdded:Connect(function(pp)
+    if pp.Name == 'Effects' then
+        for i = 1, 55 do
+            for i, v in pairs(pp:GetDescendants()) do
+                if v:IsA('ParticleEmitter') then 
+                    v.Color = ColorSequence.new{
+                        ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 0, 0)), 
+                        ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 0, 0))  
+                    }
+                end
+            end
+            task.wait()
+        end
+    end
+end)
+
+getgenv().RArmCol = char['Right Arm'].ChildAdded:Connect(function(pp)
+    if pp.Name == 'WaterPalm' then
+        for i, v in pairs(pp:WaitForChild('ConstantEmit'):GetChildren()) do
+            v.Color = ColorSequence.new{
+                ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 0, 0)), 
+                ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 0, 0))  
+            }
+        end
+
+        pp:WaitForChild('WaterTrail').Color = ColorSequence.new{
+            ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 0, 0)), 
+            ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 0, 0))  
+        }
+    end
+end)
