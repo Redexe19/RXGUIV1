@@ -26,7 +26,7 @@ coroutine.wrap(function()
     Chat1.Parent = Dialogue
  
     Sub.FontFace = Font.new("rbxassetid://12187375716", Enum.FontWeight.Bold, Enum.FontStyle.Italic)
-    Sub.Text = "First Move\nBlood Strikes"
+    Sub.Text = "First Move Blood Strikes"
     Sub.TextColor3 = Color3.new(0, 0, 0)
     Sub.TextScaled = true
     Sub.TextSize = 14
