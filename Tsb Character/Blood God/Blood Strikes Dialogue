@@ -26,7 +26,7 @@ coroutine.wrap(function()
     Chat1.Parent = Dialogue
  
     Sub.FontFace = Font.new("rbxassetid://12187375716", Enum.FontWeight.Bold, Enum.FontStyle.Italic)
-    Sub.Text = "First Move Blood Strikes"
+    Sub.Text = "First Move\nBlood Strikes"
     Sub.TextColor3 = Color3.new(0, 0, 0)
     Sub.TextScaled = true
     Sub.TextSize = 14
@@ -54,7 +54,7 @@ coroutine.wrap(function()
     tweenProperty(Chat1, {BackgroundTransparency = 0}, 1)
     tweenProperty(Sub, {TextTransparency = 0}, 1)
     tweenProperty(Chat1, {Position = UDim2.new(0.6, 0, 0.4, 0)}, 1)
-    task.wait(4)
+    task.wait(1.5)
     tweenProperty(Chat1, {BackgroundTransparency = 1}, 2)
     tweenProperty(Sub, {TextTransparency = 1}, 2)
 end)()
