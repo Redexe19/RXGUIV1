@@ -1,0 +1,115 @@
+-- 35 STYD DASH BUTTON [REALISTIC VERSION]
+local Players = game:GetService("Players")
+local CoreGui = game:GetService("CoreGui")
+local TweenService = game:GetService("TweenService")
+local LocalPlayer = Players.LocalPlayer
+local Camera = workspace.CurrentCamera
+
+-- Create GUI
+local ScreenGui = Instance.new("ScreenGui")
+local MainButton = Instance.new("TextButton")
+local UICornerMain = Instance.new("UICorner")
+local ToggleButton = Instance.new("TextButton")
+local UICornerToggle = Instance.new("UICorner")
+
+-- Parent to CoreGui
+ScreenGui.Parent = CoreGui
+
+-- Main button setup
+MainButton.Parent = ScreenGui
+MainButton.AnchorPoint = Vector2.new(0.5, 0.5)
+MainButton.Position = UDim2.new(0.5, 0, 0.5, 0)
+MainButton.Size = UDim2.new(0, 100, 0, 100)
+MainButton.Text = "💨"
+MainButton.TextSize = 50
+MainButton.BackgroundTransparency = 0.3
+MainButton.BackgroundColor3 = Color3.fromRGB(64, 64, 64)
+MainButton.Draggable = true -- Default draggable
+
+UICornerMain.Parent = MainButton
+UICornerMain.CornerRadius = UDim.new(1, 0)
+
+-- Toggle button setup
+ToggleButton.Parent = MainButton
+ToggleButton.AnchorPoint = Vector2.new(0, 0)
+ToggleButton.Position = UDim2.new(1.2, -30, 0, -30)
+ToggleButton.Size = UDim2.new(0, 50, 0, 50)
+ToggleButton.Text = "🔓"
+ToggleButton.TextSize = 24
+ToggleButton.BackgroundTransparency = 0.3
+ToggleButton.BackgroundColor3 = Color3.fromRGB(64, 64, 64)
+
+UICornerToggle.Parent = ToggleButton
+UICornerToggle.CornerRadius = UDim.new(1, 0)
+
+-- Cooldown flag
+local canTeleport = true
+
+local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+
+-- Function to stop all animations
+local function stopAllAnimations()
+    for _, track in pairs(character.Humanoid:GetPlayingAnimationTracks()) do
+        track:Stop()
+    end
+end
+
+-- Custom function to trigger at the start of teleport
+local function onTeleport()
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+
+    local humanoid = character:WaitForChild("Humanoid")
+
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://10479335397"
+
+    local animationTrack = humanoid:LoadAnimation(animation)
+
+    animationTrack:Play()
+
+    animationTrack:AdjustSpeed(1)
+    animationTrack.Looped = false
+end
+
+-- Teleport function with TweenService
+local function teleportForward()
+    if not canTeleport then return end  -- Prevent teleporting if in cooldown
+
+    canTeleport = false  -- Start cooldown
+
+    -- Trigger custom function before the teleport
+    stopAllAnimations()
+    task.wait()
+    onTeleport()
+
+    local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    local HumanoidRootPart = Character:FindFirstChild("HumanoidRootPart")
+    if HumanoidRootPart then
+        local forwardDirection = Vector3.new(Camera.CFrame.LookVector.X, 0, Camera.CFrame.LookVector.Z).Unit
+        local targetPosition = HumanoidRootPart.Position + forwardDirection * 35
+        
+        -- Create the tween
+        local tween = TweenService:Create(
+            HumanoidRootPart,
+            TweenInfo.new(0.2, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), -- 0.2 seconds
+            {CFrame = CFrame.new(targetPosition)}
+        )
+        tween:Play()
+
+        -- Cooldown duration
+        wait(1.3)  -- 1.3 second cooldown
+        canTeleport = true  -- Allow teleport again
+    end
+end
+
+-- Main button click teleports forward
+MainButton.MouseButton1Click:Connect(teleportForward)
+
+-- Toggle button functionality
+local isDraggable = true
+ToggleButton.MouseButton1Click:Connect(function()
+    isDraggable = not isDraggable
+    MainButton.Draggable = isDraggable
+    ToggleButton.Text = isDraggable and "🔓" or "🔒"
+end)
