@@ -87,7 +87,7 @@ local function teleportForward()
     local HumanoidRootPart = Character:FindFirstChild("HumanoidRootPart")
     if HumanoidRootPart then
         local forwardDirection = Vector3.new(Camera.CFrame.LookVector.X, 0, Camera.CFrame.LookVector.Z).Unit
-        local targetPosition = HumanoidRootPart.Position + forwardDirection * 35
+        local targetPosition = HumanoidRootPart.Position + forwardDirection * 45
         
         -- Create the tween
         local tween = TweenService:Create(
