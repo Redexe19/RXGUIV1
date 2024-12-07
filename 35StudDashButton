@@ -47,7 +47,7 @@ local function teleportForward()
     local HumanoidRootPart = Character:FindFirstChild("HumanoidRootPart")
     if HumanoidRootPart then
         local forwardDirection = Vector3.new(Camera.CFrame.LookVector.X, 0, Camera.CFrame.LookVector.Z).Unit
-        HumanoidRootPart.CFrame = HumanoidRootPart.CFrame + forwardDirection * 35
+        HumanoidRootPart.CFrame = HumanoidRootPart.CFrame + forwardDirection * 45
     end
 end
 
