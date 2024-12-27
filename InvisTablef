@@ -1,34 +1,15 @@
-function onAnimation(id, func)
-    local id = tostring(id):gsub("rbxassetid://", "")
-    
-    local char = game:GetService("Players").LocalPlayer.Character
-    local humanoid = char and char:WaitForChild("Humanoid", 1)
-    if char and humanoid then
-        humanoid.AnimationPlayed:Connect(function(v)
-            local vID = v.Animation.AnimationId:gsub("rbxassetid://", "")
-            if id == vID then
-                func(v)
-            end
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local animationIdToStop = "11365563255"
+
+humanoid.AnimationPlayed:Connect(function(animationTrack)
+    if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationIdToStop then
+        animationTrack:Stop()
+        humanoid.HipHeight = 15
+        task.delay(5.5, function()
+            humanoid.HipHeight = 0 -- Reset to default
         end)
     end
-    game:GetService("Players").LocalPlayer.CharacterAdded:Connect(function(char)
-        local humanoid = char and char:WaitForChild("Humanoid", 1)
-        if char and humanoid then
-            humanoid.AnimationPlayed:Connect(function(v)
-                local vID = v.Animation.AnimationId:gsub("rbxassetid://", "")
-                if id == vID then
-                    func(v)
-                end
-            end)
-        end
-    end)
-end
-
-
-
-onAnimation("11365563255", function(animation)
-game.Players.LocalPlayer.Character.Humanoid.HipHeight = 20
-wait(5.5)
-game.Players.LocalPlayer.Character.Humanoid.HipHeight = 0
-    warn("animation id:", animation.Animation.AnimationId)
 end)
