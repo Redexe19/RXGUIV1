@@ -1,0 +1,20 @@
+local player, safetyPosition = game.Players.LocalPlayer, Vector3.new(220, 440, -7)
+local savedPosition
+
+local function onHealthChanged(humanoid)
+    if humanoid.Health <= 0 then
+        local rootPart = player.Character:FindFirstChild("HumanoidRootPart")
+        savedPosition = rootPart and rootPart.Position or safetyPosition
+        if savedPosition.Y < 0 then savedPosition = safetyPosition end
+    end
+end
+
+local function onCharacterAdded(character)
+    local humanoid = character:WaitForChild("Humanoid")
+    local rootPart = character:WaitForChild("HumanoidRootPart")
+    if savedPosition then rootPart.CFrame = CFrame.new(savedPosition) end
+    humanoid.HealthChanged:Connect(function() onHealthChanged(humanoid) end)
+end
+
+player.CharacterAdded:Connect(onCharacterAdded)
+if player.Character then onCharacterAdded(player.Character) end
