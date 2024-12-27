@@ -1,0 +1,49 @@
+local tool = Instance.new("Tool", game.Players.LocalPlayer.Backpack)
+tool.Name = "Run"
+
+local handle = Instance.new("Part", tool)
+handle.Name, handle.Transparency, handle.CanCollide = "Handle", 1, false
+
+local sound = Instance.new("Sound", tool)
+sound.SoundId = "rbxassetid://your_sound_id_here"
+
+local animationId = "rbxassetid://18897115785"
+local function onEquipped()
+    local player, character = game.Players.LocalPlayer, game.Players.LocalPlayer.Character
+    if character then
+        local humanoid, rootPart = character:WaitForChild("Humanoid"), character:WaitForChild("HumanoidRootPart")
+        rootPart.Anchored = false
+
+        local animationTrack = humanoid:LoadAnimation(Instance.new("Animation", nil).AnimationId = animationId)
+        animationTrack:Play()
+        sound:Play()
+
+        local runService, speed, elapsedTime, moveSpeed = game:GetService("RunService"), 0.5, 0, 250
+        local changeTime, moveConnection
+
+        local function startMoving()
+            moveConnection = runService.RenderStepped:Connect(function(deltaTime)
+                elapsedTime = elapsedTime + deltaTime
+                if elapsedTime >= changeTime then moveSpeed = 350 end
+                rootPart.Velocity = rootPart.CFrame.LookVector * moveSpeed * speed
+            end)
+        end
+
+        local function stopMoving()
+            if moveConnection then moveConnection:Disconnect() moveConnection = nil
+                rootPart.Velocity = Vector3.new(0, 0, 0)
+            end
+        end
+
+        animationTrack.Stopped:Connect(stopMoving)
+        startMoving()
+
+        tool.Unequipped:Connect(function()
+            stopMoving()
+            animationTrack:Stop() 
+            sound:Stop()
+        end)
+    end
+end
+
+tool.Equipped:Connect(onEquipped)
