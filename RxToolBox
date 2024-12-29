@@ -64,6 +64,10 @@ end)
 
 local Utils = RxTbWindow:NewSection("Utilities")
 
+Utils:CreateButton("Lua Script Obfuscation", function()
+loadstring(game:HttpGet('https://pastefy.app/S7xNJSXX/raw'))()execute("Script20")
+end)
+
 Utils:CreateButton("Custon Keyboard", function()
 -- Keyboard script By Red_BloxZ
 -- You screen will freeze for a few seconds when execute because it loading
