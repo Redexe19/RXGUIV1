@@ -1,0 +1,40 @@
+-- Gui to Lua
+-- Version: 3.2
+
+-- Instances:
+
+local RXGUIToggle = Instance.new("ScreenGui")
+local Toggle = Instance.new("ImageButton")
+local UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint")
+local UIAspectRatioConstraint_2 = Instance.new("UIAspectRatioConstraint")
+
+--Properties:
+
+RXGUIToggle.Name = "RXGUIToggle"
+RXGUIToggle.Parent = game.CoreGui
+RXGUIToggle.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+Toggle.Name = "Toggle"
+Toggle.Parent = RXGUIToggle
+Toggle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Toggle.BackgroundTransparency = 1.000
+Toggle.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Toggle.BorderSizePixel = 0
+Toggle.Position = UDim2.new(0.142631993, 0, 0.134328365, 0)
+Toggle.Size = UDim2.new(0.0779101774, 0, 0.105721392, 0)
+Toggle.Image = "rbxassetid://88926002309500"
+Toggle.Draggable = true
+
+UIAspectRatioConstraint.Parent = Toggle
+
+UIAspectRatioConstraint_2.Parent = RXGUIToggle
+UIAspectRatioConstraint_2.AspectRatio = 1.578
+
+local function simulateKeyPress(key)
+    game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode[key], false, game)
+    game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode[key], false, game)
+end
+
+Button.MouseButton1Click:Connect(function()
+    simulateKeyPress("M")
+end)
