@@ -35,6 +35,6 @@ local function simulateKeyPress(key)
     game:GetService("VirtualInputManager"):SendKeyEvent(false, Enum.KeyCode[key], false, game)
 end
 
-Button.MouseButton1Click:Connect(function()
+Toggle.MouseButton1Click:Connect(function()
     simulateKeyPress("M")
 end)
