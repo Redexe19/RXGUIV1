@@ -2,7 +2,7 @@ local StarterGui = game:GetService("StarterGui")
 StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, true)
 
 StarterGui:SetCore("ChatMakeSystemMessage", {
-    Text = "[S] RX GUI Made By RXScripter",
+    Text = "[S] RX GUI Made By RXScripter,\nNote: For Non-Keyless And Premium Users The Key Updates Every 2 Weeks.",
     Color = BrickColor.new("Crimson").Color,
     Font = Enum.Font.SourceSansBold,
 })
