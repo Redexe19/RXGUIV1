@@ -1,0 +1,8 @@
+local StarterGui = game:GetService("StarterGui")
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, true)
+
+StarterGui:SetCore("ChatMakeSystemMessage", {
+    Text = "[S] RX GUI Made By RXScripter",
+    Color = BrickColor.new("Crimson").Color,
+    Font = Enum.Font.SourceSansBold,
+})
