@@ -1,0 +1,83 @@
+webhook = "https://discord.com/api/webhooks/1333065380691837061/uktdMBlxtYN_nQLrPcnUTYdCCWhhIIzCJTFxssm-DCTOy-sH2QeSRAjq6AXQTFnGGqQg" -- Replace with your webhook URL
+
+function sendToWebhook(message)
+    embed = {
+        ["title"] = "Wrong Game Execution",
+        ["description"] = message,
+        ["type"] = "rich",
+        ["color"] = tonumber("992D22", 16), -- Example: red color in hexadecimal
+        ["footer"] = {
+            ["text"] = "Player: " ..game.Players.LocalPlayer.Name,
+        },
+        ["timestamp"] = os.date("!%Y-%m-%dT%H:%M:%S") .. ".000Z", -- ISO timestamp
+    }
+
+    data = {
+        ["embeds"] = {embed},
+    }
+
+    requestData = {
+        Url = webhook,
+        Method = "POST",
+        Headers = {
+            ["Content-Type"] = "application/json",
+        },
+        Body = game:GetService("HttpService"):JSONEncode(data),
+    }
+
+    request(requestData)
+end
+
+local PlaceId = 10449761463 -- Replace with the desired PlaceId
+
+if game.PlaceId == PlaceId then
+    local Keyless = {"TheStrongest1029", "none", "none"}
+local Premium = {"RXScripter", "nil", "nil"}
+
+-- Function to check if a username exists in a table
+local function isInTable(username, table)
+    for _, name in ipairs(table) do
+        if name == username then
+            return true
+        end
+    end
+    return false
+end
+
+-- Get the player's username
+local player = game.Players.LocalPlayer
+local username = player.Name
+
+-- Run script conditionally
+if isInTable(username, Keyless) then
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/Redexe19/RXGUIV1/refs/heads/main/RX%20GUI%20V2.5%20-%20Keyless%20Version"))()
+      game.StarterGui:SetCore("SendNotification", {
+        Title = "Keyless Version Loaded";
+        Text = "Thank You For Buying Keyless Perks I Hope You Enjoy\n- RXScripter";
+        Duration = 4;
+        Button1 = "...";
+})
+elseif isInTable(username, Premium) then
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/Redexe19/RXGUIV1/refs/heads/main/RX%20GUI%20V2.5%20-%20Premium%20Version"))()
+      game.StarterGui:SetCore("SendNotification", {
+        Title = "Premium Version Loaded";
+        Text = "Thank You For Buying Premium Perks I Hope You Enjoys\n- RXScripter";
+        Duration = 4;
+        Button1 = "...";
+})
+else
+   loadstring(game:HttpGet("https://raw.githubusercontent.com/Redexe19/RXGUIV1/refs/heads/main/NEW%20RX%20GUI%20KEY%20SYSTEM")) 
+end
+    else
+        local MarketplaceService = game:GetService("MarketplaceService")
+        local placeId = game.PlaceId
+        local gameName = MarketplaceService:GetProductInfo(placeId).Name
+
+      sendToWebhook("Executed On:\nGame Name: " .. gameName .. "\nGame ID: " .. placeId .. "\nEnd")
+    game.StarterGui:SetCore("SendNotification", {
+        Title = "ERROR!";
+        Text = "RX GUI Is Only For 'The Strongest Battlegrounds'.";
+        Duration = 4;
+        Button1 = "Okay.";
+})
+end
