@@ -66,7 +66,306 @@ elseif isInTable(username, Premium) then
         Button1 = "...";
 })
 else
-   loadstring(game:HttpGet("https://raw.githubusercontent.com/Redexe19/RXGUIV1/refs/heads/main/NEW%20RX%20GUI%20KEY%20SYSTEM")) 
+	-- Gui to Lua
+-- Version: 3.2
+
+-- Instances:
+
+local RXKEYSYSTEM = Instance.new("ScreenGui")
+local placeholder = Instance.new("Frame")
+local title = Instance.new("TextLabel")
+local corner = Instance.new("UICorner")
+local UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint")
+local keybox = Instance.new("TextBox")
+local UICorner = Instance.new("UICorner")
+local UIAspectRatioConstraint_2 = Instance.new("UIAspectRatioConstraint")
+local UITextSizeConstraint = Instance.new("UITextSizeConstraint")
+local check = Instance.new("TextButton")
+local UICorner_2 = Instance.new("UICorner")
+local UIAspectRatioConstraint_3 = Instance.new("UIAspectRatioConstraint")
+local UITextSizeConstraint_2 = Instance.new("UITextSizeConstraint")
+local buy = Instance.new("TextButton")
+local UICorner_3 = Instance.new("UICorner")
+local UIAspectRatioConstraint_4 = Instance.new("UIAspectRatioConstraint")
+local UITextSizeConstraint_3 = Instance.new("UITextSizeConstraint")
+local get = Instance.new("TextButton")
+local UICorner_4 = Instance.new("UICorner")
+local UIAspectRatioConstraint_5 = Instance.new("UIAspectRatioConstraint")
+local UITextSizeConstraint_4 = Instance.new("UITextSizeConstraint")
+local UIAspectRatioConstraint_6 = Instance.new("UIAspectRatioConstraint")
+local corner_2 = Instance.new("UICorner")
+local old = Instance.new("Frame")
+local title_2 = Instance.new("TextLabel")
+local corner_3 = Instance.new("UICorner")
+local UIAspectRatioConstraint_7 = Instance.new("UIAspectRatioConstraint")
+local UITextSizeConstraint_5 = Instance.new("UITextSizeConstraint")
+local corner_4 = Instance.new("UICorner")
+local rayfieldoldv1 = Instance.new("TextButton")
+local UICorner_5 = Instance.new("UICorner")
+local UIAspectRatioConstraint_8 = Instance.new("UIAspectRatioConstraint")
+local UITextSizeConstraint_6 = Instance.new("UITextSizeConstraint")
+local rxguiv2notv25 = Instance.new("TextButton")
+local UICorner_6 = Instance.new("UICorner")
+local UIAspectRatioConstraint_9 = Instance.new("UIAspectRatioConstraint")
+local UITextSizeConstraint_7 = Instance.new("UITextSizeConstraint")
+local UIAspectRatioConstraint_10 = Instance.new("UIAspectRatioConstraint")
+local UIAspectRatioConstraint_11 = Instance.new("UIAspectRatioConstraint")
+
+--Properties:
+
+RXKEYSYSTEM.Name = "RX KEYSYSTEM"
+RXKEYSYSTEM.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+RXKEYSYSTEM.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+placeholder.Name = "placeholder"
+placeholder.Parent = RXKEYSYSTEM
+placeholder.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+placeholder.BorderColor3 = Color3.fromRGB(0, 0, 0)
+placeholder.BorderSizePixel = 0
+placeholder.Position = UDim2.new(0.05243209, 0, 0.210199058, 0)
+placeholder.Size = UDim2.new(0.400000006, 0, 0.582476735, 0)
+
+title.Name = "title"
+title.Parent = placeholder
+title.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+title.BorderColor3 = Color3.fromRGB(0, 0, 0)
+title.BorderSizePixel = 0
+title.Position = UDim2.new(0.0675477237, 0, 0.0520000011, 0)
+title.Size = UDim2.new(0.864904523, 0, 0.122000001, 0)
+title.Font = Enum.Font.Arcade
+title.Text = "RX GUI KEYSYSTEM"
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.TextScaled = true
+title.TextSize = 14.000
+title.TextWrapped = true
+
+corner.Name = "corner"
+corner.Parent = title
+
+UIAspectRatioConstraint.Parent = title
+UIAspectRatioConstraint.AspectRatio = 9.656
+
+keybox.Name = "keybox"
+keybox.Parent = placeholder
+keybox.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+keybox.BorderColor3 = Color3.fromRGB(0, 0, 0)
+keybox.BorderSizePixel = 0
+keybox.Position = UDim2.new(0.0602055788, 0, 0.261999995, 0)
+keybox.Size = UDim2.new(0.879588842, 0, 0.131999999, 0)
+keybox.Font = Enum.Font.Arcade
+keybox.Text = ""
+keybox.TextColor3 = Color3.fromRGB(255, 255, 255)
+keybox.TextScaled = true
+keybox.TextSize = 14.000
+keybox.TextWrapped = true
+
+UICorner.Parent = keybox
+
+UIAspectRatioConstraint_2.Parent = keybox
+UIAspectRatioConstraint_2.AspectRatio = 9.076
+
+UITextSizeConstraint.Parent = keybox
+UITextSizeConstraint.MaxTextSize = 14
+
+check.Name = "check"
+check.Parent = placeholder
+check.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+check.BorderColor3 = Color3.fromRGB(0, 0, 0)
+check.BorderSizePixel = 0
+check.Position = UDim2.new(0.139500737, 0, 0.479999989, 0)
+check.Size = UDim2.new(0.293685764, 0, 0.100000001, 0)
+check.Font = Enum.Font.Arcade
+check.Text = "Check Key"
+check.TextColor3 = Color3.fromRGB(255, 255, 255)
+check.TextScaled = true
+check.TextSize = 14.000
+check.TextWrapped = true
+
+UICorner_2.Parent = check
+
+UIAspectRatioConstraint_3.Parent = check
+UIAspectRatioConstraint_3.AspectRatio = 4.000
+
+UITextSizeConstraint_2.Parent = check
+UITextSizeConstraint_2.MaxTextSize = 40
+
+buy.Name = "buy"
+buy.Parent = placeholder
+buy.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+buy.BorderColor3 = Color3.fromRGB(0, 0, 0)
+buy.BorderSizePixel = 0
+buy.Position = UDim2.new(0.104756594, 0, 0.670490146, 0)
+buy.Size = UDim2.new(0.78963989, 0, 0.215097904, 0)
+buy.Font = Enum.Font.Arcade
+buy.Text = "Get Keyless Or Premium Perk Here"
+buy.TextColor3 = Color3.fromRGB(255, 255, 255)
+buy.TextScaled = true
+buy.TextSize = 14.000
+buy.TextWrapped = true
+
+UICorner_3.Parent = buy
+
+UIAspectRatioConstraint_4.Parent = buy
+UIAspectRatioConstraint_4.AspectRatio = 5.000
+
+UITextSizeConstraint_3.Parent = buy
+
+get.Name = "get"
+get.Parent = placeholder
+get.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+get.BorderColor3 = Color3.fromRGB(0, 0, 0)
+get.BorderSizePixel = 0
+get.Position = UDim2.new(0.566813529, 0, 0.479999989, 0)
+get.Size = UDim2.new(0.293685764, 0, 0.100000001, 0)
+get.Font = Enum.Font.Arcade
+get.Text = "Get Key"
+get.TextColor3 = Color3.fromRGB(255, 255, 255)
+get.TextScaled = true
+get.TextSize = 14.000
+get.TextWrapped = true
+
+UICorner_4.Parent = get
+
+UIAspectRatioConstraint_5.Parent = get
+UIAspectRatioConstraint_5.AspectRatio = 4.000
+
+UITextSizeConstraint_4.Parent = get
+UITextSizeConstraint_4.MaxTextSize = 50
+
+UIAspectRatioConstraint_6.Parent = placeholder
+UIAspectRatioConstraint_6.AspectRatio = 1.362
+
+corner_2.Name = "corner"
+corner_2.Parent = placeholder
+
+old.Name = "old"
+old.Parent = placeholder
+old.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+old.BorderColor3 = Color3.fromRGB(0, 0, 0)
+old.BorderSizePixel = 0
+old.Position = UDim2.new(1.07287669, 0, -0.00230809883, 0)
+old.Size = UDim2.new(0.538091719, 0, 1.00230801, 0)
+
+title_2.Name = "title"
+title_2.Parent = old
+title_2.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+title_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+title_2.BorderSizePixel = 0
+title_2.Position = UDim2.new(0.0675477237, 0, 0.0520000011, 0)
+title_2.Size = UDim2.new(0.864904583, 0, 0.122000001, 0)
+title_2.Font = Enum.Font.Arcade
+title_2.Text = "RX GUI OLDER VERSIONS"
+title_2.TextColor3 = Color3.fromRGB(255, 255, 255)
+title_2.TextScaled = true
+title_2.TextSize = 14.000
+title_2.TextWrapped = true
+
+corner_3.Name = "corner"
+corner_3.Parent = title_2
+
+UIAspectRatioConstraint_7.Parent = title_2
+UIAspectRatioConstraint_7.AspectRatio = 5.184
+
+UITextSizeConstraint_5.Parent = title_2
+UITextSizeConstraint_5.MaxTextSize = 50
+
+corner_4.Name = "corner"
+corner_4.Parent = old
+
+rayfieldoldv1.Name = "rayfieldoldv1"
+rayfieldoldv1.Parent = old
+rayfieldoldv1.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+rayfieldoldv1.BorderColor3 = Color3.fromRGB(0, 0, 0)
+rayfieldoldv1.BorderSizePixel = 0
+rayfieldoldv1.Position = UDim2.new(0.0661766976, 0, 0.263108224, 0)
+rayfieldoldv1.Size = UDim2.new(0.866275847, 0, 0.102425031, 0)
+rayfieldoldv1.Font = Enum.Font.Arcade
+rayfieldoldv1.Text = "RX GUI V1 : Rayfield"
+rayfieldoldv1.TextColor3 = Color3.fromRGB(255, 255, 255)
+rayfieldoldv1.TextScaled = true
+rayfieldoldv1.TextSize = 14.000
+rayfieldoldv1.TextWrapped = true
+
+UICorner_5.Parent = rayfieldoldv1
+
+UIAspectRatioConstraint_8.Parent = rayfieldoldv1
+UIAspectRatioConstraint_8.AspectRatio = 6.184
+
+UITextSizeConstraint_6.Parent = rayfieldoldv1
+UITextSizeConstraint_6.MaxTextSize = 22
+
+rxguiv2notv25.Name = "rxguiv2notv25"
+rxguiv2notv25.Parent = old
+rxguiv2notv25.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+rxguiv2notv25.BorderColor3 = Color3.fromRGB(0, 0, 0)
+rxguiv2notv25.BorderSizePixel = 0
+rxguiv2notv25.Position = UDim2.new(0.0661766976, 0, 0.394705504, 0)
+rxguiv2notv25.Size = UDim2.new(0.866275847, 0, 0.102425031, 0)
+rxguiv2notv25.Font = Enum.Font.Arcade
+rxguiv2notv25.Text = "RX GUI V2"
+rxguiv2notv25.TextColor3 = Color3.fromRGB(255, 255, 255)
+rxguiv2notv25.TextScaled = true
+rxguiv2notv25.TextSize = 14.000
+rxguiv2notv25.TextWrapped = true
+
+UICorner_6.Parent = rxguiv2notv25
+
+UIAspectRatioConstraint_9.Parent = rxguiv2notv25
+UIAspectRatioConstraint_9.AspectRatio = 6.184
+
+UITextSizeConstraint_7.Parent = rxguiv2notv25
+UITextSizeConstraint_7.MaxTextSize = 29
+
+UIAspectRatioConstraint_10.Parent = old
+UIAspectRatioConstraint_10.AspectRatio = 0.731
+
+UIAspectRatioConstraint_11.Parent = RXKEYSYSTEM
+UIAspectRatioConstraint_11.AspectRatio = 1.969
+
+-- FUNCTIONALITY
+
+check.MouseButton1Click:Connect(function()
+    local correctText = "release2.5"  -- Replace with the key you expect
+
+    if keybox.Text == correctText then
+        keybox.TextColor3 = Color3.fromRGB(0, 255, 0)
+        keybox.Text = "Correct Key! Running RX GUI..."
+        wait(1.8)
+        keybox.Text = ""
+        RXKEYSYSTEM:Destroy()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Redexe19/RXGUIV1/refs/heads/main/RX%20GUI%20V2.5%20-%20Normal%20Version"))()
+    else
+        keybox.Text = "Invalid Key! Try Again."
+        keybox.TextColor3 = Color3.fromRGB(255, 0, 0)
+        wait(1.8)
+        keybox.Text = ""
+        keybox.TextColor3 = Color3.fromRGB(255, 255, 255)
+    end
+end)
+
+get.MouseButton1Click:Connect(function()
+    setclipboard("")
+    keybox.Text = "Key Link Copied!"
+    keybox.TextColor3 = Color3.fromRGB(0, 255, 0)
+    wait(1.8)
+    keybox.Text = ""
+    keybox.TextColor3 = Color3.fromRGB(255, 255, 255)
+end)
+
+buy.MouseButton1Click:Connect(function()
+    game:GetService("TeleportService"):Teleport(1234567890)
+end)
+
+rayfieldoldv1.MouseButton1Click:Connect(function()
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/RXScript/RX-GUI-Version-1/refs/heads/main/RXGUIV1"))()
+    RXKEYSYSTEM:Destroy()
+end)
+
+rxguiv2notv25.MouseButton1Click:Connect(function()
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/RXScript/RX-GUI-Version-1/refs/heads/main/RX%20GUI%20V2"))()
+    RXKEYSYSTEM:Destroy()
+end)
+--   loadstring(game:HttpGet("https://raw.githubusercontent.com/Redexe19/RXGUIV1/refs/heads/main/NEW%20RX%20GUI%20KEY%20SYSTEM")) 
 end
     else
         local MarketplaceService = game:GetService("MarketplaceService")
