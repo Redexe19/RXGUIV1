@@ -28,9 +28,11 @@ function sendToWebhook(message)
     request(requestData)
 end
 
-local PlaceId = 10449761463 -- Replace with the desired PlaceId
+local NormalId = 10449761463
+local KjId = 130818724007978
+local VcId = 131048399685555
 
-if game.PlaceId == PlaceId then
+if game.PlaceId == NormalId or KjId or VcId then
     local Keyless = {"TheStrongest1029", "none", "none"}
 local Premium = {"RXScripter", "nil", "nil"}
 
