@@ -346,7 +346,7 @@ check.MouseButton1Click:Connect(function()
 end)
 
 get.MouseButton1Click:Connect(function()
-    setclipboard("https://pastefy.app/pecT5Lnj")
+    setclipboard("https://pastebin.com/cVu3ERqZ")
     keybox.Text = "Key Link Copied!"
     keybox.TextColor3 = Color3.fromRGB(0, 255, 0)
     wait(1.8)
