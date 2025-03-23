@@ -327,7 +327,7 @@ UIAspectRatioConstraint_11.AspectRatio = 1.969
 -- FUNCTIONALITY
 
 check.MouseButton1Click:Connect(function()
-    local correctText = "newupdatesoon"  -- Replace with the key you expect
+    local correctText = "needideas"  -- Replace with the key you expect
 
     if keybox.Text == correctText then
         keybox.TextColor3 = Color3.fromRGB(0, 255, 0)
