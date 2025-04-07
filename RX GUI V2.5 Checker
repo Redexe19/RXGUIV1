@@ -327,7 +327,7 @@ UIAspectRatioConstraint_11.AspectRatio = 1.969
 -- FUNCTIONALITY
 
 check.MouseButton1Click:Connect(function()
-    local correctText = "needideas"  -- Replace with the key you expect
+    local correctText = "rxisplanning"  -- Replace with the key you expect
 
     if keybox.Text == correctText then
         keybox.TextColor3 = Color3.fromRGB(0, 255, 0)
@@ -346,7 +346,7 @@ check.MouseButton1Click:Connect(function()
 end)
 
 get.MouseButton1Click:Connect(function()
-    setclipboard("https://pastebin.com/cVu3ERqZ")
+    setclipboard("https://pastefy.app/IGUGHTkE")
     keybox.Text = "Key Link Copied!"
     keybox.TextColor3 = Color3.fromRGB(0, 255, 0)
     wait(1.8)
