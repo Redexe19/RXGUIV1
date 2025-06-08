@@ -68,11 +68,15 @@ Utils:CreateButton("Lua Script Obfuscation", function()
 loadstring(game:HttpGet('https://pastefy.app/S7xNJSXX/raw'))()execute("Script20")
 end)
 
+Utils:CreateButton("Https Logger", function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Hm5011/hussain/refs/heads/main/Links%20Spy"))()
+end)
+
 Utils:CreateButton("Player Inspector", function()
 loadstring(game:HttpGet('https://pastefy.app/S7xNJSXX/raw'))()execute("Script15")
 end)
 
-Utils:CreateButton("Custon Keyboard", function()
+Utils:CreateButton("Custom Keyboard", function()
 -- Keyboard script By Red_BloxZ
 -- You screen will freeze for a few seconds when execute because it loading
 loadstring(game:HttpGet("https://gist.githubusercontent.com/RedZenXYZ/4d80bfd70ee27000660e4bfa7509c667/raw/da903c570249ab3c0c1a74f3467260972c3d87e6/KeyBoard%2520From%2520Ohio%2520Fr%2520Fr"))()
