@@ -252,7 +252,7 @@ function GUI:CreateMain(config)
         restoreButton.Position = UDim2.new(0, 20, 0, 20)
         restoreButton.Size = UDim2.new(0, 44, 0, 44)
         restoreButton.BackgroundColor3 = Theme.Accent
-        restoreButton.Text = "🏠"
+        restoreButton.Text = "🌐"
         restoreButton.TextColor3 = Theme.Text
         restoreButton.TextSize = 20
         restoreButton.Font = Enum.Font.GothamBold
