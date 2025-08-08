@@ -1,0 +1,152 @@
+-- c00la1mb0t v1 (with global visibility control)
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local LocalPlayer = Players.LocalPlayer
+local Camera = workspace.CurrentCamera
+
+-- Create GUI
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "CoolkidAimbotGUI"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.Enabled = false -- start hidden
+ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
+
+-- Global functions for GUI visibility
+getgenv().EnableCoolkidAimbotGUI = function()
+	ScreenGui.Enabled = true
+end
+
+getgenv().DisableCoolkidAimbotGUI = function()
+	ScreenGui.Enabled = false
+end
+
+-- Aimbot Button
+local AimbotButton = Instance.new("TextButton")
+AimbotButton.Name = "AimbotButton"
+AimbotButton.Size = UDim2.new(0, 100, 0, 30)
+AimbotButton.Position = UDim2.new(0, 100, 0, 100)
+AimbotButton.BackgroundColor3 = Color3.new(0, 0, 0)
+AimbotButton.BorderColor3 = Color3.new(1, 0, 0)
+AimbotButton.BorderSizePixel = 1
+AimbotButton.TextColor3 = Color3.new(1, 1, 1)
+AimbotButton.Text = "Aimbot [OFF]"
+AimbotButton.Font = Enum.Font.Code
+AimbotButton.TextScaled = true
+AimbotButton.Active = true
+AimbotButton.Draggable = true
+AimbotButton.Parent = ScreenGui
+
+-- Lock Button (Child of AimbotButton)
+local LockButton = Instance.new("TextButton")
+LockButton.Name = "LockButton"
+LockButton.Size = UDim2.new(0, 30, 0, 30)
+LockButton.Position = UDim2.new(1, 5, 0, 0)
+LockButton.BackgroundColor3 = Color3.new(0, 0, 0)
+LockButton.BorderColor3 = Color3.new(1, 0, 0)
+LockButton.BorderSizePixel = 1
+LockButton.TextColor3 = Color3.new(1, 1, 1)
+LockButton.Text = "🔓"
+LockButton.Font = Enum.Font.Code
+LockButton.TextSize = 18
+LockButton.Parent = AimbotButton
+
+-- Billboard Highlight (Red Hollow Square)
+local function createHighlightBillboard(target)
+	local gui = Instance.new("BillboardGui")
+	gui.Name = "AimbotHighlight"
+	gui.AlwaysOnTop = true
+	gui.Size = UDim2.new(3, 0, 3, 0)
+	gui.Adornee = target
+	gui.Parent = target
+
+	local frame = Instance.new("Frame")
+	frame.Size = UDim2.new(1, 0, 1, 0)
+	frame.Position = UDim2.new(0, 0, 0, 0)
+	frame.BackgroundTransparency = 1
+	frame.BorderSizePixel = 2
+	frame.BorderColor3 = Color3.new(1, 0, 0)
+	frame.Parent = gui
+
+	return gui
+end
+
+-- Aimbot state
+local aimbotEnabled = false
+local lockEnabled = false
+local currentTarget = nil
+local highlight = nil
+local lastCameraLookVector = nil
+
+-- Utility: Get closest visible player
+local function getClosestTarget()
+	local closest = nil
+	local shortestAngle = math.huge
+	for _, player in ipairs(Players:GetPlayers()) do
+		if player ~= LocalPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+			local part = player.Character.HumanoidRootPart
+			local dirToTarget = (part.Position - Camera.CFrame.Position).Unit
+			local angle = math.acos(Camera.CFrame.LookVector:Dot(dirToTarget))
+			if angle < shortestAngle and angle < math.rad(45) then -- Only within 45 degrees
+				shortestAngle = angle
+				closest = player
+			end
+		end
+	end
+	return closest
+end
+
+-- Cleanup highlight
+local function clearHighlight()
+	if highlight then
+		highlight:Destroy()
+		highlight = nil
+	end
+end
+
+-- Main Aimbot Loop
+RunService.RenderStepped:Connect(function()
+	if not aimbotEnabled then return end
+
+	if not lockEnabled then
+		if lastCameraLookVector and (Camera.CFrame.LookVector - lastCameraLookVector).Magnitude < 0.01 then
+			-- Camera hasn't really moved
+		else
+			local newTarget = getClosestTarget()
+			if newTarget and newTarget ~= currentTarget then
+				clearHighlight()
+				currentTarget = newTarget
+				if currentTarget and currentTarget.Character and currentTarget.Character:FindFirstChild("HumanoidRootPart") then
+					highlight = createHighlightBillboard(currentTarget.Character.HumanoidRootPart)
+				end
+			end
+		end
+	end
+
+	lastCameraLookVector = Camera.CFrame.LookVector
+
+	if currentTarget and currentTarget.Character and currentTarget.Character:FindFirstChild("HumanoidRootPart") then
+		local targetPos = currentTarget.Character.HumanoidRootPart.Position
+		local camPos = Camera.CFrame.Position
+		local newCF = CFrame.new(camPos, targetPos)
+		Camera.CFrame = Camera.CFrame:Lerp(newCF, 0.15) -- Smooth transition
+	else
+		clearHighlight()
+		currentTarget = nil
+	end
+end)
+
+-- Button Toggles
+AimbotButton.MouseButton1Click:Connect(function()
+	aimbotEnabled = not aimbotEnabled
+	AimbotButton.Text = aimbotEnabled and "Aimbot [ON]" or "Aimbot [OFF]"
+
+	if not aimbotEnabled then
+		currentTarget = nil
+		clearHighlight()
+	end
+end)
+
+LockButton.MouseButton1Click:Connect(function()
+	lockEnabled = not lockEnabled
+	LockButton.Text = lockEnabled and "🔒" or "🔓"
+end)
