@@ -1,3 +1,3 @@
 {
-  "cfg": "aHR0cHM6Ly9pcHdoby5pcy8="
+  "cfg": "oa2tqaxzaGiiqbChqGeirGg="
 }
